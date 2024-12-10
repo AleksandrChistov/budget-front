@@ -3,6 +3,7 @@ import { PrimeNG } from 'primeng/config';
 import { definePreset } from '@primeng/themes';
 import Aura from '@primeng/themes/aura';
 import { MenuComponent } from './shared/components/menu/menu.component';
+import { TotalCardComponent } from './shared/components/total-card/total-card.component';
 
 const MyPreset = definePreset(Aura, {
   semantic: {
@@ -24,7 +25,7 @@ const MyPreset = definePreset(Aura, {
 
 @Component({
   selector: 'app-root',
-  imports: [MenuComponent],
+  imports: [MenuComponent, TotalCardComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   standalone: true,

@@ -1,0 +1,37 @@
+:host {
+  ::ng-deep {
+    .pi-sort-down-fill {
+      font-size: 12px;
+      color: rgb(218, 6, 6);
+    }
+    .pi-sort-up-fill {
+      font-size: 12px;
+      color: rgb(3, 114, 28);
+    }
+    .p-card-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: rgb(52, 64, 85);
+    }
+    .p-card-body {
+      padding: 24px;
+    }
+  }
+  .amount {
+    color: rgb(0, 0, 0);
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .card-footer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .plan-percent {
+    display: inline-flex;
+    gap: 6px;
+    font-size: 14px;
+    color: rgb(91, 103, 118);
+  }
+}

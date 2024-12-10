@@ -1,0 +1,10 @@
+<p-card [header]="title">
+  <p class="amount">{{amount | amount}}</p>
+  <div class="card-footer">
+    <i class="pi" [ngClass]="amountPercent < 0 ? 'pi-sort-down-fill' : 'pi-sort-up-fill'"></i>
+    <p class="plan-percent">
+      <span>{{amountPercent}}%</span>
+      <span>{{amountPercent < 0 ? 'ниже плана' : 'выше плана'}}</span>
+    </p>
+  </div>
+</p-card>
