@@ -1,1 +1,14 @@
 @import "primeicons/primeicons.css";
+
+body {
+  font-family: Inter, sans-serif;
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+app-root {
+  display: flex;
+  height: 100%;
+}

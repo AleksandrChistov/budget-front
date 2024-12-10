@@ -1,8 +1,8 @@
-import {Component, inject} from '@angular/core';
-import {ButtonModule} from 'primeng/button';
-import {PrimeNG} from 'primeng/config';
-import {definePreset} from '@primeng/themes';
+import { Component, inject } from '@angular/core';
+import { PrimeNG } from 'primeng/config';
+import { definePreset } from '@primeng/themes';
 import Aura from '@primeng/themes/aura';
+import { MenuComponent } from './shared/components/menu/menu.component';
 
 const MyPreset = definePreset(Aura, {
   semantic: {
@@ -24,9 +24,9 @@ const MyPreset = definePreset(Aura, {
 
 @Component({
   selector: 'app-root',
-  imports: [ButtonModule],
+  imports: [MenuComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+  styleUrl: './app.component.scss',
   standalone: true,
 })
 export class AppComponent {

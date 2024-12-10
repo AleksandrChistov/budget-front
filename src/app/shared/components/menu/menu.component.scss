@@ -1,0 +1,54 @@
+:host {
+  ::ng-deep {
+    .p-menu {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      background: rgb(8, 3, 37);
+      border: none;
+      border-radius: 0;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .p-menu-item-content {
+      border-radius: 0;
+      color: rgb(203, 207, 213);
+    }
+    .p-menu-item:not(.p-disabled) .p-menu-item-content:hover {
+      background: rgb(25, 26, 56);
+      color: rgb(255, 255, 255);
+    }
+    .p-menu-list {
+      padding: 0;
+    }
+    .p-menu-item-link {
+      padding: 20px;
+    }
+    .p-menu-item.p-focus .p-menu-item-content {
+      background: none;
+      color: rgb(255, 255, 255);
+      font-weight: 600;
+    }
+    .p-menu-submenu-label {
+      padding: 20px;
+    }
+    .pi {
+      font-size: 20px;
+      padding: 10px;
+    }
+  }
+  .submenu {
+    margin-left: 10px;
+  }
+  .menu-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 20px 40px 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgb(52, 64, 85);
+    font-size: 12px;
+    color: rgb(203, 207, 213);
+  }
+}
