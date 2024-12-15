@@ -3,14 +3,14 @@
     <span class="text-primary font-bold">{{ item.label }}</span>
   </ng-template>
   <ng-template #item let-item>
-    <a pRipple class="flex items-center p-menu-item-link">
+    <a [routerLink]="item.routerLink" routerLinkActive="link-active" pRipple class="flex items-center p-menu-item-link">
       <span class="submenu">{{ item.label }}</span>
     </a>
   </ng-template>
   <ng-template #end>
     <div class="menu-footer">
       <i class="pi pi-users"></i>
-      <span class="">Управление доступом</span>
+      <a class="footer-link" routerLink="/accesses" routerLinkActive="link-active">Управление доступом</a>
     </div>
   </ng-template>
 </p-menu>

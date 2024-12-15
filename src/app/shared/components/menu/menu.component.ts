@@ -3,6 +3,7 @@ import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { RippleModule } from 'primeng/ripple';
 import { AvatarModule } from 'primeng/avatar';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -11,6 +12,8 @@ import { AvatarModule } from 'primeng/avatar';
     MenuModule,
     RippleModule,
     AvatarModule,
+    RouterLink,
+    RouterLinkActive,
   ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
@@ -24,9 +27,11 @@ export class MenuComponent implements OnInit {
         items: [
           {
             label: 'Отчеты',
+            routerLink: 'reports',
           },
           {
             label: 'Операции',
+            routerLink: 'transactions',
           }
         ]
       },
@@ -35,15 +40,19 @@ export class MenuComponent implements OnInit {
         items: [
           {
             label: 'Выручка',
+            routerLink: 'budgets/revenue',
           },
           {
             label: 'Расходы',
+            routerLink: 'budgets/expenses',
           },
           {
             label: 'Инвестиции',
+            routerLink: 'budgets/capex',
           },
           {
             label: 'Капитал',
+            routerLink: 'budgets/capital',
           }
         ]
       },
