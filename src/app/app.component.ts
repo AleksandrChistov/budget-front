@@ -4,6 +4,8 @@ import { definePreset } from '@primeng/themes';
 import Aura from '@primeng/themes/aura';
 import { MenuComponent } from './shared/components/menu/menu.component';
 import { TotalCardComponent } from './shared/components/total-card/total-card.component';
+import { ChartCardComponent } from './shared/components/chart-card/chart-card.component';
+import { ChartCardData } from './shared/components/chart-card/chart-card.interface';
 
 const MyPreset = definePreset(Aura, {
   semantic: {
@@ -25,13 +27,19 @@ const MyPreset = definePreset(Aura, {
 
 @Component({
   selector: 'app-root',
-  imports: [MenuComponent, TotalCardComponent],
+  imports: [MenuComponent, TotalCardComponent, ChartCardComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   standalone: true,
 })
 export class AppComponent {
   public config: PrimeNG = inject(PrimeNG);
+
+  public chartData: ChartCardData = {
+    title: "Чистая прибыль",
+    plan: [null, 0, 151500, 155000, 165000, 180000, 185000, 190000, 200000, 250000, 275000, 300000],
+    fact: [0, 5000, 100500, 150000, 165000, 200000, 185000, 195000, 250000, 350000, 375000, 500550.50],
+  }
 
   constructor() {
     this.config.theme.set({ preset: MyPreset });
