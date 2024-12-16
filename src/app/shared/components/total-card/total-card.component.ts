@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Card } from 'primeng/card';
 import { NgClass } from '@angular/common';
 import { AmountPipe } from '../../pipes/amount.pipe';
@@ -15,7 +15,7 @@ import { AmountPipe } from '../../pipes/amount.pipe';
   styleUrl: './total-card.component.scss'
 })
 export class TotalCardComponent {
-    title: string = 'Операционная прибыль';
+    title = input.required<string>();
     amount: number = 1895403;
     plan: number = 393600;
     amountPercent: number;

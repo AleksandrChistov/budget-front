@@ -1,0 +1,50 @@
+<header>
+  <h2 class="title">Отчет</h2>
+  <form [formGroup]="formGroup" class="form">
+    <div class="form-element">
+      <label for="report_type">Вид отчета</label>
+      <p-select
+        formControlName="reportType"
+        [options]="reportTypes"
+        optionLabel="name"
+        optionValue="value"
+        placeholder="Выберите отчет"
+        inputId="report_type"
+        size="small"
+        class="select"
+      />
+    </div>
+    <div class="form-element">
+      <label for="department">Отдел</label>
+      <p-select
+        formControlName="department"
+        [options]="departments"
+        optionLabel="name"
+        optionValue="value"
+        placeholder="Выберите отдел"
+        [showClear]="formGroup.get('department')?.value"
+        inputId="department"
+        size="small"
+        class="select"
+      />
+    </div>
+    <div class="form-element">
+      <label for="period">Период</label>
+      <p-datePicker
+        formControlName="period"
+        dateFormat="dd.mm.yy"
+        placeholder="Выберите период"
+        selectionMode="range"
+        iconDisplay="input"
+        [readonlyInput]="true"
+        [showButtonBar]="true"
+        inputId="period"
+        size="small"
+        showIcon
+        class="select"
+      />
+    </div>
+  </form>
+
+  <code>{{showFormValue}}</code>
+</header>

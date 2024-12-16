@@ -11,10 +11,8 @@ body {
 app-root {
   display: flex;
   height: 100%;
+  overflow: hidden;
 }
-main {
-  flex-grow: 1;
-}
-p {
+h1, h2, h3, h4, p {
   margin: 0;
 }

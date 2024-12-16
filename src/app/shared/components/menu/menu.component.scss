@@ -1,10 +1,16 @@
+$menu-width: 220px;
+
 :host {
+  display: flex;
+  min-width: 220px;
+  height: 100%;
   ::ng-deep {
     .p-menu {
+      position: fixed;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-width: 217px;
+      min-width: $menu-width;
       height: 100%;
       background: rgb(8, 3, 37);
       border: none;

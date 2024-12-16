@@ -1,9 +1,9 @@
 import { Component, input, OnInit } from '@angular/core';
-import { UIChart } from 'primeng/chart';
 import { ChartData, ChartOptions } from 'chart.js';
+import { UIChart } from 'primeng/chart';
 import { Card } from 'primeng/card';
 import { ChartCardData } from './chart-card.interface';
-import { chartData, chartOptions } from './chart-card.data';
+import { prepareChartData, prepareChartOptions } from './chart-card.util';
 
 @Component({
   selector: 'app-chart-card',
@@ -21,10 +21,7 @@ export class ChartCardComponent implements OnInit {
   options!: ChartOptions;
 
   ngOnInit() {
-    chartData.datasets[0].data = this.data().plan;
-    chartData.datasets[1].data = this.data().fact;
-    chartOptions.plugins.title.text = this.data().title;
-    this.chartData = chartData;
-    this.options = chartOptions;
+    this.chartData = prepareChartData(this.data().plan, this.data().fact);
+    this.options = prepareChartOptions(this.data().title);
   }
 }

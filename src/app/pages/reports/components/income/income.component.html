@@ -1,2 +1,12 @@
-<app-total-card></app-total-card>
-<app-chart-card [data]="chartData"></app-chart-card>
+<div class="cards">
+  <app-total-card title="Операционная прибыль"></app-total-card>
+  <app-total-card title="EBITDA"></app-total-card>
+  <app-total-card title="Прибыль до налогов"></app-total-card>
+  <app-total-card title="Чистая прибыль"></app-total-card>
+</div>
+<div class="charts">
+  <app-chart-card [data]="operProfit"></app-chart-card>
+  <app-chart-card [data]="ebitda"></app-chart-card>
+  <app-chart-card [data]="finProfit"></app-chart-card>
+  <app-chart-card [data]="netProfit"></app-chart-card>
+</div>

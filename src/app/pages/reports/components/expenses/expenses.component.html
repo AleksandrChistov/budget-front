@@ -1,1 +1,12 @@
-<p>expenses works!</p>
+<div class="cards">
+  <app-total-card title="Операционные расходы"></app-total-card>
+  <app-total-card title="Оплата труда"></app-total-card>
+  <app-total-card title="Налоги"></app-total-card>
+  <app-total-card title="Проценты к уплате"></app-total-card>
+</div>
+<div class="charts">
+  <app-chart-card [data]="opex"></app-chart-card>
+  <app-chart-card [data]="staff"></app-chart-card>
+  <app-chart-card [data]="taxes"></app-chart-card>
+  <app-chart-card [data]="finex"></app-chart-card>
+</div>
