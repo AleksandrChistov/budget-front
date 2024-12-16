@@ -14,6 +14,14 @@ export const appConfig: ApplicationConfig = {
     providePrimeNG({
       theme: {
         preset: Aura
+      },
+      translation: {
+        today: 'Сегодня',
+        clear: 'Очистить',
+        firstDayOfWeek: 1,
+        dayNamesMin: ['Вс', 'Пн', 'Вт', 'Cр', 'Чт', 'Пт', 'Сб'],
+        monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+        monthNamesShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек']
       }
     })
   ]
