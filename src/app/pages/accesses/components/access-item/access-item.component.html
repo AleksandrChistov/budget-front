@@ -1,0 +1,48 @@
+<div class="form-element">
+  <input
+    [value]="email()"
+    type="text"
+    pSize="small"
+    pInputText
+    class="input"
+    [disabled]="true"
+  />
+</div>
+<div class="form-element">
+  <input
+    [value]="fullName()"
+    type="text"
+    pSize="small"
+    pInputText
+    class="input"
+    [disabled]="true"
+  />
+</div>
+<div class="form-element">
+  <input
+    [value]="role()"
+    type="text"
+    pSize="small"
+    pInputText
+    class="input"
+    [disabled]="true"
+  />
+</div>
+<div class="form-element">
+  <p-password
+    [ngModel]="password()"
+    type="password"
+    size="small"
+    class="input"
+    [disabled]="true"
+    [toggleMask]="true"
+  />
+</div>
+<p-button
+  (onClick)="delete()"
+  label="Удалить"
+  type="button"
+  size="small"
+  severity="secondary"
+  class="delete-button"
+/>

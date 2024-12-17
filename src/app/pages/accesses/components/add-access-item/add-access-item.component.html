@@ -1,0 +1,60 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="form">
+  <div class="form-element">
+    <label for="email">Электронная почта</label>
+    <input
+      formControlName="email"
+      placeholder="Введите почту"
+      type="text"
+      pSize="small"
+      inputId="email"
+      pInputText
+      autocomplete="off"
+      class="input"
+    />
+  </div>
+  <div class="form-element">
+    <label for="full_name">ФИО</label>
+    <input
+      formControlName="fullName"
+      placeholder="Введите ФИО"
+      type="text"
+      pSize="small"
+      inputId="full_name"
+      pInputText
+      autocomplete="off"
+      class="input"
+    />
+  </div>
+  <div class="form-element">
+    <label for="role">Выберите роль</label>
+    <p-select
+      formControlName="role"
+      [options]="roleOptions"
+      optionLabel="name"
+      optionValue="value"
+      placeholder="Выберите роль"
+      inputId="role"
+      size="small"
+      class="input"
+    />
+  </div>
+  <div class="form-element">
+    <label for="password">Пароль</label>
+    <p-password
+      formControlName="password"
+      placeholder="Введите пароль от 6 цифр"
+      type="password"
+      size="small"
+      class="input"
+      autocomplete="off"
+      [toggleMask]="true"
+    />
+  </div>
+  <p-button
+    [disabled]="formGroup.invalid"
+    label="Добавить"
+    type="submit"
+    size="small"
+    class="add-button"
+  />
+</form>

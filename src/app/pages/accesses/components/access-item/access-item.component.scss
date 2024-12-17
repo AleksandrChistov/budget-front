@@ -1,0 +1,11 @@
+:host {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  .form-element {
+    width: 242px;
+  }
+  .delete-button {
+    min-width: 104px;
+  }
+}

@@ -1,0 +1,14 @@
+:host {
+  .form {
+    display: flex;
+    align-items: end;
+    gap: 16px;
+  }
+  .form-element {
+    width: 242px;
+  }
+  .add-button {
+    min-width: 104px;
+    border: 1px solid transparent;
+  }
+}
