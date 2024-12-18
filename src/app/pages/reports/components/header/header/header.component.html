@@ -6,7 +6,7 @@
       <p-select
         formControlName="reportType"
         [options]="reportTypes"
-        optionLabel="name"
+        optionLabel="label"
         optionValue="value"
         placeholder="Выберите отчет"
         inputId="report_type"
@@ -19,7 +19,7 @@
       <p-select
         formControlName="department"
         [options]="departments"
-        optionLabel="name"
+        optionLabel="label"
         optionValue="value"
         placeholder="Выберите отдел"
         [showClear]="formGroup.get('department')?.value"

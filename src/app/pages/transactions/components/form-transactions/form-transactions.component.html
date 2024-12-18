@@ -1,0 +1,133 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="form">
+  <div class="form-header">
+    <span>{{ type() === TransactionTypes.INCOME ? 'Приход' : 'Расход'}} по счету</span>
+    <p-button
+      type="button"
+      icon="pi pi-times"
+      severity="secondary"
+      [rounded]="true"
+      [text]="true"
+      (onClick)="close.emit()"
+    />
+  </div>
+  <div class="form-elements">
+    <div class="form-element">
+      <label for="sum">Сумма</label>
+      <p-inputNumber
+        formControlName="sum"
+        placeholder="0.00 ₽"
+        inputId="sum"
+        mode="currency"
+        size="small"
+        class="input"
+        [minFractionDigits]="2"
+        [maxFractionDigits]="2"
+        currency="RUB"
+      />
+    </div>
+    <div class="form-element">
+      <label for="account">Счет</label>
+      <p-select
+        formControlName="account"
+        [options]="accountOptions()"
+        [group]="true"
+        optionGroupLabel="title"
+        optionGroupChildren="children"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Выберите счет"
+        inputId="account"
+        size="small"
+        class="input"
+      >
+        <ng-template let-group pTemplate="group">
+          <div class="select-group-label">
+            <i [class]="'pi pi-' + group.icon"></i>
+            <span> {{ group.title }}</span>
+          </div>
+        </ng-template>
+      </p-select>
+    </div>
+    <div class="form-element">
+      <label for="budget-type">Тип бюджета</label>
+      <p-select
+        formControlName="budgetType"
+        [options]="budgetTypes()"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Выберите бюджет"
+        inputId="budget-type"
+        size="small"
+        class="input"
+      />
+    </div>
+    <div class="form-element">
+      <label for="budget-item">Статья бюджета</label>
+      <p-treeSelect
+        formControlName="budgetItem"
+        [options]="budgetItems()"
+        placeholder="Выберите статью"
+        inputId="budget-item"
+        size="small"
+        containerStyleClass="input"
+      ></p-treeSelect>
+    </div>
+    <div class="form-element">
+      <label for="payment-date">Дата оплаты</label>
+      <p-datePicker
+        formControlName="paymentDate"
+        dateFormat="dd.mm.yy"
+        placeholder="ДД.ММ.ГГ"
+        iconDisplay="input"
+        inputId="payment-date"
+        size="small"
+        showIcon
+        class="input"
+      />
+    </div>
+    <div class="form-element">
+      <label for="counterparty">Контрагент</label>
+      <p-select
+        formControlName="counterparty"
+        [options]="counterpartyOptions()"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Выберите контрагента"
+        inputId="counterparty"
+        size="small"
+        class="input"
+      />
+    </div>
+    <div class="form-element description">
+      <label for="description">Описание</label>
+      <textarea
+        formControlName="description"
+        placeholder="Введите описание операции"
+        [maxlength]="255"
+        rows="5" cols="30"
+        [autoResize]="true"
+        pTextarea
+        pSize="small"
+        id="description"
+        class="input"
+      ></textarea>
+    </div>
+    <div class="buttons">
+      <p-button
+        label="Отменить"
+        severity="secondary"
+        type="button"
+        size="small"
+        class="form-button"
+        (onClick)="close.emit()"
+      />
+      <p-button
+        [disabled]="formGroup.invalid"
+        label="Добавить"
+        type="submit"
+        size="small"
+        class="form-button"
+      />
+    </div>
+  </div>
+</form>

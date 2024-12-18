@@ -1,6 +1,6 @@
 export interface Option {
-  name: string;
-  value: string;
+  label: string;
+  value: string | number;
 }
 
 export interface FormData {

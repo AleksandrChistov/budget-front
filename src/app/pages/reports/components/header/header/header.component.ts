@@ -28,8 +28,8 @@ export class HeaderComponent implements OnInit {
   formGroup!: FormGroup;
   reportTypes: Array<Option> = reportTypesOptions;
   departments: Array<Option> = [
-    {name: 'Сибирский филиал', value: 'Сибирский филиал'},
-    {name: 'Московский филиал', value: 'Московский филиал'}
+    { label: 'Сибирский филиал', value: 'Сибирский филиал' },
+    { label: 'Московский филиал', value: 'Московский филиал' }
   ]; // TODO replace with DB values
 
   ngOnInit(): void {

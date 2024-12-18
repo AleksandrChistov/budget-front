@@ -1,4 +1,4 @@
 export const reportTypesOptions = [
-  {name: 'Доходы', value: 'income'},
-  {name: 'Расходы', value: 'expenses'}
+  { label: 'Доходы', value: 'income' },
+  { label: 'Расходы', value: 'expenses' }
 ];

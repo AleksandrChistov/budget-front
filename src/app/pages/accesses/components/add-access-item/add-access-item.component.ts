@@ -31,9 +31,9 @@ export class AddAccessItemComponent {
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
   roleOptions: Option[] = [
-    { name: 'Админ', value: Roles.ADMIN},
-    {name: 'Менеджер', value: Roles.MANAGER},
-    {name: 'Аналитик', value: Roles.ANALYST}
+    { label: 'Админ', value: Roles.ADMIN },
+    { label: 'Менеджер', value: Roles.MANAGER },
+    { label: 'Аналитик', value: Roles.ANALYST }
   ];
   onSubmit() {
     this.addAccess.emit(this.formGroup.value);

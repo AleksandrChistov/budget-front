@@ -1,1 +1,13 @@
 <p>transactions works!</p>
+@if (isFormOpened) {
+  <app-form-transactions
+    [type]="type"
+    [budgetTypes]="budgetTypes"
+    [budgetItems]="budgetItems"
+    [accountOptions]="accountOptions"
+    [counterpartyOptions]="counterpartyOptions"
+    (budgetTypeChanged)="budgetTypeChanged($event)"
+    (formSubmitted)="formSubmitted($event)"
+    (close)="closeForm()"
+  ></app-form-transactions>
+}
