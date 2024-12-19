@@ -3,7 +3,7 @@ import { TransactionsComponent } from './pages/transactions/components/transacti
 import { AccessesComponent } from './pages/accesses/components/accesses/accesses.component';
 import { NotFoundComponent } from './pages/not-found/not-found/not-found.component';
 import { budgetsRoutes } from './pages/budgets/budgets.routes';
-import { ReportsComponent } from './pages/reports/components/container/reports/reports.component';
+import { ReportsComponent } from './pages/reports/components/reports/reports.component';
 
 
 export const routes: Routes = [

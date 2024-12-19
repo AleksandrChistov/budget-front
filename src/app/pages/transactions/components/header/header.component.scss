@@ -1,0 +1,15 @@
+:host {
+  .title {
+    margin-bottom: 30px;
+  }
+  .form {
+    display: flex;
+    align-items: end;
+    gap: 16px;
+  }
+  .buttons {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+}

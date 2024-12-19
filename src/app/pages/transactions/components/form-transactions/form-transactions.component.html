@@ -29,7 +29,7 @@
       <label for="account">Счет</label>
       <p-select
         formControlName="account"
-        [options]="accountOptions()"
+        [options]="accounts()"
         [group]="true"
         optionGroupLabel="title"
         optionGroupChildren="children"
@@ -89,7 +89,7 @@
       <label for="counterparty">Контрагент</label>
       <p-select
         formControlName="counterparty"
-        [options]="counterpartyOptions()"
+        [options]="counterparties()"
         optionLabel="label"
         optionValue="value"
         placeholder="Выберите контрагента"

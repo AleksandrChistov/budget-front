@@ -1,4 +1,4 @@
-import { Option } from '../../../../shared/interfaces/option.interface';
+import { Option } from '../../../shared/interfaces/option.interface';
 
 export interface BudgetItem {
   id: number;
@@ -9,5 +9,5 @@ export interface BudgetItem {
 export interface AccountOption {
   title: string;
   icon: string;
-  children: Array<Option>;
+  children: Array<Option<number>>;
 }

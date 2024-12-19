@@ -30,7 +30,7 @@ export class AddAccessItemComponent {
     role: ['', Validators.required],
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
-  roleOptions: Option[] = [
+  roleOptions: Array<Option<Roles>> = [
     { label: 'Админ', value: Roles.ADMIN },
     { label: 'Менеджер', value: Roles.MANAGER },
     { label: 'Аналитик', value: Roles.ANALYST }

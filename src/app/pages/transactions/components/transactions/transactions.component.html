@@ -1,13 +1,20 @@
-<p>transactions works!</p>
+<app-transaction-header
+  [departments]="departments"
+  [accounts]="accounts"
+  (departmentChanged)="departmentChanged($event)"
+  (accountChanged)="accountChanged($event)"
+  (createTransaction)="openTransactionForm($event)"
+></app-transaction-header>
 @if (isFormOpened) {
   <app-form-transactions
     [type]="type"
+    [account]="accountId"
     [budgetTypes]="budgetTypes"
     [budgetItems]="budgetItems"
-    [accountOptions]="accountOptions"
-    [counterpartyOptions]="counterpartyOptions"
+    [accounts]="accounts"
+    [counterparties]="counterparties"
     (budgetTypeChanged)="budgetTypeChanged($event)"
-    (formSubmitted)="formSubmitted($event)"
-    (close)="closeForm()"
+    (formSubmitted)="createTransaction($event)"
+    (close)="closeTransactionForm()"
   ></app-form-transactions>
 }

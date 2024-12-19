@@ -1,0 +1,61 @@
+<header>
+  <h2 class="title">Операции</h2>
+  <form [formGroup]="formGroup" class="form">
+    <div class="form-element">
+      <label for="department">Отдел</label>
+      <p-select
+        formControlName="department"
+        [options]="departments()"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Выберите отдел"
+        [showClear]="formGroup.get('department')?.value"
+        inputId="department"
+        size="small"
+        class="input"
+      />
+    </div>
+    <div class="form-element">
+      <label for="account">Счет</label>
+      <p-select
+        formControlName="account"
+        [options]="accounts()"
+        [group]="true"
+        optionGroupLabel="title"
+        optionGroupChildren="children"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Выберите счет"
+        [showClear]="formGroup.get('account')?.value"
+        inputId="account"
+        size="small"
+        class="input"
+      >
+        <ng-template let-group pTemplate="group">
+          <div class="select-group-label">
+            <i [class]="'pi pi-' + group.icon"></i>
+            <span> {{ group.title }}</span>
+          </div>
+        </ng-template>
+      </p-select>
+    </div>
+    <div class="buttons">
+      <p-button
+        (onClick)="addTransaction(TransactionTypes.INCOME)"
+        label="Приход"
+        type="button"
+        icon="pi pi-plus"
+        iconPos="right"
+        severity="secondary"
+      />
+      <p-button
+        (onClick)="addTransaction(TransactionTypes.EXPENSE)"
+        label="Расход"
+        type="button"
+        icon="pi pi-minus"
+        iconPos="right"
+        severity="secondary"
+      />
+    </div>
+  </form>
+</header>

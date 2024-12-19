@@ -8,9 +8,10 @@ import { Textarea } from 'primeng/textarea';
 import { Button } from 'primeng/button';
 import { TreeSelect } from 'primeng/treeselect';
 import { Option } from '../../../../shared/interfaces/option.interface';
-import { AccountOption, BudgetItem } from '../interfaces/transaction.interface';
-import { TransactionForm } from '../interfaces/form.interface';
-import { TransactionTypes } from '../enums/transaction.enum';
+import { AccountOption, BudgetItem } from '../../interfaces/transaction.interface';
+import { TransactionForm } from '../../interfaces/transaction-form.interface';
+import { TransactionTypes } from '../../enums/transaction.enum';
+import { BudgetTypes } from '../../enums/budget.enum';
 
 @Component({
   selector: 'app-form-transactions',
@@ -29,26 +30,19 @@ import { TransactionTypes } from '../enums/transaction.enum';
   styleUrl: './form-transactions.component.scss'
 })
 export class FormTransactionsComponent implements OnInit {
-  type = input.required<TransactionTypes>();
-  budgetTypes = input.required<Array<Option>>();
+  type = input.required<TransactionTypes | null>();
+  account = input.required<number | null>();
+  budgetTypes = input.required<Array<Option<BudgetTypes>>>();
   budgetItems = input.required<Array<BudgetItem>>();
-  accountOptions = input.required<Array<AccountOption>>();
-  counterpartyOptions = input.required<Array<Option>>();
+  accounts = input.required<Array<AccountOption>>();
+  counterparties = input.required<Array<Option<number>>>();
   budgetTypeChanged = output<string>();
   formSubmitted = output<TransactionForm>();
   close = output<void>();
 
   fb = inject(FormBuilder);
 
-  formGroup: FormGroup = this.fb.group({
-    sum: [null, Validators.required],
-    budgetType: [null, Validators.required],
-    budgetItem: [{ value: null, disabled: true}, Validators.required],
-    paymentDate: [null, Validators.required],
-    account: [null, Validators.required],
-    counterparty: [null, Validators.required],
-    description: [null, Validators.required],
-  });
+  formGroup!: FormGroup;
 
   protected readonly TransactionTypes = TransactionTypes;
 
@@ -61,6 +55,16 @@ export class FormTransactionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.formGroup  = this.fb.group({
+      sum: [null, Validators.required],
+      budgetType: [null, Validators.required],
+      budgetItem: [{ value: null, disabled: true}, Validators.required],
+      paymentDate: [null, Validators.required],
+      account: [this.account(), Validators.required],
+      counterparty: [null, Validators.required],
+      description: [null, Validators.required],
+    });
+
     this.formGroup.get('budgetType')?.valueChanges
       .subscribe(budgetType => this.budgetTypeChanged.emit(budgetType));
   }

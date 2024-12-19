@@ -6,6 +6,7 @@ import { DatePicker } from 'primeng/datepicker';
 import { Option } from '../../../../shared/interfaces/option.interface';
 import { FormData } from '../../interfaces/form.interface';
 import { reportTypesOptions } from './header.data';
+import { ReportTypes } from '../../enums/reports.enum';
 
 @Component({
   selector: 'app-reports-header',
@@ -27,10 +28,10 @@ export class HeaderComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
 
   formGroup!: FormGroup;
-  reportTypes: Array<Option> = reportTypesOptions;
-  departments: Array<Option> = [
-    { label: 'Сибирский филиал', value: 'Сибирский филиал' },
-    { label: 'Московский филиал', value: 'Московский филиал' }
+  reportTypes: Array<Option<ReportTypes>> = reportTypesOptions;
+  departments: Array<Option<number>> = [
+    { label: 'Сибирский филиал', value: 1 },
+    { label: 'Московский филиал', value: 2 }
   ]; // TODO replace with DB values
 
   ngOnInit(): void {
@@ -43,10 +44,6 @@ export class HeaderComponent implements OnInit {
     this.formGroup.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((formValue: FormData) => this.formDataChanged.emit(formValue));
-  }
-
-  get showFormValue(): string {
-    return JSON.stringify(this.formGroup.value);
   }
 
 }

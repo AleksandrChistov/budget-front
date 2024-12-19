@@ -3,16 +3,18 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { of, switchMap } from 'rxjs';
 import { FormTransactionsComponent } from '../form-transactions/form-transactions.component';
 import { Option } from '../../../../shared/interfaces/option.interface';
-import { AccountOption, BudgetItem } from '../interfaces/transaction.interface';
-import { TransactionForm } from '../interfaces/form.interface';
-import { BudgetTypes } from '../enums/budget.enum';
-import { TransactionTypes } from '../enums/transaction.enum';
+import { AccountOption, BudgetItem } from '../../interfaces/transaction.interface';
+import { TransactionForm } from '../../interfaces/transaction-form.interface';
+import { BudgetTypes } from '../../enums/budget.enum';
+import { TransactionTypes } from '../../enums/transaction.enum';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-transactions',
   standalone: true,
   imports: [
-    FormTransactionsComponent
+    FormTransactionsComponent,
+    HeaderComponent
   ],
   templateUrl: './transactions.component.html',
   styleUrl: './transactions.component.scss'
@@ -20,16 +22,16 @@ import { TransactionTypes } from '../enums/transaction.enum';
 export class TransactionsComponent {
   destroyRef = inject(DestroyRef);
 
-  isFormOpened = true; // TODO: initial value should be false
-  type: TransactionTypes = TransactionTypes.INCOME;
-  budgetTypes: Array<Option> = [
-    { label: 'Доходы', value: BudgetTypes.REVENUE },
-    { label: 'Расходы', value: BudgetTypes.EXPENSES },
-    { label: 'Инвестиции', value: BudgetTypes.CAPEX },
-    { label: 'Капитал', value: BudgetTypes.CAPITAL },
-  ];
-  budgetItems: Array<BudgetItem> = [];
-  accountOptions: Array<AccountOption> = [
+  isFormOpened = false;
+  type: TransactionTypes | null = null;
+  departmentId: number | null = null;
+  accountId: number | null = null;
+
+  departments: Array<Option<number>> = [
+    { label: 'Сибирский филиал', value: 1 },
+    { label: 'Московский филиал', value: 2 }
+  ]; // TODO replace with DB values
+  accounts: Array<AccountOption> = [
     {
       title: 'Банковский',
       icon: 'id-card',
@@ -46,8 +48,15 @@ export class TransactionsComponent {
         { label: 'Касса Сибирского филлиала', value: 4 }
       ]
     },
-  ]; // TODO: it depends on department was chosen on the page
-  counterpartyOptions: Array<Option> = [
+  ]; // TODO: it depends on department was chosen on the page or get all initially
+  budgetTypes: Array<Option<BudgetTypes>> = [
+    { label: 'Доходы', value: BudgetTypes.REVENUE },
+    { label: 'Расходы', value: BudgetTypes.EXPENSES },
+    { label: 'Инвестиции', value: BudgetTypes.CAPEX },
+    { label: 'Капитал', value: BudgetTypes.CAPITAL },
+  ];
+  budgetItems: Array<BudgetItem> = [];
+  counterparties: Array<Option<number>> = [
     { label: 'ООО Яндекс', value: 1 },
     { label: 'ИП Иванов', value: 2 },
   ];
@@ -94,14 +103,36 @@ export class TransactionsComponent {
       .subscribe((budgetItems: Array<BudgetItem>) => this.budgetItems = budgetItems);
   }
 
-  formSubmitted(transactionForm: TransactionForm): void {
-    // TODO: replace with http request
+  createTransaction(transactionForm: TransactionForm): void {
+    // TODO: make a request to create a new transaction
+    console.log('type > ', this.type);
+    console.log('departmentId > ', this.departmentId);
+    console.log('accountId > ', this.accountId);
     console.log('transactionForm > ', transactionForm);
     console.log('budgetItem.id > ', transactionForm.budgetItem.id);
     console.log('paymentDate.toISOString > ', transactionForm.paymentDate.toISOString());
   }
 
-  closeForm(): void {
+  closeTransactionForm(): void {
     this.isFormOpened = false;
+  }
+
+  departmentChanged(departmentId: number): void {
+    console.log('departmentId > ', departmentId);
+    this.departmentId = departmentId;
+    // TODO: make a request to get accounts options
+    // TODO: make a request to get transactions
+  }
+
+  accountChanged(accountId: number): void {
+    console.log('accountId > ', accountId);
+    this.accountId = accountId;
+    // TODO: make a request to get transactions
+  }
+
+  openTransactionForm(type: TransactionTypes): void {
+    console.log('type > ', type);
+    this.type = type;
+    this.isFormOpened = true;
   }
 }
