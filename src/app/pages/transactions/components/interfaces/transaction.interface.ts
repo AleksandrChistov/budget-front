@@ -1,4 +1,4 @@
-import { Option } from '../../../reports/components/header/header/header.interface';
+import { Option } from '../../../../shared/interfaces/option.interface';
 
 export interface BudgetItem {
   id: number;

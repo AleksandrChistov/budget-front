@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HeaderComponent } from '../../header/header/header.component';
 import { IncomeComponent } from '../../income/income.component';
 import { ExpensesComponent } from '../../expenses/expenses.component';
-import { FormData } from '../../header/header/header.interface';
+import { FormData } from '../../../interfaces/form.interface';
 
 @Component({
   selector: 'app-reports',

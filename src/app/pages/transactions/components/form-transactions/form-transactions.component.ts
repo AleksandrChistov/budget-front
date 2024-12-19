@@ -7,7 +7,7 @@ import { PrimeTemplate } from 'primeng/api';
 import { Textarea } from 'primeng/textarea';
 import { Button } from 'primeng/button';
 import { TreeSelect } from 'primeng/treeselect';
-import { Option } from '../../../reports/components/header/header/header.interface';
+import { Option } from '../../../../shared/interfaces/option.interface';
 import { AccountOption, BudgetItem } from '../interfaces/transaction.interface';
 import { TransactionForm } from '../interfaces/form.interface';
 import { TransactionTypes } from '../enums/transaction.enum';

@@ -2,7 +2,7 @@ import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { of, switchMap } from 'rxjs';
 import { FormTransactionsComponent } from '../form-transactions/form-transactions.component';
-import { Option } from '../../../reports/components/header/header/header.interface';
+import { Option } from '../../../../shared/interfaces/option.interface';
 import { AccountOption, BudgetItem } from '../interfaces/transaction.interface';
 import { TransactionForm } from '../interfaces/form.interface';
 import { BudgetTypes } from '../enums/budget.enum';

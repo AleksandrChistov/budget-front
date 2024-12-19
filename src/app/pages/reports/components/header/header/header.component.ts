@@ -3,7 +3,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Select } from 'primeng/select';
 import { DatePicker } from 'primeng/datepicker';
-import { FormData, Option } from './header.interface';
+import { Option } from '../../../../../shared/interfaces/option.interface';
+import { FormData } from '../../../interfaces/form.interface';
 import { reportTypesOptions } from './header.data';
 
 @Component({

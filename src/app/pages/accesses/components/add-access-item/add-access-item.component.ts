@@ -4,7 +4,7 @@ import { InputText } from "primeng/inputtext";
 import { Select } from "primeng/select";
 import { Password } from 'primeng/password';
 import { Button } from 'primeng/button';
-import { Option } from '../../../reports/components/header/header/header.interface';
+import { Option } from '../../../../shared/interfaces/option.interface';
 import { FormAccessData } from '../../interfaces/form.interface';
 import { Roles } from '../../../../shared/enums/role.enums';
 
