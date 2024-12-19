@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from '../../header/header/header.component';
+import { HeaderComponent } from '../../header/header.component';
 import { IncomeComponent } from '../../income/income.component';
 import { ExpensesComponent } from '../../expenses/expenses.component';
 import { FormData } from '../../../interfaces/form.interface';
