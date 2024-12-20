@@ -1,6 +1,6 @@
 import { ReportTypes } from '../../enums/reports.enum';
 
 export const reportTypesOptions = [
-  { label: 'Доходы', value: ReportTypes.INCOME },
-  { label: 'Расходы', value: ReportTypes.EXPENSES }
+  { label: 'Доходы', id: ReportTypes.INCOME },
+  { label: 'Расходы', id: ReportTypes.EXPENSES }
 ];

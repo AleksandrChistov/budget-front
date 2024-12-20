@@ -33,37 +33,37 @@ export class TransactionsComponent {
 
   transactions = toSignal<Array<Transaction>, []>(this.transactionService.get(), { initialValue: [] });
   departments: Array<Option<number>> = [
-    { label: 'Сибирский филиал', value: 1 },
-    { label: 'Московский филиал', value: 2 }
+    { label: 'Сибирский филиал', id: 1 },
+    { label: 'Московский филиал', id: 2 }
   ]; // TODO replace with DB values
   accounts: Array<AccountOption> = [
     {
       title: 'Банковский',
       icon: 'id-card',
       children: [
-        { label: 'ООО ВТБ р.счет', value: 1 },
-        { label: 'АО ТБанк р.счет', value: 2 }
+        { label: 'ООО ВТБ р.счет', id: 1 },
+        { label: 'АО ТБанк р.счет', id: 2 }
       ]
     },
     {
       title: 'Наличные',
       icon: 'money-bill',
       children: [
-        { label: 'Касса Московсого филлиала', value: 3 },
-        { label: 'Касса Сибирского филлиала', value: 4 }
+        { label: 'Касса Московсого филлиала', id: 3 },
+        { label: 'Касса Сибирского филлиала', id: 4 }
       ]
     },
   ]; // TODO: it depends on department was chosen on the page or get all initially
   budgetTypes: Array<Option<BudgetTypes>> = [
-    { label: 'Доходы', value: BudgetTypes.REVENUE },
-    { label: 'Расходы', value: BudgetTypes.EXPENSES },
-    { label: 'Инвестиции', value: BudgetTypes.CAPEX },
-    { label: 'Капитал', value: BudgetTypes.CAPITAL },
+    { label: 'Доходы', id: BudgetTypes.REVENUE },
+    { label: 'Расходы', id: BudgetTypes.EXPENSES },
+    { label: 'Инвестиции', id: BudgetTypes.CAPEX },
+    { label: 'Капитал', id: BudgetTypes.CAPITAL },
   ];
   budgetItems: Array<BudgetItem> = [];
   counterparties: Array<Option<number>> = [
-    { label: 'ООО Яндекс', value: 1 },
-    { label: 'ИП Иванов', value: 2 },
+    { label: 'ООО Яндекс', id: 1 },
+    { label: 'ИП Иванов', id: 2 },
   ];
 
   budgetTypeChanged(budgetType: string): void {
