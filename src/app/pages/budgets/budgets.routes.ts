@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { RevenueComponent } from './components/revenue/revenue.component';
-import { ExpensesComponent } from './components/expenses/expenses.component';
-import { CapexComponent } from './components/capex/capex.component';
-import { CapitalComponent } from './components/capital/capital.component';
+import { RevenueComponent } from './components/pages/revenue/revenue.component';
+import { ExpensesComponent } from './components/pages/expenses/expenses.component';
+import { CapexComponent } from './components/pages/capex/capex.component';
+import { CapitalComponent } from './components/pages/capital/capital.component';
 
 export const budgetsRoutes: Routes = [
   {
