@@ -5,6 +5,10 @@
   (accountChanged)="accountChanged($event)"
   (createTransaction)="openTransactionForm($event)"
 ></app-transaction-header>
+<app-table-transactions
+  [transactions]="transactions()"
+  (delete)="deleteTransaction($event)"
+></app-table-transactions>
 @if (isFormOpened) {
   <app-form-transactions
     [type]="type"

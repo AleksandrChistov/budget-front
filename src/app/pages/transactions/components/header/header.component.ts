@@ -50,8 +50,4 @@ export class HeaderComponent implements OnInit {
       .subscribe((account: number) => this.accountChanged.emit(account));
   }
 
-  addTransaction(type: TransactionTypes): void {
-    this.createTransaction.emit(type);
-  }
-
 }

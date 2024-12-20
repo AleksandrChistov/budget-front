@@ -1,0 +1,28 @@
+import { Component, input, output } from '@angular/core';
+import { CurrencyPipe, DatePipe } from '@angular/common';
+import { TableModule } from 'primeng/table';
+import { Button } from 'primeng/button';
+import { TransactionTypes } from '../../enums/transaction.enum';
+import { AccountTypes } from '../../enums/account.enum';
+import { BudgetTypes } from '../../enums/budget.enum';
+import { Transaction } from '../../interfaces/transaction.interface';
+
+@Component({
+  selector: 'app-table-transactions',
+  standalone: true,
+  imports: [
+    TableModule,
+    Button,
+    DatePipe,
+    CurrencyPipe
+  ],
+  templateUrl: './table-transactions.component.html',
+  styleUrl: './table-transactions.component.scss'
+})
+export class TableTransactionsComponent {
+  transactions = input.required<Array<Transaction>>();
+  delete = output<number>();
+  protected readonly TransactionTypes = TransactionTypes;
+  protected readonly AccountTypes = AccountTypes;
+  protected readonly BudgetTypes = BudgetTypes;
+}

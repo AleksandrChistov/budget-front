@@ -1,0 +1,22 @@
+:host {
+  .multi-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  ::ng-deep {
+    .p-datatable {
+      height: calc(100% - 115px);
+      display: flex;
+      flex-direction: column;
+      font-size: 14px;
+    }
+    .p-datatable-scrollable > .p-datatable-table-container {
+      flex-grow: 1;
+      margin-top: 30px;
+    }
+    .p-datatable-tbody > tr > td {
+      vertical-align: top;
+    }
+  }
+}

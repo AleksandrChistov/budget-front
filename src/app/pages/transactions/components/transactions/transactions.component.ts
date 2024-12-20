@@ -1,25 +1,29 @@
 import { Component, DestroyRef, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { of, switchMap } from 'rxjs';
 import { FormTransactionsComponent } from '../form-transactions/form-transactions.component';
 import { Option } from '../../../../shared/interfaces/option.interface';
-import { AccountOption, BudgetItem } from '../../interfaces/transaction.interface';
+import { AccountOption, BudgetItem, Transaction } from '../../interfaces/transaction.interface';
 import { TransactionForm } from '../../interfaces/transaction-form.interface';
 import { BudgetTypes } from '../../enums/budget.enum';
 import { TransactionTypes } from '../../enums/transaction.enum';
 import { HeaderComponent } from '../header/header.component';
+import { TransactionService } from '../../services/transaction.service';
+import { TableTransactionsComponent } from '../table-transactions/table-transactions.component';
 
 @Component({
   selector: 'app-transactions',
   standalone: true,
   imports: [
     FormTransactionsComponent,
-    HeaderComponent
+    HeaderComponent,
+    TableTransactionsComponent
   ],
   templateUrl: './transactions.component.html',
   styleUrl: './transactions.component.scss'
 })
 export class TransactionsComponent {
+  transactionService = inject(TransactionService);
   destroyRef = inject(DestroyRef);
 
   isFormOpened = false;
@@ -27,6 +31,7 @@ export class TransactionsComponent {
   departmentId: number | null = null;
   accountId: number | null = null;
 
+  transactions = toSignal<Array<Transaction>, []>(this.transactionService.get(), { initialValue: [] });
   departments: Array<Option<number>> = [
     { label: 'Сибирский филиал', value: 1 },
     { label: 'Московский филиал', value: 2 }
@@ -134,5 +139,10 @@ export class TransactionsComponent {
     console.log('type > ', type);
     this.type = type;
     this.isFormOpened = true;
+  }
+
+  deleteTransaction(id: number): void {
+    console.log('deleteTransaction', id);
+    // TODO: make a request to delete the transaction
   }
 }
