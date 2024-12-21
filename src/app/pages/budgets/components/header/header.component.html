@@ -1,0 +1,59 @@
+<header>
+  <h2 class="title">{{ title() }}</h2>
+  <form [formGroup]="formGroup" class="form">
+    <div class="filters">
+      <div class="form-element">
+        <label for="department">Отдел</label>
+        <p-select
+          formControlName="department"
+          [options]="departments()"
+          optionLabel="label"
+          optionValue="id"
+          placeholder="Выберите отдел"
+          [showClear]="formGroup.get('department')?.value"
+          inputId="department"
+          size="small"
+          class="input"
+        />
+      </div>
+      <div class="form-element">
+        <label for="budget">Бюджет</label>
+        <p-select
+          formControlName="budget"
+          [options]="budgets()"
+          optionLabel="label"
+          optionValue="id"
+          placeholder="Выберите бюджет"
+          [showClear]="formGroup.get('budget')?.value"
+          inputId="account"
+          size="small"
+          class="input"
+        />
+      </div>
+      <div class="bullet"><i class="pi pi-circle-fill blue-bullet"></i> План</div>
+      <div class="bullet"><i class="pi pi-circle-fill black-bullet"></i> Факт</div>
+    </div>
+    <div class="buttons">
+      <p-button
+        (onClick)="saveToExcel.emit()"
+        label="Скачать в Excel"
+        type="button"
+        severity="secondary"
+        [outlined]="true"
+      />
+      <p-button
+        (onClick)="getFromExcel.emit()"
+        label="Загрузить из Excel"
+        type="button"
+        severity="secondary"
+        [outlined]="true"
+      />
+      <p-button
+        (click)="deleteBudget.emit(formGroup.get('budget')?.value)"
+        [text]="true"
+        icon="pi pi-trash"
+        severity="secondary"
+      />
+    </div>
+  </form>
+</header>
