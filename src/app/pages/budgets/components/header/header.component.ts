@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, input, OnInit, output } from '@angular/core';
+import { Component, DestroyRef, effect, inject, input, OnInit, output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Select } from 'primeng/select';
@@ -20,22 +20,28 @@ import { Option } from '../../../../shared/interfaces/option.interface';
 export class HeaderComponent implements OnInit {
   title = input.required<string>();
   departments = input.required<Array<Option<number>>>();
-  budgets = input.required<Array<Option<number>>>();
+  budgetTitles = input.required<Array<Option<number>>>();
   departmentChanged = output<number>();
   budgetChanged = output<number>();
+  deleteBudget = output<number>();
   saveToExcel = output<void>();
   getFromExcel = output<void>();
-  deleteBudget = output<number>();
 
   private fb = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
 
   formGroup!: FormGroup;
 
+  constructor() {
+    effect(() => {
+      this.formGroup.get('budget')?.setValue(this.budgetTitles()[0]?.id);
+    }, { allowSignalWrites: true });
+  }
+
   ngOnInit(): void {
     this.formGroup = this.fb.group({
       department: [null],
-      budget: [this.budgets()?.[0].id],
+      budget: [null],
     });
 
     this.formGroup.get('department')?.valueChanges

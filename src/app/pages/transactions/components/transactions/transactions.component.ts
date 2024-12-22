@@ -5,7 +5,7 @@ import { FormTransactionsComponent } from '../form-transactions/form-transaction
 import { Option } from '../../../../shared/interfaces/option.interface';
 import { AccountOption, BudgetItem, Transaction } from '../../interfaces/transaction.interface';
 import { TransactionForm } from '../../interfaces/transaction-form.interface';
-import { BudgetTypes } from '../../enums/budget.enum';
+import { BudgetTypes } from '../../../budgets/enums/budget.enum';
 import { TransactionTypes } from '../../enums/transaction.enum';
 import { HeaderComponent } from '../header/header.component';
 import { TransactionService } from '../../services/transaction.service';

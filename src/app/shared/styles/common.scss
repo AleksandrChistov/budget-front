@@ -16,6 +16,14 @@
   border-radius: 8px;
 }
 
+*::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: lightgray;
+}
+
 .p-button-sm {
   width: 100%;
 }

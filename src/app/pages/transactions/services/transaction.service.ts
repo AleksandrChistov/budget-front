@@ -8,7 +8,6 @@ import { Transaction } from '../interfaces/transaction.interface';
 })
 export class TransactionService {
   http = inject(HttpClient);
-  transactions = signal<Array<Transaction>>([]);
 
   get(departmentId?: number, accountId?: number): Observable<Array<Transaction>> {
     // TODO: replace mock with real (optional ?departmentId=1&accountId=1)

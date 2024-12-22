@@ -5,15 +5,26 @@
     gap: 10px;
   }
   ::ng-deep {
+    .p-card {
+      height: calc(100% - 145px);
+      margin-top: 30px;
+    }
+    .p-card-body {
+      padding: 1px 1px 0;
+    }
+    .p-card-body,
+    .p-card-content,
+    p-table {
+      height: 100%;
+    }
     .p-datatable {
-      height: calc(100% - 115px);
       display: flex;
       flex-direction: column;
       font-size: 14px;
+      height: 100%;
     }
-    .p-datatable-scrollable > .p-datatable-table-container {
+    .p-datatable-table-container {
       flex-grow: 1;
-      margin-top: 30px;
     }
     .p-datatable-tbody > tr > td {
       vertical-align: top;

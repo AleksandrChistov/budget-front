@@ -1,6 +1,6 @@
 import { Option } from '../../../shared/interfaces/option.interface';
 import { TransactionTypes } from '../enums/transaction.enum';
-import { BudgetTypes } from '../enums/budget.enum';
+import { BudgetTypes } from '../../budgets/enums/budget.enum';
 import { AccountTypes } from '../enums/account.enum';
 
 export interface BudgetItem {

@@ -4,8 +4,9 @@ import { TableModule } from 'primeng/table';
 import { Button } from 'primeng/button';
 import { TransactionTypes } from '../../enums/transaction.enum';
 import { AccountTypes } from '../../enums/account.enum';
-import { BudgetTypes } from '../../enums/budget.enum';
+import { BudgetTypes } from '../../../budgets/enums/budget.enum';
 import { Transaction } from '../../interfaces/transaction.interface';
+import { Card } from 'primeng/card';
 
 @Component({
   selector: 'app-table-transactions',
@@ -14,7 +15,8 @@ import { Transaction } from '../../interfaces/transaction.interface';
     TableModule,
     Button,
     DatePipe,
-    CurrencyPipe
+    CurrencyPipe,
+    Card
   ],
   templateUrl: './table-transactions.component.html',
   styleUrl: './table-transactions.component.scss'

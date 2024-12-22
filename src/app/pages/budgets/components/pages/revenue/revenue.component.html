@@ -1,5 +1,14 @@
 <app-budgets-header
   title="Доходы"
-  [departments]="departments"
-  [budgets]="budgets"
+  [departments]="departmentLabels()"
+  [budgetTitles]="budgetLabels()"
+  (budgetChanged)="budgetChanged($event)"
+  (departmentChanged)="departmentChanged($event)"
+  (deleteBudget)="deleteBudget($event)"
+  (saveToExcel)="saveToExcel()"
+  (getFromExcel)="getFromExcel()"
 ></app-budgets-header>
+<app-table-budgets
+  [budget]="budget()"
+  (saveBudget)="saveBudget($event)"
+></app-table-budgets>

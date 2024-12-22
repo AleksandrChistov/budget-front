@@ -1,0 +1,173 @@
+<p-card>
+  <p-treeTable
+    [value]="budget().budgetItems"
+    [paginator]="true"
+    [rows]="30"
+    [scrollable]="true"
+    [frozenColumns]="frozenCols"
+    [columns]="scrollableCols"
+    frozenWidth="200px"
+    [tableStyle]="{'min-width':'100%','width':'auto'}"
+    styleClass="p-datatable-lg"
+  >
+    <ng-template pTemplate="colgroup" let-columns>
+      <colgroup>
+        @for (col of columns; track col.header) {
+          <col style="min-width:165px;height:90px"/>
+        }
+      </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        @for (col of columns; track col.header) {
+          @if (col.header === 'Итого') {
+            <th style="min-width:165px"><strong>{{ col.header }}</strong></th>
+          } @else {
+            <th style="min-width:165px">{{ col.header }}</th>
+          }
+        }
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+      <tr [ttRow]="rowNode">
+        @for (month of rowData.months; track month.id) {
+          <td [style]="{'min-width':'165px','height':'92px'}">
+            <p-inputNumber
+              [formControl]="getFormControl(month.plan, !!rowNode.node.children)"
+              placeholder="0.00 ₽"
+              inputId="sum"
+              mode="currency"
+              size="small"
+              [minFractionDigits]="2"
+              [maxFractionDigits]="2"
+              currency="RUB"
+              [inputStyleClass]="!!rowNode.node.children ? 'writable-input input-bold' : 'writable-input'"
+              [inputStyle]="{'margin-bottom':'5px'}"
+              (onKeyDown)="$event.stopPropagation()"
+              (onBlur)="changeBudgetItem(month.id, $any($event.target).value)"
+            />
+            <p-inputNumber
+              [formControl]="getFormControl(month.actual, true)"
+              placeholder="0.00 ₽"
+              inputId="sum"
+              mode="currency"
+              size="small"
+              [minFractionDigits]="2"
+              [maxFractionDigits]="2"
+              currency="RUB"
+              [inputStyleClass]="!!rowNode.node.children ? 'readable-input input-bold' : 'readable-input'"
+              (onKeyDown)="$event.stopPropagation()"
+            />
+          </td>
+        }
+        <td [style]="{'min-width':'165px','height':'92px'}">
+          <p-inputNumber
+            [formControl]="getFormControl(rowData.planTotal, true)"
+            placeholder="0.00 ₽"
+            inputId="sum"
+            mode="currency"
+            size="small"
+            [minFractionDigits]="2"
+            [maxFractionDigits]="2"
+            currency="RUB"
+            inputStyleClass="writable-input input-bold"
+            [inputStyle]="{'margin-bottom':'5px'}"
+          />
+          <p-inputNumber
+            [formControl]="getFormControl(rowData.actualTotal, true)"
+            placeholder="0.00 ₽"
+            inputId="sum"
+            mode="currency"
+            size="small"
+            [minFractionDigits]="2"
+            [maxFractionDigits]="2"
+            currency="RUB"
+            inputStyleClass="readable-input input-bold"
+          />
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="frozenbody" let-rowNode let-rowData="rowData">
+      <tr [ttRow]="rowNode" [style]="{'min-width':'165px','height':'92px'}">
+        <td>
+          <p-treeTableToggler [rowNode]="rowNode"/>
+          @if (rowNode.node.children) {
+            <strong>{{ rowData.name }}</strong>
+          } @else {
+            {{ rowData.name }}
+          }
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <tr *ngIf="budget().totals as totals">
+        @if (showTotal()) {
+          <td [style]="{'min-width':'165px','height':'92px'}">
+            <strong>{{ totals.name }}</strong>
+          </td>
+        } @else {
+          @for (month of totals.months; track month.id) {
+            <td [style]="{'min-width':'165px','height':'92px'}">
+              <p-inputNumber
+                [formControl]="getFormControl(month.plan, true)"
+                placeholder="0.00 ₽"
+                inputId="sum"
+                mode="currency"
+                size="small"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                currency="RUB"
+                inputStyleClass="writable-input input-bold"
+                [inputStyle]="{'margin-bottom':'5px'}"
+              />
+              <p-inputNumber
+                [formControl]="getFormControl(month.actual, true)"
+                placeholder="0.00 ₽"
+                inputId="sum"
+                mode="currency"
+                size="small"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                currency="RUB"
+                inputStyleClass="readable-input input-bold"
+              />
+            </td>
+          }
+          <td [style]="{'min-width':'165px','height':'92px'}">
+            <p-inputNumber
+              [formControl]="getFormControl(totals.planTotal, true)"
+              placeholder="0.00 ₽"
+              inputId="sum"
+              mode="currency"
+              size="small"
+              [minFractionDigits]="2"
+              [maxFractionDigits]="2"
+              currency="RUB"
+              inputStyleClass="writable-input input-bold"
+              [inputStyle]="{'margin-bottom':'5px'}"
+            />
+            <p-inputNumber
+              [formControl]="getFormControl(totals.actualTotal, true)"
+              placeholder="0.00 ₽"
+              inputId="sum"
+              mode="currency"
+              size="small"
+              [minFractionDigits]="2"
+              [maxFractionDigits]="2"
+              currency="RUB"
+              inputStyleClass="readable-input input-bold"
+            />
+          </td>
+        }
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <p-button
+        icon="pi pi-save"
+        label="Сохранить"
+        severity="primary"
+        (onClick)="saveBudget.emit(budget())"
+      />
+    </ng-template>
+  </p-treeTable>
+</p-card>
