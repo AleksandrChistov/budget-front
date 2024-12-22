@@ -10,6 +10,7 @@ import { TransactionTypes } from '../../enums/transaction.enum';
 import { HeaderComponent } from '../header/header.component';
 import { TransactionService } from '../../services/transaction.service';
 import { TableTransactionsComponent } from '../table-transactions/table-transactions.component';
+import { LabelsService } from '../../../../shared/services/labels.service';
 
 @Component({
   selector: 'app-transactions',
@@ -24,6 +25,7 @@ import { TableTransactionsComponent } from '../table-transactions/table-transact
 })
 export class TransactionsComponent {
   transactionService = inject(TransactionService);
+  labelsService = inject(LabelsService);
   destroyRef = inject(DestroyRef);
 
   isFormOpened = false;
@@ -32,10 +34,8 @@ export class TransactionsComponent {
   accountId: number | null = null;
 
   transactions = toSignal<Array<Transaction>, []>(this.transactionService.get(), { initialValue: [] });
-  departments: Array<Option<number>> = [
-    { label: 'Сибирский филиал', id: 1 },
-    { label: 'Московский филиал', id: 2 }
-  ]; // TODO replace with DB values
+  departmentLabels = toSignal<Option<number>[], []>(this.labelsService.getDepartments(), { initialValue: [] });
+
   accounts: Array<AccountOption> = [
     {
       title: 'Банковский',

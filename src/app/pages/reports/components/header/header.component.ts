@@ -5,7 +5,6 @@ import { Select } from 'primeng/select';
 import { DatePicker } from 'primeng/datepicker';
 import { Option } from '../../../../shared/interfaces/option.interface';
 import { FormData } from '../../interfaces/form.interface';
-import { reportTypesOptions } from './header.data';
 import { ReportTypes } from '../../enums/reports.enum';
 
 @Component({
@@ -22,17 +21,14 @@ import { ReportTypes } from '../../enums/reports.enum';
 })
 export class HeaderComponent implements OnInit {
   reportType = input.required<string>();
+  reportTypeLabels = input.required<Option<ReportTypes>[]>();
+  departmentLabels = input.required<Option<number>[]>();
   formDataChanged = output<FormData>();
 
   private fb = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
 
   formGroup!: FormGroup;
-  reportTypes: Array<Option<ReportTypes>> = reportTypesOptions;
-  departments: Array<Option<number>> = [
-    { label: 'Сибирский филиал', id: 1 },
-    { label: 'Московский филиал', id: 2 }
-  ]; // TODO replace with DB values
 
   ngOnInit(): void {
     this.formGroup = this.fb.group({

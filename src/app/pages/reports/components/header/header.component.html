@@ -5,7 +5,7 @@
       <label for="report_type">Вид отчета</label>
       <p-select
         formControlName="reportType"
-        [options]="reportTypes"
+        [options]="reportTypeLabels()"
         optionLabel="label"
         optionValue="id"
         placeholder="Выберите отчет"
@@ -18,7 +18,7 @@
       <label for="department">Отдел</label>
       <p-select
         formControlName="department"
-        [options]="departments"
+        [options]="departmentLabels()"
         optionLabel="label"
         optionValue="id"
         placeholder="Выберите отдел"

@@ -1,5 +1,5 @@
 <app-transaction-header
-  [departments]="departments"
+  [departments]="departmentLabels()"
   [accounts]="accounts"
   (departmentChanged)="departmentChanged($event)"
   (accountChanged)="accountChanged($event)"

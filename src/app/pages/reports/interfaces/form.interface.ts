@@ -1,5 +1,7 @@
+import { ReportTypes } from '../enums/reports.enum';
+
 export interface FormData {
-  reportType: string;
+  reportType: ReportTypes;
   department: string;
   period: Array<Date>;
 }

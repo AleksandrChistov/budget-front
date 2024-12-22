@@ -1,8 +1,10 @@
 <app-reports-header
   [reportType]="reportType"
+  [departmentLabels]="departmentLabels()"
+  [reportTypeLabels]="reportTypesLabels()"
   (formDataChanged)="formDataChanged($event)"
 ></app-reports-header>
-@if (reportType === 'income') {
+@if (reportType === ReportTypes.INCOME) {
   <app-reports-income
     [department]="department"
     [period]="period"
