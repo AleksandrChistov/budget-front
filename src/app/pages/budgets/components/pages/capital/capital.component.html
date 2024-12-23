@@ -1,1 +1,14 @@
-<p>capital works!</p>
+<app-budgets-header
+  title="Капитал"
+  [departments]="departmentLabels()"
+  [budgetTitles]="budgetLabels()"
+  (budgetChanged)="budgetChanged($event)"
+  (departmentChanged)="departmentChanged($event)"
+  (deleteBudget)="deleteBudget($event)"
+  (saveToExcel)="saveToExcel()"
+  (getFromExcel)="getFromExcel()"
+></app-budgets-header>
+<app-table-budgets
+  [budget]="budget()"
+  (saveBudget)="saveBudget($event)"
+></app-table-budgets>
