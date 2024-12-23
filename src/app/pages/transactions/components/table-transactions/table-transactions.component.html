@@ -47,7 +47,7 @@
         <td style="min-width:200px">
           <div class="multi-cell">
           <span>
-            <strong>{{ transaction.account.type === AccountTypes.BANK ? 'Банковский' : 'Наличные' }}</strong>
+            <strong>{{ transaction.account.type | accountTypeToTitle }}</strong>
           </span>
             <span>{{ transaction.account.name }}</span>
           </div>

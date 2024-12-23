@@ -8,6 +8,7 @@ import { BudgetTypes } from '../../../budgets/enums/budget.enum';
 import { Transaction } from '../../interfaces/transaction.interface';
 import { Card } from 'primeng/card';
 import { BudgetTypeToTitlePipe } from '../../pipes/budget-type-to-title.pipe';
+import { AccountTypeToTitlePipe } from '../../pipes/account-type-to-title.pipe';
 
 @Component({
   selector: 'app-table-transactions',
@@ -18,7 +19,8 @@ import { BudgetTypeToTitlePipe } from '../../pipes/budget-type-to-title.pipe';
     DatePipe,
     CurrencyPipe,
     Card,
-    BudgetTypeToTitlePipe
+    BudgetTypeToTitlePipe,
+    AccountTypeToTitlePipe
   ],
   templateUrl: './table-transactions.component.html',
   styleUrl: './table-transactions.component.scss'

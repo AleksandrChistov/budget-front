@@ -21,4 +21,5 @@ export class BudgetTypeToTitlePipe implements PipeTransform {
         return 'Без группы';
     }
   }
+
 }
