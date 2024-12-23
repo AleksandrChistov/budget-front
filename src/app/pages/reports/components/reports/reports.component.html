@@ -8,10 +8,12 @@
   <app-reports-income
     [department]="department"
     [period]="period"
+    [totals]="totals()"
   ></app-reports-income>
 } @else {
   <app-reports-expenses
     [department]="department"
     [period]="period"
+    [totals]="totals()"
   ></app-reports-expenses>
 }

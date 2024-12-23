@@ -1,8 +1,11 @@
 <div class="cards">
-  <app-total-card title="Операционная прибыль"></app-total-card>
-  <app-total-card title="EBITDA"></app-total-card>
-  <app-total-card title="Прибыль до налогов"></app-total-card>
-  <app-total-card title="Чистая прибыль"></app-total-card>
+  @for (total of totals(); track total.id) {
+    <app-total-card
+      [title]="total.title"
+      [plan]="total.plan"
+      [actual]="total.actual"
+    ></app-total-card>
+  }
 </div>
 <div class="charts">
   <app-chart-card [data]="operProfit"></app-chart-card>

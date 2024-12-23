@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { Option } from '../../../../shared/interfaces/option.interface';
 import { LabelsService } from '../../../../shared/services/labels.service';
 import { HeaderComponent } from '../header/header.component';
@@ -7,6 +7,8 @@ import { IncomeComponent } from '../income/income.component';
 import { ExpensesComponent } from '../expenses/expenses.component';
 import { FormData } from '../../interfaces/form.interface';
 import { ReportTypes } from '../../enums/reports.enum';
+import { ReportsTotal } from '../../interfaces/reports.interface';
+import { ReportsService } from '../../services/reports.service';
 
 @Component({
   selector: 'app-reports',
@@ -19,21 +21,35 @@ import { ReportTypes } from '../../enums/reports.enum';
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.scss'
 })
-export class ReportsComponent {
+export class ReportsComponent implements OnInit {
+  private reportsService = inject(ReportsService);
   private labelsService = inject(LabelsService);
+  private destroyRef = inject(DestroyRef);
 
   departmentLabels = toSignal<Option<number>[], []>(this.labelsService.getDepartments(), { initialValue: [] });
   reportTypesLabels = toSignal<Option<ReportTypes>[], []>(this.labelsService.getReportTypes(), { initialValue: [] });
+  totals = signal<ReportsTotal[]>([]);
 
   protected readonly ReportTypes = ReportTypes;
 
   reportType = ReportTypes.INCOME;
-  department: string | null = null;
+  department: number | null = null;
   period: Array<Date> | null = null;
 
+  ngOnInit() {
+    this.getTotals(this.reportType);
+  }
+
   formDataChanged(formData: FormData): void {
+    console.log('formData > ', formData)
     this.reportType = formData.reportType;
     this.department = formData.department;
     this.period = formData.period;
+    this.getTotals(this.reportType, this.department, this.period);
+  }
+
+  private getTotals(reportType: ReportTypes, departmentId?: number, period?: Date[]): void {
+    this.reportsService.getTotals(reportType, departmentId, period).pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(totals => this.totals.set(totals));
   }
 }

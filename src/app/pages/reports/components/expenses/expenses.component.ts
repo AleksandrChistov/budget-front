@@ -2,6 +2,7 @@ import { Component, input } from '@angular/core';
 import { ChartCardComponent } from '../../../../shared/components/chart-card/chart-card.component';
 import { TotalCardComponent } from '../../../../shared/components/total-card/total-card.component';
 import { ChartCardData } from '../../../../shared/components/chart-card/chart-card.interface';
+import { ReportsTotal } from '../../interfaces/reports.interface';
 
 @Component({
   selector: 'app-reports-expenses',
@@ -14,8 +15,9 @@ import { ChartCardData } from '../../../../shared/components/chart-card/chart-ca
   styleUrl: './expenses.component.scss'
 })
 export class ExpensesComponent {
-  department = input.required<string | null>();
-  period = input.required<Array<Date> | null>();
+  department = input.required<number | null>();
+  period = input.required<Date[] | null>();
+  totals = input.required<ReportsTotal[]>();
 
   public opex: ChartCardData = {
     title: "Операционные расходы",

@@ -1,5 +1,5 @@
-<p-card [header]="title()">
-  <p class="amount">{{amount | amount}}</p>
+<p-card class="card" [header]="title()">
+  <p class="amount">{{actual() | amount}}</p>
   <div class="card-footer">
     <i class="pi" [ngClass]="amountPercent < 0 ? 'pi-sort-down-fill' : 'pi-sort-up-fill'"></i>
     <p class="plan-percent">

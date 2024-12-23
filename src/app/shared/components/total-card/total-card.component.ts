@@ -1,6 +1,6 @@
-import { Component, input } from '@angular/core';
-import { Card } from 'primeng/card';
+import { Component, input, OnInit } from '@angular/core';
 import { NgClass } from '@angular/common';
+import { Card } from 'primeng/card';
 import { AmountPipe } from '../../pipes/amount.pipe';
 
 @Component({
@@ -14,13 +14,13 @@ import { AmountPipe } from '../../pipes/amount.pipe';
   templateUrl: './total-card.component.html',
   styleUrl: './total-card.component.scss'
 })
-export class TotalCardComponent {
-    title = input.required<string>();
-    amount: number = 1895403;
-    plan: number = 393600;
-    amountPercent: number;
+export class TotalCardComponent implements OnInit {
+  title = input.required<string>();
+  actual = input.required<number>();
+  plan = input.required<number>();
+  amountPercent!: number;
 
-  constructor() {
-    this.amountPercent = Math.round((this.amount - this.plan) / this.plan * 100);
+  ngOnInit() {
+    this.amountPercent = +((this.actual() - this.plan()) / this.plan() * 100).toFixed(1);
   }
 }

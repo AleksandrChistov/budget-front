@@ -1,8 +1,11 @@
 <div class="cards">
-  <app-total-card title="Операционные расходы"></app-total-card>
-  <app-total-card title="Оплата труда"></app-total-card>
-  <app-total-card title="Налоги"></app-total-card>
-  <app-total-card title="Проценты к уплате"></app-total-card>
+  @for (total of totals(); track total.id) {
+    <app-total-card
+      [title]="total.title"
+      [plan]="total.plan"
+      [actual]="total.actual"
+    ></app-total-card>
+  }
 </div>
 <div class="charts">
   <app-chart-card [data]="opex"></app-chart-card>
