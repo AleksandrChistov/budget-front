@@ -39,7 +39,7 @@
         <td style="min-width:200px">
           <div class="multi-cell">
           <span>
-            <strong>{{ transaction.budget.type === BudgetTypes.REVENUE ? 'Доходы' : 'Нужен пайп - ещё 3 варианта' }}</strong>
+            <strong>{{ transaction.budget.type | budgetTypeToTitle }}</strong>
           </span>
             <span>{{ transaction.budget.item }}</span>
           </div>

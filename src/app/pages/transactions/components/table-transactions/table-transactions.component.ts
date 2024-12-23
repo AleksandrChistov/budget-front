@@ -7,6 +7,7 @@ import { AccountTypes } from '../../enums/account.enum';
 import { BudgetTypes } from '../../../budgets/enums/budget.enum';
 import { Transaction } from '../../interfaces/transaction.interface';
 import { Card } from 'primeng/card';
+import { BudgetTypeToTitlePipe } from '../../pipes/budget-type-to-title.pipe';
 
 @Component({
   selector: 'app-table-transactions',
@@ -16,7 +17,8 @@ import { Card } from 'primeng/card';
     Button,
     DatePipe,
     CurrencyPipe,
-    Card
+    Card,
+    BudgetTypeToTitlePipe
   ],
   templateUrl: './table-transactions.component.html',
   styleUrl: './table-transactions.component.scss'
