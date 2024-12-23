@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { AddAccessItemComponent } from '../add-access-item/add-access-item.component';
 import { AccessItemComponent } from '../access-item/access-item.component';
-import { FormAccessData } from '../../interfaces/form.interface';
-import { Roles } from '../../../../shared/enums/role.enums';
+import { AccessesService } from '../../services/accesses.service';
+import { AccessData, FormAccessData } from '../../interfaces/form.interface';
 
 @Component({
   selector: 'app-accesses',
@@ -15,22 +16,10 @@ import { Roles } from '../../../../shared/enums/role.enums';
   styleUrl: './accesses.component.scss'
 })
 export class AccessesComponent {
-  accesses: Array<FormAccessData & { id: number }> = [
-    {
-      id: 1,
-      email: 'test@yandex.ru',
-      fullName: 'Иванов Иван Иванович',
-      role: Roles.ADMIN,
-      password: '123456'
-    },
-    {
-      id: 2,
-      email: 'test2@yandex.ru',
-      fullName: 'Петров Петр Петрович',
-      role: Roles.MANAGER,
-      password: 'ffgfdh123456'
-    }
-  ];
+  private readonly accessesService = inject(AccessesService);
+
+  accesses = toSignal<AccessData[], []>(this.accessesService.get(), { initialValue: [] });
+
   addAccess(form: FormAccessData): void {
     console.log('addAccess > ', form); // TODO make a POST request
   }

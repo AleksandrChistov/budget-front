@@ -6,3 +6,7 @@ export interface FormAccessData {
   role: Roles;
   password: string;
 }
+
+export interface AccessData extends FormAccessData {
+  id: number;
+}
