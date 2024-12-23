@@ -39,14 +39,16 @@
         label="Скачать в Excel"
         type="button"
         severity="secondary"
+        icon="pi pi-save"
         [outlined]="true"
       />
-      <p-button
-        (onClick)="getFromExcel.emit()"
-        label="Загрузить из Excel"
-        type="button"
-        severity="secondary"
-        [outlined]="true"
+      <p-fileupload
+        chooseLabel="Загрузить из Excel"
+        mode="basic"
+        accept=".xlsx"
+        maxFileSize="1000000"
+        [auto]="true"
+        (onSelect)="getFromExcel.emit($event)"
       />
       <p-button
         (click)="deleteBudget.emit(formGroup.get('budget')?.value)"

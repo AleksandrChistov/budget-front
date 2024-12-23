@@ -29,4 +29,16 @@
     font-size: 10px;
     color: rgb(27, 33, 40);
   }
+  ::ng-deep {
+    .p-fileupload-choose-button {
+      background: transparent;
+      border-color: var(--p-button-outlined-secondary-border-color);
+      color: var(--p-button-outlined-secondary-color);
+      &:not(:disabled):hover {
+        background: var(--p-button-outlined-secondary-hover-background);
+        border-color: var(--p-button-outlined-secondary-border-color);
+        color: var(--p-button-outlined-secondary-color);
+      }
+    }
+  }
 }

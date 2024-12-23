@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { Select } from 'primeng/select';
 import { Button } from 'primeng/button';
 import { Option } from '../../../../shared/interfaces/option.interface';
+import { FileSelectEvent, FileUpload } from 'primeng/fileupload';
 
 @Component({
   selector: 'app-budgets-header',
@@ -12,7 +13,8 @@ import { Option } from '../../../../shared/interfaces/option.interface';
     ReactiveFormsModule,
     Select,
     FormsModule,
-    Button
+    Button,
+    FileUpload
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
@@ -25,7 +27,7 @@ export class HeaderComponent implements OnInit {
   budgetChanged = output<number>();
   deleteBudget = output<number>();
   saveToExcel = output<void>();
-  getFromExcel = output<void>();
+  getFromExcel = output<FileSelectEvent>();
 
   private fb = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);

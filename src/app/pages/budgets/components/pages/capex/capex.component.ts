@@ -1,6 +1,7 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { take } from 'rxjs';
+import { FileSelectEvent } from 'primeng/fileupload';
 import { HeaderComponent } from "../../header/header.component";
 import { TableBudgetsComponent } from "../../table-budgets/table-budgets.component";
 import { BudgetService } from '../../../services/budget.service';
@@ -61,7 +62,8 @@ export class CapexComponent implements OnInit {
     // TODO: make a request to save a budget to excel and download this file
   }
 
-  getFromExcel(): void {
+  getFromExcel(event: FileSelectEvent): void {
+    console.log('getFromExcel', event);
     // TODO: open a modal to upload excel file
   }
 
