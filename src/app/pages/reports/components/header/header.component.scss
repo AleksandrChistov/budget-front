@@ -6,4 +6,15 @@
     display: flex;
     gap: 16px;
   }
+  ::ng-deep {
+    timesicon.p-datepicker-clear-icon {
+      position: absolute;
+      top: calc(50% - 8px);
+      right: 32px;
+      color: #94a3b8;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
 }

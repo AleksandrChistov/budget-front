@@ -9,6 +9,7 @@ import { FormData } from '../../interfaces/form.interface';
 import { ReportTypes } from '../../enums/reports.enum';
 import { ReportsTotal } from '../../interfaces/reports.interface';
 import { ReportsService } from '../../services/reports.service';
+import { ChartCardData } from '../../../../shared/components/chart-card/chart-card.interface';
 
 @Component({
   selector: 'app-reports',
@@ -29,6 +30,7 @@ export class ReportsComponent implements OnInit {
   departmentLabels = toSignal<Option<number>[], []>(this.labelsService.getDepartments(), { initialValue: [] });
   reportTypesLabels = toSignal<Option<ReportTypes>[], []>(this.labelsService.getReportTypes(), { initialValue: [] });
   totals = signal<ReportsTotal[]>([]);
+  reports = signal<ChartCardData[]>([]);
 
   protected readonly ReportTypes = ReportTypes;
 
@@ -38,6 +40,7 @@ export class ReportsComponent implements OnInit {
 
   ngOnInit() {
     this.getTotals(this.reportType);
+    this.getReports(this.reportType);
   }
 
   formDataChanged(formData: FormData): void {
@@ -46,10 +49,16 @@ export class ReportsComponent implements OnInit {
     this.department = formData.department;
     this.period = formData.period;
     this.getTotals(this.reportType, this.department, this.period);
+    this.getReports(this.reportType, this.department, this.period);
   }
 
   private getTotals(reportType: ReportTypes, departmentId?: number, period?: Date[]): void {
     this.reportsService.getTotals(reportType, departmentId, period).pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(totals => this.totals.set(totals));
+  }
+
+  private getReports(reportType: ReportTypes, departmentId?: number, period?: Date[]): void {
+    this.reportsService.get(reportType, departmentId, period).pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(reports => this.reports.set(reports));
   }
 }

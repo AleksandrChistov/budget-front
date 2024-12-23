@@ -8,8 +8,7 @@
   }
 </div>
 <div class="charts">
-  <app-chart-card [data]="opex"></app-chart-card>
-  <app-chart-card [data]="staff"></app-chart-card>
-  <app-chart-card [data]="taxes"></app-chart-card>
-  <app-chart-card [data]="finex"></app-chart-card>
+  @for (report of reports(); track report.id) {
+    <app-chart-card [data]="report"></app-chart-card>
+  }
 </div>

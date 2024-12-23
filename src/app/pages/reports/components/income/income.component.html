@@ -8,8 +8,7 @@
   }
 </div>
 <div class="charts">
-  <app-chart-card [data]="operProfit"></app-chart-card>
-  <app-chart-card [data]="ebitda"></app-chart-card>
-  <app-chart-card [data]="finProfit"></app-chart-card>
-  <app-chart-card [data]="netProfit"></app-chart-card>
+  @for (report of reports(); track report.id) {
+    <app-chart-card [data]="report"></app-chart-card>
+  }
 </div>

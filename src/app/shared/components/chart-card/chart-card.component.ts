@@ -21,7 +21,7 @@ export class ChartCardComponent implements OnInit {
   options!: ChartOptions;
 
   ngOnInit() {
-    this.chartData = prepareChartData(this.data().plan, this.data().fact);
+    this.chartData = prepareChartData(this.data().plan, this.data().actual);
     this.options = prepareChartOptions(this.data().title);
   }
 }
