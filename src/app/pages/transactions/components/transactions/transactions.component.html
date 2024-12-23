@@ -1,6 +1,6 @@
 <app-transaction-header
   [departments]="departmentLabels()"
-  [accounts]="accounts"
+  [accounts]="accounts()"
   (departmentChanged)="departmentChanged($event)"
   (accountChanged)="accountChanged($event)"
   (createTransaction)="openTransactionForm($event)"
@@ -13,10 +13,10 @@
   <app-form-transactions
     [type]="type"
     [account]="accountId"
-    [budgetTypes]="budgetTypes"
-    [budgetItems]="budgetItems"
-    [accounts]="accounts"
-    [counterparties]="counterparties"
+    [budgetTypes]="budgetTypes()"
+    [budgetItems]="budgetItems()"
+    [accounts]="accounts()"
+    [counterparties]="counterparties()"
     (budgetTypeChanged)="budgetTypeChanged($event)"
     (formSubmitted)="createTransaction($event)"
     (close)="closeTransactionForm()"

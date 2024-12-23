@@ -1,6 +1,6 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { of, switchMap } from 'rxjs';
+import { take } from 'rxjs';
 import { FormTransactionsComponent } from '../form-transactions/form-transactions.component';
 import { Option } from '../../../../shared/interfaces/option.interface';
 import { AccountOption, BudgetItem, Transaction } from '../../interfaces/transaction.interface';
@@ -23,89 +23,36 @@ import { LabelsService } from '../../../../shared/services/labels.service';
   templateUrl: './transactions.component.html',
   styleUrl: './transactions.component.scss'
 })
-export class TransactionsComponent {
+export class TransactionsComponent implements OnInit {
   transactionService = inject(TransactionService);
   labelsService = inject(LabelsService);
   destroyRef = inject(DestroyRef);
 
   isFormOpened = false;
   type: TransactionTypes | null = null;
-  departmentId: number | null = null;
-  accountId: number | null = null;
+  departmentId!: number;
+  accountId!: number;
 
-  transactions = toSignal<Array<Transaction>, []>(this.transactionService.get(), { initialValue: [] });
   departmentLabels = toSignal<Option<number>[], []>(this.labelsService.getDepartments(), { initialValue: [] });
+  budgetTypes = toSignal<Option<BudgetTypes>[], []>(this.labelsService.getBudgetTypes(), { initialValue: [] });
+  counterparties = toSignal<Option<number>[], []>(this.labelsService.getCounterparties(), { initialValue: [] });
+  accounts = signal<Array<AccountOption>>([]);
+  transactions = signal<Array<Transaction>>([]);
+  budgetItems = signal<Array<BudgetItem>>([]);
 
-  accounts: Array<AccountOption> = [
-    {
-      title: 'Банковский',
-      icon: 'id-card',
-      children: [
-        { label: 'ООО ВТБ р.счет', id: 1 },
-        { label: 'АО ТБанк р.счет', id: 2 }
-      ]
-    },
-    {
-      title: 'Наличные',
-      icon: 'money-bill',
-      children: [
-        { label: 'Касса Московсого филлиала', id: 3 },
-        { label: 'Касса Сибирского филлиала', id: 4 }
-      ]
-    },
-  ]; // TODO: it depends on department was chosen on the page or get all initially
-  budgetTypes: Array<Option<BudgetTypes>> = [
-    { label: 'Доходы', id: BudgetTypes.REVENUE },
-    { label: 'Расходы', id: BudgetTypes.EXPENSES },
-    { label: 'Инвестиции', id: BudgetTypes.CAPEX },
-    { label: 'Капитал', id: BudgetTypes.CAPITAL },
-  ];
-  budgetItems: Array<BudgetItem> = [];
-  counterparties: Array<Option<number>> = [
-    { label: 'ООО Яндекс', id: 1 },
-    { label: 'ИП Иванов', id: 2 },
-  ];
+  ngOnInit() {
+    this.loadAccounts();
+    this.loadTransactions();
+  }
 
-  budgetTypeChanged(budgetType: string): void {
-    of(budgetType).pipe(
-      switchMap(budgetType => {
-        // TODO: replace mock data with a request for budgetItems by budgetType
-        return of([
-          {
-            id: 1,
-            label: 'Операционные расходы',
-            children: [
-              {
-                id: 2,
-                label: 'Расходы на закупку',
-                children: [
-                  {
-                    id: 3,
-                    label: 'Закупка мебели в офис'
-                  }
-                ]
-              },
-              {
-                id: 4,
-                label: 'Амортизация'
-              }
-            ]
-          },
-          {
-            id: 5,
-            label: 'Зарплата сотрудникам',
-            children: [
-              {
-                id: 6,
-                label: 'Зарплата сотрудникам отдела ИТ'
-              }
-            ]
-          },
-        ])
-      }),
-      takeUntilDestroyed(this.destroyRef)
-    )
-      .subscribe((budgetItems: Array<BudgetItem>) => this.budgetItems = budgetItems);
+  openTransactionForm(type: TransactionTypes): void {
+    console.log('type > ', type);
+    this.type = type;
+    this.isFormOpened = true;
+  }
+
+  closeTransactionForm(): void {
+    this.isFormOpened = false;
   }
 
   createTransaction(transactionForm: TransactionForm): void {
@@ -118,31 +65,39 @@ export class TransactionsComponent {
     console.log('paymentDate.toISOString > ', transactionForm.paymentDate.toISOString());
   }
 
-  closeTransactionForm(): void {
-    this.isFormOpened = false;
+  deleteTransaction(id: number): void {
+    console.log('deleteTransaction', id);
+    // TODO: make a request to delete the transaction
   }
 
   departmentChanged(departmentId: number): void {
     console.log('departmentId > ', departmentId);
     this.departmentId = departmentId;
-    // TODO: make a request to get accounts options
-    // TODO: make a request to get transactions
+    this.loadAccounts(departmentId);
+    this.loadTransactions(departmentId);
   }
 
   accountChanged(accountId: number): void {
     console.log('accountId > ', accountId);
     this.accountId = accountId;
-    // TODO: make a request to get transactions
+    this.loadTransactions(this.departmentId, accountId);
   }
 
-  openTransactionForm(type: TransactionTypes): void {
-    console.log('type > ', type);
-    this.type = type;
-    this.isFormOpened = true;
+  budgetTypeChanged(budgetType: BudgetTypes): void {
+    this.labelsService.getBudgetItems(budgetType).pipe(
+      take(1),
+      takeUntilDestroyed(this.destroyRef),
+    ).subscribe(budgetItems => this.budgetItems.set(budgetItems));
   }
 
-  deleteTransaction(id: number): void {
-    console.log('deleteTransaction', id);
-    // TODO: make a request to delete the transaction
+  private loadAccounts(departmentId?: number): void {
+    this.labelsService.getAccounts(departmentId).pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(accounts => this.accounts.set(accounts));
   }
+
+  private loadTransactions(departmentId?: number, accountId?: number): void {
+    this.transactionService.get(departmentId, accountId).pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((transactions: Array<Transaction>) => this.transactions.set(transactions));
+  }
+
 }

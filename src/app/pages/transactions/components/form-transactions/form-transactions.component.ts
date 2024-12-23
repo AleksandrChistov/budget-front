@@ -36,7 +36,7 @@ export class FormTransactionsComponent implements OnInit {
   budgetItems = input.required<Array<BudgetItem>>();
   accounts = input.required<Array<AccountOption>>();
   counterparties = input.required<Array<Option<number>>>();
-  budgetTypeChanged = output<string>();
+  budgetTypeChanged = output<BudgetTypes>();
   formSubmitted = output<TransactionForm>();
   close = output<void>();
 

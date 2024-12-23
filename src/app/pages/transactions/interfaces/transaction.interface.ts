@@ -9,6 +9,12 @@ export interface BudgetItem {
   children?: Array<BudgetItem>;
 }
 
+export interface AccountResponse {
+  id: number;
+  label: string;
+  type: AccountTypes;
+}
+
 export interface AccountOption {
   title: string;
   icon: string;
