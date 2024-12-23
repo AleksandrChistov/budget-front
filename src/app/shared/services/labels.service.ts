@@ -3,9 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { BudgetTypes } from '../../pages/budgets/enums/budget.enum';
 import { ReportTypes } from '../../pages/reports/enums/reports.enum';
-import { Option } from '../interfaces/option.interface';
 import { AccountOption, AccountResponse, BudgetItem } from '../../pages/transactions/interfaces/transaction.interface';
+import { Option } from '../interfaces/option.interface';
 import { AccountTypes } from '../../pages/transactions/enums/account.enum';
+import { Roles } from '../enums/role.enums';
 
 @Injectable({
   providedIn: 'root'
@@ -64,6 +65,10 @@ export class LabelsService {
 
   getCounterparties(): Observable<Array<Option<number>>> {
     return this.http.get<Array<Option<number>>>('https://mock.apidog.com/m2/755292-732507-default/12711482');
+  }
+
+  getRoles(): Observable<Array<Option<Roles>>> {
+    return this.http.get<Array<Option<Roles>>>('https://mock.apidog.com/m2/755292-732507-default/12713356');
   }
 
 }
