@@ -66,7 +66,11 @@ export class FormTransactionsComponent implements OnInit {
     });
 
     this.formGroup.get('budgetType')?.valueChanges
-      .subscribe(budgetType => this.budgetTypeChanged.emit(budgetType));
+      .subscribe(budgetType => {
+        this.formGroup.get('budgetItem')?.reset();
+        this.formGroup.get('budgetItem')?.disable();
+        this.budgetTypeChanged.emit(budgetType);
+      });
   }
 
   onSubmit(): void {

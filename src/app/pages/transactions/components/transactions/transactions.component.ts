@@ -84,6 +84,7 @@ export class TransactionsComponent implements OnInit {
   }
 
   budgetTypeChanged(budgetType: BudgetTypes): void {
+    console.log('budgetType', budgetType);
     this.labelsService.getBudgetItems(budgetType).pipe(
       take(1),
       takeUntilDestroyed(this.destroyRef),
