@@ -2,15 +2,16 @@ import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { take } from 'rxjs';
 import { FormTransactionsComponent } from '../form-transactions/form-transactions.component';
-import { Option } from '../../../../shared/interfaces/option.interface';
+import { OptionName } from '../../../../shared/interfaces/option.interface';
+import { BudgetTypes } from '../../../../shared/interfaces/budget-type.enum';
+import { budgetTypes } from '../../../../shared/consts/budget-types.const';
+import { LabelsService } from '../../../../shared/services/labels.service';
 import { AccountOption, BudgetItem, Transaction } from '../../interfaces/transaction.interface';
 import { TransactionForm } from '../../interfaces/transaction-form.interface';
-import { BudgetTypes } from '../../../budgets/enums/budget.enum';
 import { TransactionTypes } from '../../enums/transaction.enum';
 import { HeaderComponent } from '../header/header.component';
 import { TransactionService } from '../../services/transaction.service';
 import { TableTransactionsComponent } from '../table-transactions/table-transactions.component';
-import { LabelsService } from '../../../../shared/services/labels.service';
 
 @Component({
   selector: 'app-transactions',
@@ -33,12 +34,12 @@ export class TransactionsComponent implements OnInit {
   departmentId!: number;
   accountId!: number;
 
-  departmentLabels = toSignal<Option<number>[], []>(this.labelsService.getDepartments(), { initialValue: [] });
-  budgetTypes = toSignal<Option<BudgetTypes>[], []>(this.labelsService.getBudgetTypes(), { initialValue: [] });
-  counterparties = toSignal<Option<number>[], []>(this.labelsService.getCounterparties(), { initialValue: [] });
-  accounts = signal<Array<AccountOption>>([]);
-  transactions = signal<Array<Transaction>>([]);
-  budgetItems = signal<Array<BudgetItem>>([]);
+  departmentLabels = toSignal<OptionName<number>[], []>(this.labelsService.getDepartments(), { initialValue: [] });
+  counterparties = toSignal<OptionName<number>[], []>(this.labelsService.getCounterparties(), { initialValue: [] });
+  budgetTypes = signal<OptionName<BudgetTypes>[]>(budgetTypes);
+  accounts = signal<AccountOption[]>([]);
+  transactions = signal<Transaction[]>([]);
+  budgetItems = signal<BudgetItem[]>([]);
 
   ngOnInit() {
     this.loadAccounts();
@@ -59,7 +60,6 @@ export class TransactionsComponent implements OnInit {
     // TODO: make a request to create a new transaction
     console.log('type > ', this.type);
     console.log('departmentId > ', this.departmentId);
-    console.log('accountId > ', this.accountId);
     console.log('transactionForm > ', transactionForm);
     console.log('budgetItem.id > ', transactionForm.budgetItem.id);
     console.log('paymentDate.toISOString > ', transactionForm.paymentDate.toISOString());

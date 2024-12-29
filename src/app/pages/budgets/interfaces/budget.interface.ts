@@ -1,4 +1,4 @@
-import { BudgetTypes } from '../enums/budget.enum';
+import { BudgetTypes } from '../../../shared/interfaces/budget-type.enum';
 
 export interface Budget {
   id: number;

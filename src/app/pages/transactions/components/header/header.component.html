@@ -7,7 +7,7 @@
         <p-select
           formControlName="department"
           [options]="departments()"
-          optionLabel="label"
+          optionLabel="name"
           optionValue="id"
           placeholder="Выберите отдел"
           [showClear]="formGroup.get('department')?.value"
@@ -24,7 +24,7 @@
           [group]="true"
           optionGroupLabel="title"
           optionGroupChildren="children"
-          optionLabel="label"
+          optionLabel="name"
           optionValue="id"
           placeholder="Выберите счет"
           [showClear]="formGroup.get('account')?.value"

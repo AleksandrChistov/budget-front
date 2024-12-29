@@ -33,7 +33,7 @@
         [group]="true"
         optionGroupLabel="title"
         optionGroupChildren="children"
-        optionLabel="label"
+        optionLabel="name"
         optionValue="id"
         placeholder="Выберите счет"
         inputId="account"
@@ -53,7 +53,7 @@
       <p-select
         formControlName="budgetType"
         [options]="budgetTypes()"
-        optionLabel="label"
+        optionLabel="name"
         optionValue="id"
         placeholder="Выберите бюджет"
         inputId="budget-type"
@@ -90,7 +90,7 @@
       <p-select
         formControlName="counterparty"
         [options]="counterparties()"
-        optionLabel="label"
+        optionLabel="name"
         optionValue="id"
         placeholder="Выберите контрагента"
         inputId="counterparty"

@@ -7,11 +7,11 @@ import { PrimeTemplate } from 'primeng/api';
 import { Textarea } from 'primeng/textarea';
 import { Button } from 'primeng/button';
 import { TreeSelect } from 'primeng/treeselect';
-import { Option } from '../../../../shared/interfaces/option.interface';
+import { OptionName } from '../../../../shared/interfaces/option.interface';
+import { BudgetTypes } from '../../../../shared/interfaces/budget-type.enum';
 import { AccountOption, BudgetItem } from '../../interfaces/transaction.interface';
 import { TransactionForm } from '../../interfaces/transaction-form.interface';
 import { TransactionTypes } from '../../enums/transaction.enum';
-import { BudgetTypes } from '../../../budgets/enums/budget.enum';
 
 @Component({
   selector: 'app-form-transactions',
@@ -32,10 +32,10 @@ import { BudgetTypes } from '../../../budgets/enums/budget.enum';
 export class FormTransactionsComponent implements OnInit {
   type = input.required<TransactionTypes | null>();
   account = input.required<number | null>();
-  budgetTypes = input.required<Array<Option<BudgetTypes>>>();
+  budgetTypes = input.required<Array<OptionName<BudgetTypes>>>();
   budgetItems = input.required<Array<BudgetItem>>();
   accounts = input.required<Array<AccountOption>>();
-  counterparties = input.required<Array<Option<number>>>();
+  counterparties = input.required<Array<OptionName<number>>>();
   budgetTypeChanged = output<BudgetTypes>();
   formSubmitted = output<TransactionForm>();
   close = output<void>();

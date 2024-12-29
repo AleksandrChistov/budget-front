@@ -2,12 +2,12 @@ import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { take } from 'rxjs';
 import { FileSelectEvent } from 'primeng/fileupload';
-import { Option } from '../../../../../shared/interfaces/option.interface';
+import { Option, OptionName } from '../../../../../shared/interfaces/option.interface';
 import { LabelsService } from '../../../../../shared/services/labels.service';
+import { BudgetTypes } from '../../../../../shared/interfaces/budget-type.enum';
 import { HeaderComponent } from '../../header/header.component';
 import { TableBudgetsComponent } from '../../table-budgets/table-budgets.component';
 import { BudgetService } from '../../../services/budget.service';
-import { BudgetTypes } from '../../../enums/budget.enum';
 import { Budget } from '../../../interfaces/budget.interface';
 
 @Component({
@@ -25,7 +25,7 @@ export class RevenueComponent implements OnInit {
   labelsService = inject(LabelsService);
   destroyRef = inject(DestroyRef);
 
-  departmentLabels = toSignal<Option<number>[], []>(this.labelsService.getDepartments(), { initialValue: [] });
+  departmentLabels = toSignal<OptionName<number>[], []>(this.labelsService.getDepartments(), { initialValue: [] });
   budgetLabels = signal<Option<number>[]>([]);
   budget = signal<Budget>({} as Budget);
 

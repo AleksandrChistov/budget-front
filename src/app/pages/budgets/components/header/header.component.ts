@@ -3,7 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Select } from 'primeng/select';
 import { Button } from 'primeng/button';
-import { Option } from '../../../../shared/interfaces/option.interface';
+import { Option, OptionName } from '../../../../shared/interfaces/option.interface';
 import { FileSelectEvent, FileUpload } from 'primeng/fileupload';
 
 @Component({
@@ -21,8 +21,8 @@ import { FileSelectEvent, FileUpload } from 'primeng/fileupload';
 })
 export class HeaderComponent implements OnInit {
   title = input.required<string>();
-  departments = input.required<Array<Option<number>>>();
-  budgetTitles = input.required<Array<Option<number>>>();
+  departments = input.required<OptionName<number>[]>();
+  budgetTitles = input.required<Option<number>[]>();
   departmentChanged = output<number>();
   budgetChanged = output<number>();
   deleteBudget = output<number>();

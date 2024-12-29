@@ -1,12 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { BudgetTypes } from '../../pages/budgets/enums/budget.enum';
 import { ReportTypes } from '../../pages/reports/enums/reports.enum';
 import { AccountOption, AccountResponse, BudgetItem } from '../../pages/transactions/interfaces/transaction.interface';
-import { Option } from '../interfaces/option.interface';
+import { Option, OptionName } from '../interfaces/option.interface';
+import { BudgetTypes } from '../interfaces/budget-type.enum';
 import { AccountTypes } from '../../pages/transactions/enums/account.enum';
 import { Roles } from '../enums/role.enums';
+import { buildQueryParams } from '../utils/http.util';
 
 @Injectable({
   providedIn: 'root'
@@ -14,39 +15,38 @@ import { Roles } from '../enums/role.enums';
 export class LabelsService {
   http = inject(HttpClient);
 
-  getBudgets(type: BudgetTypes, departmentId?: number): Observable<Array<Option<number>>> {
+  getBudgets(type: BudgetTypes, departmentId?: number): Observable<Option<number>[]> {
     // TODO check departmentId ?? '';
-    return this.http.get<Array<Option<number>>>('https://mock.apidog.com/m2/755292-732507-default/12524306');
+    return this.http.get<Option<number>[]>('https://mock.apidog.com/m2/755292-732507-default/12524306');
   }
 
-  getDepartments(): Observable<Array<Option<number>>> {
-    return this.http.get<Array<Option<number>>>('https://mock.apidog.com/m2/755292-732507-default/12694270');
+  getDepartments(): Observable<OptionName<number>[]> {
+    return this.http.get<OptionName<number>[]>('http://localhost:8080/api/departments');
   }
 
-  getReportTypes(): Observable<Array<Option<ReportTypes>>> {
-    return this.http.get<Array<Option<ReportTypes>>>('https://mock.apidog.com/m2/755292-732507-default/12695232');
+  getReportTypes(): Observable<Option<ReportTypes>[]> {
+    return this.http.get<Option<ReportTypes>[]>('https://mock.apidog.com/m2/755292-732507-default/12695232');
   }
 
-  getAccounts(departmentId?: number): Observable<Array<AccountOption>> {
-    // TODO: check departmentId ?? '';
-    return this.http.get<Array<AccountResponse>>('https://mock.apidog.com/m2/755292-732507-default/12695279')
+  getAccounts(departmentId?: number): Observable<AccountOption[]> {
+    return this.http.get<AccountResponse[]>(`http://localhost:8080/api/accounts${buildQueryParams({departmentId})}`)
       .pipe(
-        map((accounts: Array<AccountResponse>) => {
+        map((accounts: AccountResponse[]) => {
           const bank = {
             title: 'Банковский',
             icon: 'id-card',
-            children: [] as Array<Option<number>>,
+            children: [] as OptionName<number>[],
           }
           const cash = {
             title: 'Наличные',
             icon: 'money-bill',
-            children: [] as Array<Option<number>>,
+            children: [] as OptionName<number>[],
           }
-          accounts.forEach(({ type, id, label }) => {
+          accounts.forEach(({ type, id, name }) => {
             if (type === AccountTypes.BANK) {
-              bank.children.push({ id, label });
+              bank.children.push({ id, name });
             } else {
-              cash.children.push({ id, label });
+              cash.children.push({ id, name });
             }
           });
           return [bank, cash];
@@ -54,21 +54,16 @@ export class LabelsService {
       );
   }
 
-  getBudgetTypes(): Observable<Array<Option<BudgetTypes>>> {
-    return this.http.get<Array<Option<BudgetTypes>>>('https://mock.apidog.com/m2/755292-732507-default/12711008');
+  getBudgetItems(budgetType: BudgetTypes): Observable<BudgetItem[]> {
+    return this.http.get<BudgetItem[]>(`http://localhost:8080/api/budget-items${buildQueryParams({budgetType})}`);
   }
 
-  getBudgetItems(budgetType: BudgetTypes): Observable<Array<BudgetItem>> {
-    // TODO: argument budgetType is required
-    return this.http.get<Array<BudgetItem>>('https://mock.apidog.com/m2/755292-732507-default/12711186');
+  getCounterparties(): Observable<OptionName<number>[]> {
+    return this.http.get<OptionName<number>[]>('http://localhost:8080/api/counterparty');
   }
 
-  getCounterparties(): Observable<Array<Option<number>>> {
-    return this.http.get<Array<Option<number>>>('https://mock.apidog.com/m2/755292-732507-default/12711482');
-  }
-
-  getRoles(): Observable<Array<Option<Roles>>> {
-    return this.http.get<Array<Option<Roles>>>('https://mock.apidog.com/m2/755292-732507-default/12713356');
+  getRoles(): Observable<Option<Roles>[]> {
+    return this.http.get<Option<Roles>[]>('https://mock.apidog.com/m2/755292-732507-default/12713356');
   }
 
 }

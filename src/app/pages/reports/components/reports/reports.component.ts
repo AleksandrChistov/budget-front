@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { Option } from '../../../../shared/interfaces/option.interface';
+import { Option, OptionName } from '../../../../shared/interfaces/option.interface';
 import { LabelsService } from '../../../../shared/services/labels.service';
 import { HeaderComponent } from '../header/header.component';
 import { IncomeComponent } from '../income/income.component';
@@ -27,7 +27,7 @@ export class ReportsComponent implements OnInit {
   private labelsService = inject(LabelsService);
   private destroyRef = inject(DestroyRef);
 
-  departmentLabels = toSignal<Option<number>[], []>(this.labelsService.getDepartments(), { initialValue: [] });
+  departmentLabels = toSignal<OptionName<number>[], []>(this.labelsService.getDepartments(), { initialValue: [] });
   reportTypesLabels = toSignal<Option<ReportTypes>[], []>(this.labelsService.getReportTypes(), { initialValue: [] });
   totals = signal<ReportsTotal[]>([]);
   reports = signal<ChartCardData[]>([]);

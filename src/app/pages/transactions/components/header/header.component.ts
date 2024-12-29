@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { Select } from 'primeng/select';
 import { Button } from 'primeng/button';
 import { PrimeTemplate } from 'primeng/api';
-import { Option } from '../../../../shared/interfaces/option.interface';
+import { OptionName } from '../../../../shared/interfaces/option.interface';
 import { AccountOption } from '../../interfaces/transaction.interface';
 import { TransactionTypes } from '../../enums/transaction.enum';
 
@@ -22,8 +22,8 @@ import { TransactionTypes } from '../../enums/transaction.enum';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
-  departments = input.required<Array<Option<number>>>();
-  accounts = input.required<Array<AccountOption>>();
+  departments = input.required<OptionName<number>[]>();
+  accounts = input.required<AccountOption[]>();
   departmentChanged = output<number>();
   accountChanged = output<number>();
   createTransaction = output<TransactionTypes>();
@@ -43,7 +43,10 @@ export class HeaderComponent implements OnInit {
 
     this.formGroup.get('department')?.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((department: number) => this.departmentChanged.emit(department));
+      .subscribe((department: number) => {
+        this.formGroup.get('account')?.reset();
+        this.departmentChanged.emit(department);
+      });
 
     this.formGroup.get('account')?.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))

@@ -4,9 +4,9 @@ import { take } from 'rxjs';
 import { FileSelectEvent } from 'primeng/fileupload';
 import { BudgetService } from '../../../services/budget.service';
 import { LabelsService } from '../../../../../shared/services/labels.service';
-import { Option } from '../../../../../shared/interfaces/option.interface';
+import { Option, OptionName } from '../../../../../shared/interfaces/option.interface';
+import { BudgetTypes } from '../../../../../shared/interfaces/budget-type.enum';
 import { Budget } from '../../../interfaces/budget.interface';
-import { BudgetTypes } from '../../../enums/budget.enum';
 import { HeaderComponent } from '../../header/header.component';
 import { TableBudgetsComponent } from '../../table-budgets/table-budgets.component';
 
@@ -25,7 +25,7 @@ export class CapitalComponent implements OnInit {
   labelsService = inject(LabelsService);
   destroyRef = inject(DestroyRef);
 
-  departmentLabels = toSignal<Option<number>[], []>(this.labelsService.getDepartments(), { initialValue: [] });
+  departmentLabels = toSignal<OptionName<number>[], []>(this.labelsService.getDepartments(), { initialValue: [] });
   budgetLabels = signal<Option<number>[]>([]);
   budget = signal<Budget>({} as Budget);
 
