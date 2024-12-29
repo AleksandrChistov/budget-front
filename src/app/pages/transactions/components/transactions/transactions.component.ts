@@ -58,7 +58,7 @@ export class TransactionsComponent implements OnInit {
 
   createTransaction(transactionForm: TransactionForm): void {
     this.transactionService.create(transactionForm, this.departmentId, this.type)
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(take(1), takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
         this.isFormOpened = false;
         this.loadTransactions(this.departmentId, this.accountId);
@@ -67,7 +67,7 @@ export class TransactionsComponent implements OnInit {
 
   deleteTransaction(id: number): void {
     this.transactionService.delete(id)
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(take(1), takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.loadTransactions(this.departmentId, this.accountId));
   }
 
@@ -90,12 +90,14 @@ export class TransactionsComponent implements OnInit {
   }
 
   private loadAccounts(departmentId?: number): void {
-    this.labelsService.getAccounts(departmentId).pipe(takeUntilDestroyed(this.destroyRef))
+    this.labelsService.getAccounts(departmentId)
+      .pipe(take(1), takeUntilDestroyed(this.destroyRef))
       .subscribe(accounts => this.accounts.set(accounts));
   }
 
   private loadTransactions(departmentId?: number, accountId?: number): void {
-    this.transactionService.get(departmentId, accountId).pipe(takeUntilDestroyed(this.destroyRef))
+    this.transactionService.get(departmentId, accountId)
+      .pipe(take(1), takeUntilDestroyed(this.destroyRef))
       .subscribe((transactions: Array<Transaction>) => this.transactions.set(transactions));
   }
 

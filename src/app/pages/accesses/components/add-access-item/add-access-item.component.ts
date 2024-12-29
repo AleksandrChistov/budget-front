@@ -1,14 +1,11 @@
 import { Component, inject, output } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { InputText } from "primeng/inputtext";
 import { Select } from "primeng/select";
 import { Password } from 'primeng/password';
 import { Button } from 'primeng/button';
-import { Option } from '../../../../shared/interfaces/option.interface';
-import { Roles } from '../../../../shared/enums/role.enums';
-import { LabelsService } from '../../../../shared/services/labels.service';
 import { FormAccessData } from '../../interfaces/form.interface';
+import { roles } from '../../consts/roles.consts';
 
 @Component({
   selector: 'app-add-access-item',
@@ -25,11 +22,10 @@ import { FormAccessData } from '../../interfaces/form.interface';
 })
 export class AddAccessItemComponent {
   private fb = inject(FormBuilder);
-  private labelsService = inject(LabelsService);
 
   addAccess = output<FormAccessData>();
 
-  roleOptions = toSignal<Option<Roles>[], []>(this.labelsService.getRoles(), { initialValue: [] });
+  roleOptions = roles;
 
   formGroup: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],

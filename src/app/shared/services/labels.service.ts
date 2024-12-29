@@ -7,7 +7,6 @@ import { Option, OptionName } from '../interfaces/option.interface';
 import { BudgetTypes } from '../interfaces/budget-types.enum';
 import { AccountTypes } from '../../pages/transactions/enums/account.enum';
 import { TransactionTypes } from '../../pages/transactions/enums/transaction.enum';
-import { Roles } from '../enums/role.enums';
 import { buildQueryParams } from '../utils/http.util';
 
 @Injectable({
@@ -61,10 +60,6 @@ export class LabelsService {
 
   getCounterparties(): Observable<OptionName<number>[]> {
     return this.http.get<OptionName<number>[]>('http://localhost:8080/api/counterparty');
-  }
-
-  getRoles(): Observable<Option<Roles>[]> {
-    return this.http.get<Option<Roles>[]>('https://mock.apidog.com/m2/755292-732507-default/12713356');
   }
 
 }

@@ -1,5 +1,6 @@
-import { Component, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { switchMap, take } from 'rxjs';
 import { AddAccessItemComponent } from '../add-access-item/add-access-item.component';
 import { AccessItemComponent } from '../access-item/access-item.component';
 import { AccessesService } from '../../services/accesses.service';
@@ -15,15 +16,35 @@ import { AccessData, FormAccessData } from '../../interfaces/form.interface';
   templateUrl: './accesses.component.html',
   styleUrl: './accesses.component.scss'
 })
-export class AccessesComponent {
+export class AccessesComponent implements OnInit {
   private readonly accessesService = inject(AccessesService);
+  private destroyRef = inject(DestroyRef);
 
-  accesses = toSignal<AccessData[], []>(this.accessesService.get(), { initialValue: [] });
+  accesses = signal<AccessData[]>([]);
+
+  ngOnInit() {
+    this.accessesService.get()
+      .pipe(take(1), takeUntilDestroyed(this.destroyRef))
+      .subscribe(accesses => this.accesses.set(accesses));
+  }
 
   addAccess(form: FormAccessData): void {
-    console.log('addAccess > ', form); // TODO make a POST request
+    this.accessesService.create(form)
+      .pipe(
+        take(1),
+        takeUntilDestroyed(this.destroyRef),
+        switchMap(() => this.accessesService.get()),
+      )
+      .subscribe(accesses => this.accesses.set(accesses));
   }
+
   deleteAccess(id: number) {
-    console.log('deleteAccess > ', id); // TODO make a DELETE request
+    this.accessesService.delete(id)
+      .pipe(
+        take(1),
+        takeUntilDestroyed(this.destroyRef),
+        switchMap(() => this.accessesService.get()),
+      )
+      .subscribe(accesses => this.accesses.set(accesses));
   }
 }

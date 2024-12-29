@@ -1,5 +1,6 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { take } from 'rxjs';
 import { Option, OptionName } from '../../../../shared/interfaces/option.interface';
 import { LabelsService } from '../../../../shared/services/labels.service';
 import { HeaderComponent } from '../header/header.component';
@@ -53,12 +54,14 @@ export class ReportsComponent implements OnInit {
   }
 
   private getTotals(reportType: ReportTypes, departmentId?: number, period?: Date[]): void {
-    this.reportsService.getTotals(reportType, departmentId, period).pipe(takeUntilDestroyed(this.destroyRef))
+    this.reportsService.getTotals(reportType, departmentId, period)
+      .pipe(take(1), takeUntilDestroyed(this.destroyRef))
       .subscribe(totals => this.totals.set(totals));
   }
 
   private getReports(reportType: ReportTypes, departmentId?: number, period?: Date[]): void {
-    this.reportsService.get(reportType, departmentId, period).pipe(takeUntilDestroyed(this.destroyRef))
+    this.reportsService.get(reportType, departmentId, period)
+      .pipe(take(1), takeUntilDestroyed(this.destroyRef))
       .subscribe(reports => this.reports.set(reports));
   }
 }
