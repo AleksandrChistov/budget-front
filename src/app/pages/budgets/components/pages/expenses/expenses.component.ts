@@ -7,7 +7,7 @@ import { TableBudgetsComponent } from "../../table-budgets/table-budgets.compone
 import { BudgetService } from '../../../services/budget.service';
 import { LabelsService } from '../../../../../shared/services/labels.service';
 import { Option, OptionName } from '../../../../../shared/interfaces/option.interface';
-import { BudgetTypes } from '../../../../../shared/interfaces/budget-type.enum';
+import { BudgetTypes } from '../../../../../shared/interfaces/budget-types.enum';
 import { Budget } from '../../../interfaces/budget.interface';
 
 @Component({

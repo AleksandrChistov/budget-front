@@ -1,5 +1,5 @@
 import { OptionName } from '../../../shared/interfaces/option.interface';
-import { BudgetTypes } from '../../../shared/interfaces/budget-type.enum';
+import { BudgetTypes } from '../../../shared/interfaces/budget-types.enum';
 import { TransactionTypes } from '../enums/transaction.enum';
 import { AccountTypes } from '../enums/account.enum';
 
@@ -41,4 +41,15 @@ export interface Transaction {
     type: AccountTypes;
     name: string;
   }
+}
+
+export interface TransactionBody {
+  sum: number;
+  departmentId: number;
+  accountId: number;
+  type: TransactionTypes;
+  budgetItemId: number;
+  paymentDate: string;
+  description: string;
+  counterpartyId: number;
 }

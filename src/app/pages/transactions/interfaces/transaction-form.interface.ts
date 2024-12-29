@@ -1,9 +1,9 @@
 export interface TransactionForm {
   sum: number;
   budgetType: string;
-  budgetItem: { id: number, label: string };
+  budgetItem: { id: number, name: string };
   paymentDate: Date;
-  account: string;
-  counterparty: string;
+  account: number;
+  counterparty: number;
   description: string;
 }

@@ -4,8 +4,9 @@ import { map, Observable } from 'rxjs';
 import { ReportTypes } from '../../pages/reports/enums/reports.enum';
 import { AccountOption, AccountResponse, BudgetItem } from '../../pages/transactions/interfaces/transaction.interface';
 import { Option, OptionName } from '../interfaces/option.interface';
-import { BudgetTypes } from '../interfaces/budget-type.enum';
+import { BudgetTypes } from '../interfaces/budget-types.enum';
 import { AccountTypes } from '../../pages/transactions/enums/account.enum';
+import { TransactionTypes } from '../../pages/transactions/enums/transaction.enum';
 import { Roles } from '../enums/role.enums';
 import { buildQueryParams } from '../utils/http.util';
 
@@ -54,8 +55,8 @@ export class LabelsService {
       );
   }
 
-  getBudgetItems(budgetType: BudgetTypes): Observable<BudgetItem[]> {
-    return this.http.get<BudgetItem[]>(`http://localhost:8080/api/budget-items${buildQueryParams({budgetType})}`);
+  getBudgetItems(budgetType: BudgetTypes, transactionType: TransactionTypes): Observable<BudgetItem[]> {
+    return this.http.get<BudgetItem[]>(`http://localhost:8080/api/budget-items${buildQueryParams({budgetType, transactionType})}`);
   }
 
   getCounterparties(): Observable<OptionName<number>[]> {

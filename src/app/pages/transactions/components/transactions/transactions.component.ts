@@ -3,8 +3,7 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { take } from 'rxjs';
 import { FormTransactionsComponent } from '../form-transactions/form-transactions.component';
 import { OptionName } from '../../../../shared/interfaces/option.interface';
-import { BudgetTypes } from '../../../../shared/interfaces/budget-type.enum';
-import { budgetTypes } from '../../../../shared/consts/budget-types.const';
+import { BudgetTypes } from '../../../../shared/interfaces/budget-types.enum';
 import { LabelsService } from '../../../../shared/services/labels.service';
 import { AccountOption, BudgetItem, Transaction } from '../../interfaces/transaction.interface';
 import { TransactionForm } from '../../interfaces/transaction-form.interface';
@@ -12,6 +11,7 @@ import { TransactionTypes } from '../../enums/transaction.enum';
 import { HeaderComponent } from '../header/header.component';
 import { TransactionService } from '../../services/transaction.service';
 import { TableTransactionsComponent } from '../table-transactions/table-transactions.component';
+import { getBudgetTypeOptions } from '../../../../shared/utils/budget-types.util';
 
 @Component({
   selector: 'app-transactions',
@@ -30,13 +30,13 @@ export class TransactionsComponent implements OnInit {
   destroyRef = inject(DestroyRef);
 
   isFormOpened = false;
-  type: TransactionTypes | null = null;
+  type: TransactionTypes = TransactionTypes.EXPENSE;
   departmentId!: number;
   accountId!: number;
 
   departmentLabels = toSignal<OptionName<number>[], []>(this.labelsService.getDepartments(), { initialValue: [] });
   counterparties = toSignal<OptionName<number>[], []>(this.labelsService.getCounterparties(), { initialValue: [] });
-  budgetTypes = signal<OptionName<BudgetTypes>[]>(budgetTypes);
+  budgetTypes = signal<OptionName<BudgetTypes>[]>(getBudgetTypeOptions(this.type));
   accounts = signal<AccountOption[]>([]);
   transactions = signal<Transaction[]>([]);
   budgetItems = signal<BudgetItem[]>([]);
@@ -47,8 +47,8 @@ export class TransactionsComponent implements OnInit {
   }
 
   openTransactionForm(type: TransactionTypes): void {
-    console.log('type > ', type);
     this.type = type;
+    this.budgetTypes.set(getBudgetTypeOptions(type));
     this.isFormOpened = true;
   }
 
@@ -57,35 +57,33 @@ export class TransactionsComponent implements OnInit {
   }
 
   createTransaction(transactionForm: TransactionForm): void {
-    // TODO: make a request to create a new transaction
-    console.log('type > ', this.type);
-    console.log('departmentId > ', this.departmentId);
-    console.log('transactionForm > ', transactionForm);
-    console.log('budgetItem.id > ', transactionForm.budgetItem.id);
-    console.log('paymentDate.toISOString > ', transactionForm.paymentDate.toISOString());
+    this.transactionService.create(transactionForm, this.departmentId, this.type)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.isFormOpened = false;
+        this.loadTransactions(this.departmentId, this.accountId);
+      });
   }
 
   deleteTransaction(id: number): void {
-    console.log('deleteTransaction', id);
-    // TODO: make a request to delete the transaction
+    this.transactionService.delete(id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.loadTransactions(this.departmentId, this.accountId));
   }
 
   departmentChanged(departmentId: number): void {
-    console.log('departmentId > ', departmentId);
     this.departmentId = departmentId;
     this.loadAccounts(departmentId);
     this.loadTransactions(departmentId);
   }
 
   accountChanged(accountId: number): void {
-    console.log('accountId > ', accountId);
     this.accountId = accountId;
     this.loadTransactions(this.departmentId, accountId);
   }
 
   budgetTypeChanged(budgetType: BudgetTypes): void {
-    console.log('budgetType', budgetType);
-    this.labelsService.getBudgetItems(budgetType).pipe(
+    this.labelsService.getBudgetItems(budgetType, this.type).pipe(
       take(1),
       takeUntilDestroyed(this.destroyRef),
     ).subscribe(budgetItems => this.budgetItems.set(budgetItems));

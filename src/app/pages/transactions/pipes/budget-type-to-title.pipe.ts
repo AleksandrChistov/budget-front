@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { BudgetTypes } from '../../../shared/interfaces/budget-type.enum';
+import { BudgetTypes } from '../../../shared/interfaces/budget-types.enum';
 
 @Pipe({
   name: 'budgetTypeToTitle',

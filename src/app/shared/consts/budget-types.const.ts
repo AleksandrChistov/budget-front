@@ -1,4 +1,4 @@
-import { BudgetTypes } from '../interfaces/budget-type.enum';
+import { BudgetTypes } from '../interfaces/budget-types.enum';
 import { OptionName } from '../interfaces/option.interface';
 
 export const budgetTypes: OptionName<BudgetTypes>[] = [
