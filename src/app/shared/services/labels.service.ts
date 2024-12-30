@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { ReportTypes } from '../../pages/reports/enums/reports.enum';
 import { AccountOption, AccountResponse, BudgetItem } from '../../pages/transactions/interfaces/transaction.interface';
 import { Option, OptionName } from '../interfaces/option.interface';
 import { BudgetTypes } from '../interfaces/budget-types.enum';
@@ -22,10 +21,6 @@ export class LabelsService {
 
   getDepartments(): Observable<OptionName<number>[]> {
     return this.http.get<OptionName<number>[]>('http://localhost:8080/api/departments');
-  }
-
-  getReportTypes(): Observable<Option<ReportTypes>[]> {
-    return this.http.get<Option<ReportTypes>[]>('https://mock.apidog.com/m2/755292-732507-default/12695232');
   }
 
   getAccounts(departmentId?: number): Observable<AccountOption[]> {

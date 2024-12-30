@@ -11,21 +11,21 @@ import { ChartCardData } from '../../../shared/components/chart-card/chart-card.
 export class ReportsService {
   http = inject(HttpClient);
 
-  get(type: ReportTypes, departmentId?: number, period?: Date[]): Observable<Array<ChartCardData>> {
+  get(type: ReportTypes, departmentId?: number, period?: Date[]): Observable<ChartCardData[]> {
     const periodFrom = period?.[0]?.toISOString();
     const periodTo = period?.[1]?.toISOString();
     console.log('periodFrom', periodFrom);
     console.log('periodTo', periodTo);
     // TODO check departmentId ?? '' and periodFrom ?? '' and periodTo ?? '';
-    return this.http.get<Array<ChartCardData>>('https://mock.apidog.com/m1/755292-732507-default/reports');
+    return this.http.get<ChartCardData[]>('https://mock.apidog.com/m1/755292-732507-default/reports');
   }
 
-  getTotals(type: ReportTypes, departmentId?: number, period?: Date[]): Observable<Array<ReportsTotal>> {
+  getTotals(type: ReportTypes, departmentId?: number, period?: Date[]): Observable<ReportsTotal[]> {
     const periodFrom = period?.[0]?.toISOString();
     const periodTo = period?.[1]?.toISOString();
     console.log('periodFrom', periodFrom);
     console.log('periodTo', periodTo);
     // TODO check departmentId ?? '' and periodFrom ?? '' and periodTo ?? '';
-    return this.http.get<Array<ReportsTotal>>('https://mock.apidog.com/m1/755292-732507-default/reports/totals');
+    return this.http.get<ReportsTotal[]>('https://mock.apidog.com/m1/755292-732507-default/reports/totals');
   }
 }

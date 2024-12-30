@@ -3,7 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Select } from 'primeng/select';
 import { DatePicker } from 'primeng/datepicker';
-import { Option, OptionName } from '../../../../shared/interfaces/option.interface';
+import { OptionName } from '../../../../shared/interfaces/option.interface';
 import { FormData } from '../../interfaces/form.interface';
 import { ReportTypes } from '../../enums/reports.enum';
 
@@ -21,7 +21,7 @@ import { ReportTypes } from '../../enums/reports.enum';
 })
 export class HeaderComponent implements OnInit {
   reportType = input.required<string>();
-  reportTypeLabels = input.required<Option<ReportTypes>[]>();
+  reportTypeLabels = input.required<OptionName<ReportTypes>[]>();
   departmentLabels = input.required<OptionName<number>[]>();
   formDataChanged = output<FormData>();
 

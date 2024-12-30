@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { take } from 'rxjs';
-import { Option, OptionName } from '../../../../shared/interfaces/option.interface';
+import { OptionName } from '../../../../shared/interfaces/option.interface';
 import { LabelsService } from '../../../../shared/services/labels.service';
 import { HeaderComponent } from '../header/header.component';
 import { IncomeComponent } from '../income/income.component';
@@ -11,6 +11,7 @@ import { ReportTypes } from '../../enums/reports.enum';
 import { ReportsTotal } from '../../interfaces/reports.interface';
 import { ReportsService } from '../../services/reports.service';
 import { ChartCardData } from '../../../../shared/components/chart-card/chart-card.interface';
+import { reportsTypes } from '../../consts/report-types.consts';
 
 @Component({
   selector: 'app-reports',
@@ -29,13 +30,13 @@ export class ReportsComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
 
   departmentLabels = toSignal<OptionName<number>[], []>(this.labelsService.getDepartments(), { initialValue: [] });
-  reportTypesLabels = toSignal<Option<ReportTypes>[], []>(this.labelsService.getReportTypes(), { initialValue: [] });
+  reportTypesLabels = signal<OptionName<ReportTypes>[]>(reportsTypes);
   totals = signal<ReportsTotal[]>([]);
   reports = signal<ChartCardData[]>([]);
 
   protected readonly ReportTypes = ReportTypes;
 
-  reportType = ReportTypes.INCOME;
+  reportType = ReportTypes.EXPENSE;
   department: number | null = null;
   period: Array<Date> | null = null;
 
