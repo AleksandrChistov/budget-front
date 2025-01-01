@@ -86,7 +86,7 @@ export class TransactionsComponent implements OnInit {
     this.labelsService.getBudgetItems(budgetType, this.type).pipe(
       take(1),
       takeUntilDestroyed(this.destroyRef),
-    ).subscribe(budgetItems => this.budgetItems.set(budgetItems));
+    ).subscribe(budgetItems => this.budgetItems.set(this.buildTreeOptions(budgetItems)));
   }
 
   private loadAccounts(departmentId?: number): void {
@@ -99,6 +99,18 @@ export class TransactionsComponent implements OnInit {
     this.transactionService.get(departmentId, accountId)
       .pipe(take(1), takeUntilDestroyed(this.destroyRef))
       .subscribe((transactions: Array<Transaction>) => this.transactions.set(transactions));
+  }
+
+  private buildTreeOptions(items: BudgetItem[]): BudgetItem[] {
+    return items.map((item => (
+      {
+        id: item.id,
+        label: item.label,
+        children: item.children ? this.buildTreeOptions(item.children) : undefined,
+        selectionMode: 'single',
+        selectable: !item.children,
+      }
+    )))
   }
 
 }

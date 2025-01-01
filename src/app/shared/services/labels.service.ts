@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { AccountOption, AccountResponse, BudgetItem } from '../../pages/transactions/interfaces/transaction.interface';
-import { Option, OptionName } from '../interfaces/option.interface';
+import { OptionName } from '../interfaces/option.interface';
 import { BudgetTypes } from '../interfaces/budget-types.enum';
 import { AccountTypes } from '../../pages/transactions/enums/account.enum';
 import { TransactionTypes } from '../../pages/transactions/enums/transaction.enum';
@@ -14,9 +14,8 @@ import { buildQueryParams } from '../utils/http.util';
 export class LabelsService {
   http = inject(HttpClient);
 
-  getBudgets(type: BudgetTypes, departmentId?: number): Observable<Option<number>[]> {
-    // TODO check departmentId ?? '';
-    return this.http.get<Option<number>[]>('https://mock.apidog.com/m2/755292-732507-default/12524306');
+  getBudgets(type: BudgetTypes, departmentId?: number): Observable<OptionName<number>[]> {
+    return this.http.get<OptionName<number>[]>(`http://localhost:8080/api/budgets/names${buildQueryParams({type, departmentId})}`);
   }
 
   getDepartments(): Observable<OptionName<number>[]> {

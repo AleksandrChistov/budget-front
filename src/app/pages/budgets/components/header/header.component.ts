@@ -22,7 +22,7 @@ import { FileSelectEvent, FileUpload } from 'primeng/fileupload';
 export class HeaderComponent implements OnInit {
   title = input.required<string>();
   departments = input.required<OptionName<number>[]>();
-  budgetTitles = input.required<Option<number>[]>();
+  budgetTitles = input.required<OptionName<number>[]>();
   departmentChanged = output<number>();
   budgetChanged = output<number>();
   deleteBudget = output<number>();

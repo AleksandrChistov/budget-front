@@ -1,9 +1,4 @@
-import { BudgetTypes } from '../../../shared/interfaces/budget-types.enum';
-
 export interface Budget {
-  id: number;
-  type: BudgetTypes;
-  name: string;
   budgetItems: BudgetTreeNode[];
   totals: BudgetData;
 }

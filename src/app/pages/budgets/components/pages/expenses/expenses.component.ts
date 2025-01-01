@@ -26,7 +26,7 @@ export class ExpensesComponent implements OnInit {
   destroyRef = inject(DestroyRef);
 
   departmentLabels = toSignal<OptionName<number>[], []>(this.labelsService.getDepartments(), { initialValue: [] });
-  budgetLabels = signal<Option<number>[]>([]);
+  budgetLabels = signal<OptionName<number>[]>([]);
   budget = signal<Budget>({} as Budget);
 
   ngOnInit(): void {
@@ -36,7 +36,7 @@ export class ExpensesComponent implements OnInit {
   budgetChanged(id: number): void {
     console.log('budgetChanged ', id);
     if (id) {
-      this.budgetService.get(id).pipe(
+      this.budgetService.get(BudgetTypes.EXPENSES, id).pipe(
         take(1),
         takeUntilDestroyed(this.destroyRef)
       ).subscribe((budget: Budget) => this.budget.set(budget));

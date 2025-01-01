@@ -48,8 +48,10 @@ export class FormTransactionsComponent implements OnInit {
 
   constructor() {
     effect(() => {
-      if (this.budgetItems().length > 0) {
+      if (this.budgetItems().length > 0 && this.formGroup.get('budgetType')?.value) {
         this.formGroup.get('budgetItem')?.enable();
+      } else {
+        this.formGroup.get('budgetItem')?.disable();
       }
     });
   }
