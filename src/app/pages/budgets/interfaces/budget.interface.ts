@@ -8,7 +8,7 @@ export interface BudgetTreeNode {
   children?: BudgetTreeNode[];
 }
 
-interface BudgetData {
+export interface BudgetData {
   id: number;
   name: string;
   actualTotal: number;

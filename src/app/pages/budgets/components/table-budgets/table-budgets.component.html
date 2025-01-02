@@ -106,7 +106,7 @@
             <strong>{{ totals.name }}</strong>
           </td>
         } @else {
-          @for (month of totals.months; track month.id) {
+          @for (month of totals.months; track month.index) {
             <td [style]="{'min-width':'165px','height':'92px'}">
               <p-inputNumber
                 [formControl]="getFormControl(month.plan, true)"

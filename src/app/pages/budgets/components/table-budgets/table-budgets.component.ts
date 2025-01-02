@@ -4,7 +4,7 @@ import { TableModule } from 'primeng/table';
 import { Card } from 'primeng/card';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputNumber } from 'primeng/inputnumber';
-import { Budget, BudgetTreeNode } from '../../interfaces/budget.interface';
+import { Budget, BudgetData, BudgetTreeNode } from '../../interfaces/budget.interface';
 import { NgIf } from '@angular/common';
 import { Button } from 'primeng/button';
 
@@ -59,21 +59,32 @@ export class TableBudgetsComponent {
 
   changeBudgetItem(id: number, planString: string): void {
     const plan = parseFloat(planString.replace(/\s/g, '').replace(',', '.'));
-    this.changeBudgetItemMonth(id, plan, this.budget().budgetItems);
+    this.changeBudgetItemMonth(id, plan, this.budget().totals, this.budget().budgetItems);
   }
 
-  private changeBudgetItemMonth(id: number, plan: number, children?: BudgetTreeNode[]): void {
-    children?.find(item => {
-      const foundItem = item.data.months.find(month => {
+  private changeBudgetItemMonth(id: number, plan: number, totals: BudgetData, children?: BudgetTreeNode[]): number | undefined {
+    return (children || []).reduce<number>((acc, item) => {
+      const foundItemIndex = item.data.months.findIndex((month, index) => {
         if (month.id === id) {
-          month.plan = plan;
+          month.plan += plan;
+          totals.months[index].plan += plan;
           return true;
         }
         return false;
       });
-      if (!foundItem) {
-        this.changeBudgetItemMonth(id, plan, item.children);
+      if (foundItemIndex === -1) {
+        const foundMonthIndex = this.changeBudgetItemMonth(id, plan, totals, item.children);
+        if (foundMonthIndex !== undefined && foundMonthIndex !== -1) {
+          item.data.months[foundMonthIndex].plan += plan;
+          acc += foundMonthIndex;
+        }
+        return acc;
+      } else {
+        totals.planTotal += plan;
+        item.data.planTotal += plan;
+        acc += foundItemIndex;
+        return acc;
       }
-    });
+    }, 0);
   }
 }
