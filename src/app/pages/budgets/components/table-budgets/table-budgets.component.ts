@@ -1,12 +1,13 @@
 import { Component, input, output } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TreeTableModule } from 'primeng/treetable';
 import { TableModule } from 'primeng/table';
 import { Card } from 'primeng/card';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Button } from 'primeng/button';
 import { InputNumber } from 'primeng/inputnumber';
 import { Budget, BudgetData, BudgetTreeNode } from '../../interfaces/budget.interface';
-import { NgIf } from '@angular/common';
-import { Button } from 'primeng/button';
+import { TransactionTypes } from '../../../transactions/enums/transaction.enum';
 
 @Component({
   selector: 'app-table-budgets',
@@ -69,10 +70,21 @@ export class TableBudgetsComponent {
       if (foundItemIndex >= 0) {
         item.data.planTotal = this.calculateSum(item.data.planTotal, item.data.months[foundItemIndex].plan, '-');
         item.data.planTotal = this.calculateSum(item.data.planTotal, plan, '+');
-        totals.planTotal = this.calculateSum(totals.planTotal, item.data.months[foundItemIndex].plan, '-');
-        totals.planTotal = this.calculateSum(totals.planTotal, plan, '+');
+        if (item.type == TransactionTypes.INCOME) {
+          totals.planTotal = this.calculateSum(totals.planTotal, item.data.months[foundItemIndex].plan, '-');
+          totals.planTotal = this.calculateSum(totals.planTotal, plan, '+');
+        } else {
+          totals.planTotal = this.calculateSum(totals.planTotal, item.data.months[foundItemIndex].plan, '+');
+          totals.planTotal = this.calculateSum(totals.planTotal, plan, '-');
+        }
+        if (item.type == TransactionTypes.INCOME) {
         totals.months[foundItemIndex].plan = this.calculateSum(totals.months[foundItemIndex].plan, item.data.months[foundItemIndex].plan, '-');
         totals.months[foundItemIndex].plan = this.calculateSum(totals.months[foundItemIndex].plan, plan, '+');
+        } else {
+          totals.months[foundItemIndex].plan = this.calculateSum(totals.months[foundItemIndex].plan, item.data.months[foundItemIndex].plan, '+');
+          totals.months[foundItemIndex].plan = this.calculateSum(totals.months[foundItemIndex].plan, plan, '-');
+        }
+
         if (item.parent) {
           this.changeParent(item.parent, foundItemIndex, plan, item.data.months[foundItemIndex].plan);
         }

@@ -33,10 +33,12 @@ export class BudgetService {
         return {
           data: item.data,
           children: this.prepareBudgetItems(item.children),
+          type: item.type
         }
       }
       return {
         data: item.data,
+        type: item.type
       };
     })
   }
