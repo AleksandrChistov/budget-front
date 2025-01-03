@@ -28,6 +28,7 @@ export class CapexComponent implements OnInit {
   departmentLabels = toSignal<OptionName<number>[], []>(this.labelsService.getDepartments(), { initialValue: [] });
   budgetLabels = signal<OptionName<number>[]>([]);
   budget = signal<Budget>({} as Budget);
+  departmentId!: number;
 
   ngOnInit(): void {
     this.getBudgetLabels();
@@ -44,12 +45,18 @@ export class CapexComponent implements OnInit {
   }
 
   departmentChanged(id: number): void {
+    console.log('departmentChanged ', id);
+    this.departmentId = id;
     this.getBudgetLabels(id);
   }
 
   saveBudget(budget: Budget): void {
     console.log('saveBudget', budget);
-    // TODO: make a request to save a new budget
+    this.budget().departmentId = this.departmentId ?? this.budget().departmentId;
+    this.budgetService.create(this.budget()).pipe(
+      take(1),
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe(() => this.getBudgetLabels(this.budget().departmentId));
   }
 
   deleteBudget(id: number): void {
