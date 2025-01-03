@@ -8,6 +8,7 @@ import { Button } from 'primeng/button';
 import { InputNumber } from 'primeng/inputnumber';
 import { Budget, BudgetData, BudgetTreeNode } from '../../interfaces/budget.interface';
 import { TransactionTypes } from '../../../transactions/enums/transaction.enum';
+import { BudgetTypes } from '../../../../shared/interfaces/budget-types.enum';
 
 @Component({
   selector: 'app-table-budgets',
@@ -70,14 +71,14 @@ export class TableBudgetsComponent {
       if (foundItemIndex >= 0) {
         item.data.planTotal = this.calculateSum(item.data.planTotal, item.data.months[foundItemIndex].plan, '-');
         item.data.planTotal = this.calculateSum(item.data.planTotal, plan, '+');
-        if (item.type == TransactionTypes.INCOME) {
+        if (item.type == TransactionTypes.INCOME || this.budget().type === BudgetTypes.EXPENSES) {
           totals.planTotal = this.calculateSum(totals.planTotal, item.data.months[foundItemIndex].plan, '-');
           totals.planTotal = this.calculateSum(totals.planTotal, plan, '+');
         } else {
           totals.planTotal = this.calculateSum(totals.planTotal, item.data.months[foundItemIndex].plan, '+');
           totals.planTotal = this.calculateSum(totals.planTotal, plan, '-');
         }
-        if (item.type == TransactionTypes.INCOME) {
+        if (item.type == TransactionTypes.INCOME || this.budget().type === BudgetTypes.EXPENSES) {
         totals.months[foundItemIndex].plan = this.calculateSum(totals.months[foundItemIndex].plan, item.data.months[foundItemIndex].plan, '-');
         totals.months[foundItemIndex].plan = this.calculateSum(totals.months[foundItemIndex].plan, plan, '+');
         } else {
