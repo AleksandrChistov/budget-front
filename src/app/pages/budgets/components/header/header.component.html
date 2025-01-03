@@ -52,6 +52,7 @@
       <p-button
         (click)="deleteBudget.emit(formGroup.get('budget')?.value)"
         [text]="true"
+        [disabled]="budgetTitles().length < 2"
         icon="pi pi-trash"
         severity="secondary"
       />
