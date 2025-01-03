@@ -1,11 +1,16 @@
+import { BudgetTypes } from '../../../shared/interfaces/budget-types.enum';
+
 export interface Budget {
   budgetItems: BudgetTreeNode[];
   totals: BudgetData;
+  type: BudgetTypes,
+  departmentId: number;
 }
 
 export interface BudgetTreeNode {
   data: BudgetData;
   children?: BudgetTreeNode[];
+  parent?: BudgetTreeNode;
 }
 
 export interface BudgetData {

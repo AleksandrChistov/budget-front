@@ -62,29 +62,46 @@ export class TableBudgetsComponent {
     this.changeBudgetItemMonth(id, plan, this.budget().totals, this.budget().budgetItems);
   }
 
-  private changeBudgetItemMonth(id: number, plan: number, totals: BudgetData, children?: BudgetTreeNode[]): number | undefined {
-    return (children || []).reduce<number>((acc, item) => {
-      const foundItemIndex = item.data.months.findIndex((month, index) => {
-        if (month.id === id) {
-          month.plan += plan;
-          totals.months[index].plan += plan;
-          return true;
+  private changeBudgetItemMonth(id: number, plan: number, totals: BudgetData, children?: BudgetTreeNode[]): void {
+    return (children || []).forEach(item => {
+      const foundItemIndex = item.data.months.findIndex(month => month.id === id);
+
+      if (foundItemIndex >= 0) {
+        item.data.planTotal = this.calculateSum(item.data.planTotal, item.data.months[foundItemIndex].plan, '-');
+        item.data.planTotal = this.calculateSum(item.data.planTotal, plan, '+');
+        totals.planTotal = this.calculateSum(totals.planTotal, item.data.months[foundItemIndex].plan, '-');
+        totals.planTotal = this.calculateSum(totals.planTotal, plan, '+');
+        totals.months[foundItemIndex].plan = this.calculateSum(totals.months[foundItemIndex].plan, item.data.months[foundItemIndex].plan, '-');
+        totals.months[foundItemIndex].plan = this.calculateSum(totals.months[foundItemIndex].plan, plan, '+');
+        if (item.parent) {
+          this.changeParent(item.parent, foundItemIndex, plan, item.data.months[foundItemIndex].plan);
         }
-        return false;
-      });
-      if (foundItemIndex === -1) {
-        const foundMonthIndex = this.changeBudgetItemMonth(id, plan, totals, item.children);
-        if (foundMonthIndex !== undefined && foundMonthIndex !== -1) {
-          item.data.months[foundMonthIndex].plan += plan;
-          acc += foundMonthIndex;
-        }
-        return acc;
+        item.data.months[foundItemIndex].plan = plan;
       } else {
-        totals.planTotal += plan;
-        item.data.planTotal += plan;
-        acc += foundItemIndex;
-        return acc;
+        this.changeBudgetItemMonth(id, plan, totals, item.children);
       }
-    }, 0);
+    });
   }
+
+  private changeParent(parent: BudgetTreeNode, index: number, plan: number, prevPlan: number): void {
+    parent.data.planTotal = this.calculateSum(parent.data.planTotal, prevPlan, '-');
+    parent.data.planTotal = this.calculateSum(parent.data.planTotal, plan, '+');
+    if (parent.parent) {
+      this.changeParent(parent.parent, index, plan, prevPlan);
+    }
+    parent.data.months[index].plan = this.calculateSum(parent.data.months[index].plan, prevPlan, '-');
+    parent.data.months[index].plan = this.calculateSum(parent.data.months[index].plan, plan, '+');
+  }
+
+  private calculateSum(a: number, b: number, sign: '+' | '-'): number {
+    switch (sign) {
+      case '+':
+        return Math.round(100 * (a + b)) / 100;
+      case '-':
+        return Math.round(100 * (a - b)) / 100;
+      default:
+        return 0;
+    }
+  }
+
 }
