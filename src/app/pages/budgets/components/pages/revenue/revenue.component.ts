@@ -2,7 +2,7 @@ import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { take } from 'rxjs';
 import { FileSelectEvent } from 'primeng/fileupload';
-import { Option, OptionName } from '../../../../../shared/interfaces/option.interface';
+import { OptionName } from '../../../../../shared/interfaces/option.interface';
 import { LabelsService } from '../../../../../shared/services/labels.service';
 import { BudgetTypes } from '../../../../../shared/interfaces/budget-types.enum';
 import { HeaderComponent } from '../../header/header.component';
