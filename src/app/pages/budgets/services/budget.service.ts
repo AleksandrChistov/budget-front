@@ -15,6 +15,10 @@ export class BudgetService {
     return this.http.get<Budget>(`http://localhost:8080/api/budgets${buildQueryParams({type, budgetId})}`);
   }
 
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`http://localhost:8080/api/budgets/${id}`);
+  }
+
   create(budget: Budget): Observable<number> {
 
     const newBudget: Budget = {

@@ -61,7 +61,11 @@ export class CapexComponent implements OnInit {
 
   deleteBudget(id: number): void {
     console.log('deleteBudget', id);
-    // TODO: make a request to delete a budget
+    this.budget().departmentId = this.departmentId ?? this.budget().departmentId;
+    this.budgetService.delete(id).pipe(
+      take(1),
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe(() => this.getBudgetLabels(this.budget().departmentId));
   }
 
   saveToExcel(): void {
