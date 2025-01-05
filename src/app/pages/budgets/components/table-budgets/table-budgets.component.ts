@@ -28,6 +28,7 @@ import { BudgetTypes } from '../../../../shared/interfaces/budget-types.enum';
 })
 export class TableBudgetsComponent {
   budget = input.required<Budget>();
+  budgetType = input.required<BudgetTypes>();
   saveBudget = output<Budget>();
 
   skipTotal = false;
@@ -71,14 +72,14 @@ export class TableBudgetsComponent {
       if (foundItemIndex >= 0) {
         item.data.planTotal = this.calculateSum(item.data.planTotal, item.data.months[foundItemIndex].plan, '-');
         item.data.planTotal = this.calculateSum(item.data.planTotal, plan, '+');
-        if (item.type == TransactionTypes.INCOME || this.budget().type === BudgetTypes.EXPENSES) {
+        if (item.type == TransactionTypes.INCOME || this.budgetType() === BudgetTypes.EXPENSES) {
           totals.planTotal = this.calculateSum(totals.planTotal, item.data.months[foundItemIndex].plan, '-');
           totals.planTotal = this.calculateSum(totals.planTotal, plan, '+');
         } else {
           totals.planTotal = this.calculateSum(totals.planTotal, item.data.months[foundItemIndex].plan, '+');
           totals.planTotal = this.calculateSum(totals.planTotal, plan, '-');
         }
-        if (item.type == TransactionTypes.INCOME || this.budget().type === BudgetTypes.EXPENSES) {
+        if (item.type == TransactionTypes.INCOME || this.budgetType() === BudgetTypes.EXPENSES) {
         totals.months[foundItemIndex].plan = this.calculateSum(totals.months[foundItemIndex].plan, item.data.months[foundItemIndex].plan, '-');
         totals.months[foundItemIndex].plan = this.calculateSum(totals.months[foundItemIndex].plan, plan, '+');
         } else {

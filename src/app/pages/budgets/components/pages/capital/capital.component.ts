@@ -30,6 +30,8 @@ export class CapitalComponent implements OnInit {
   budget = signal<Budget>({} as Budget);
   departmentId!: number;
 
+  protected readonly BudgetTypes = BudgetTypes;
+
   ngOnInit(): void {
     this.getBudgetLabels();
   }
@@ -53,7 +55,7 @@ export class CapitalComponent implements OnInit {
   saveBudget(budget: Budget): void {
     console.log('saveBudget', budget);
     this.budget().departmentId = this.departmentId ?? this.budget().departmentId;
-    this.budgetService.create(this.budget()).pipe(
+    this.budgetService.update(this.budget()).pipe(
       take(1),
       takeUntilDestroyed(this.destroyRef)
     ).subscribe(() => this.getBudgetLabels(this.budget().departmentId));
@@ -86,4 +88,5 @@ export class CapitalComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef)
       ).subscribe(budgetLabels => this.budgetLabels.set(budgetLabels));
   }
+
 }

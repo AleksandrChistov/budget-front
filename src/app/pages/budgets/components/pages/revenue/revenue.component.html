@@ -10,5 +10,6 @@
 ></app-budgets-header>
 <app-table-budgets
   [budget]="budget()"
+  [budgetType]="BudgetTypes.REVENUE"
   (saveBudget)="saveBudget($event)"
 ></app-table-budgets>

@@ -19,16 +19,15 @@ export class BudgetService {
     return this.http.delete<void>(`http://localhost:8080/api/budgets/${id}`);
   }
 
-  create(budget: Budget): Observable<number> {
-
+  update(budget: Budget): Observable<number> {
     const newBudget: Budget = {
-      type: budget.type,
+      id: budget.id,
       departmentId: budget.departmentId,
       totals: budget.totals,
       budgetItems: this.prepareBudgetItems(budget.budgetItems)
     }
 
-    return this.http.post<number>(`http://localhost:8080/api/budgets`, newBudget);
+    return this.http.put<number>(`http://localhost:8080/api/budgets/${budget.id}`, newBudget);
   }
 
   private prepareBudgetItems(items: BudgetTreeNode[]): BudgetTreeNode[] {
