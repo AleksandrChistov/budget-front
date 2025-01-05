@@ -15,8 +15,6 @@ import { ReportsTotal } from '../../interfaces/reports.interface';
   styleUrl: './income.component.scss'
 })
 export class IncomeComponent {
-  department = input.required<number | null>();
-  period = input.required<Date[] | null>();
   totals = input.required<ReportsTotal[]>();
   reports = input.required<ChartCardData[]>();
 }

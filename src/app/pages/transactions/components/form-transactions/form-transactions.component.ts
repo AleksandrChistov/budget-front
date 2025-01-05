@@ -11,7 +11,7 @@ import { OptionName } from '../../../../shared/interfaces/option.interface';
 import { BudgetTypes } from '../../../../shared/interfaces/budget-types.enum';
 import { AccountOption, BudgetItem } from '../../interfaces/transaction.interface';
 import { TransactionForm } from '../../interfaces/transaction-form.interface';
-import { TransactionTypes } from '../../enums/transaction.enum';
+import { TransactionTypes } from '../../../../shared/enums/transaction.enum';
 
 @Component({
   selector: 'app-form-transactions',

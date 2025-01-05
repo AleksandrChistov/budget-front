@@ -7,7 +7,7 @@ import { BudgetTypes } from '../../../../shared/interfaces/budget-types.enum';
 import { LabelsService } from '../../../../shared/services/labels.service';
 import { AccountOption, BudgetItem, Transaction } from '../../interfaces/transaction.interface';
 import { TransactionForm } from '../../interfaces/transaction-form.interface';
-import { TransactionTypes } from '../../enums/transaction.enum';
+import { TransactionTypes } from '../../../../shared/enums/transaction.enum';
 import { HeaderComponent } from '../header/header.component';
 import { TransactionService } from '../../services/transaction.service';
 import { TableTransactionsComponent } from '../table-transactions/table-transactions.component';

@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ReportsTotal } from '../interfaces/reports.interface';
-import { ReportTypes } from '../enums/reports.enum';
-import { ChartCardData } from '../../../shared/components/chart-card/chart-card.interface';
+import { Reports } from '../interfaces/reports.interface';
+import { TransactionTypes } from '../../../shared/enums/transaction.enum';
+import { buildQueryParams } from '../../../shared/utils/http.util';
 
 @Injectable({
   providedIn: 'root'
@@ -11,21 +11,11 @@ import { ChartCardData } from '../../../shared/components/chart-card/chart-card.
 export class ReportsService {
   http = inject(HttpClient);
 
-  get(type: ReportTypes, departmentId?: number, period?: Date[]): Observable<ChartCardData[]> {
-    const periodFrom = period?.[0]?.toISOString();
-    const periodTo = period?.[1]?.toISOString();
-    console.log('periodFrom', periodFrom);
-    console.log('periodTo', periodTo);
-    // TODO check departmentId ?? '' and periodFrom ?? '' and periodTo ?? '';
-    return this.http.get<ChartCardData[]>('https://mock.apidog.com/m1/755292-732507-default/reports');
+  get(type: TransactionTypes, budgetId: number): Observable<Reports> {
+    console.log('transactionType', type);
+    console.log('budgetId', budgetId);
+    return this.http.get<Reports>(`http://localhost:8080/api/reports${buildQueryParams({type, budgetId})}`);
+    // return this.http.get<Reports>('https://mock.apidog.com/m1/755292-732507-default/reports');
   }
 
-  getTotals(type: ReportTypes, departmentId?: number, period?: Date[]): Observable<ReportsTotal[]> {
-    const periodFrom = period?.[0]?.toISOString();
-    const periodTo = period?.[1]?.toISOString();
-    console.log('periodFrom', periodFrom);
-    console.log('periodTo', periodTo);
-    // TODO check departmentId ?? '' and periodFrom ?? '' and periodTo ?? '';
-    return this.http.get<ReportsTotal[]>('https://mock.apidog.com/m1/755292-732507-default/reports/totals');
-  }
 }

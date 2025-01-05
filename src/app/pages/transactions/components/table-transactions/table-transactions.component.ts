@@ -3,7 +3,7 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
-import { TransactionTypes } from '../../enums/transaction.enum';
+import { TransactionTypes } from '../../../../shared/enums/transaction.enum';
 import { Transaction } from '../../interfaces/transaction.interface';
 import { BudgetTypeToTitlePipe } from '../../pipes/budget-type-to-title.pipe';
 import { AccountTypeToTitlePipe } from '../../pipes/account-type-to-title.pipe';

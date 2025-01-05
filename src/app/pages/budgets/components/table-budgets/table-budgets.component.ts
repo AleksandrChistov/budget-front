@@ -7,7 +7,7 @@ import { Card } from 'primeng/card';
 import { Button } from 'primeng/button';
 import { InputNumber } from 'primeng/inputnumber';
 import { Budget, BudgetData, BudgetTreeNode } from '../../interfaces/budget.interface';
-import { TransactionTypes } from '../../../transactions/enums/transaction.enum';
+import { TransactionTypes } from '../../../../shared/enums/transaction.enum';
 import { BudgetTypes } from '../../../../shared/interfaces/budget-types.enum';
 
 @Component({

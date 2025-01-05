@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Transaction, TransactionBody } from '../interfaces/transaction.interface';
 import { TransactionForm } from '../interfaces/transaction-form.interface';
-import { TransactionTypes } from '../enums/transaction.enum';
+import { TransactionTypes } from '../../../shared/enums/transaction.enum';
 import { buildQueryParams } from '../../../shared/utils/http.util';
 
 @Injectable({

@@ -6,12 +6,12 @@ import { LabelsService } from '../../../../shared/services/labels.service';
 import { HeaderComponent } from '../header/header.component';
 import { IncomeComponent } from '../income/income.component';
 import { ExpensesComponent } from '../expenses/expenses.component';
-import { FormData } from '../../interfaces/form.interface';
-import { ReportTypes } from '../../enums/reports.enum';
 import { ReportsTotal } from '../../interfaces/reports.interface';
 import { ReportsService } from '../../services/reports.service';
 import { ChartCardData } from '../../../../shared/components/chart-card/chart-card.interface';
 import { reportsTypes } from '../../consts/report-types.consts';
+import { BudgetTypes } from '../../../../shared/interfaces/budget-types.enum';
+import { TransactionTypes } from '../../../../shared/enums/transaction.enum';
 
 @Component({
   selector: 'app-reports',
@@ -30,39 +30,55 @@ export class ReportsComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
 
   departmentLabels = toSignal<OptionName<number>[], []>(this.labelsService.getDepartments(), { initialValue: [] });
-  reportTypesLabels = signal<OptionName<ReportTypes>[]>(reportsTypes);
+  reportTypesLabels = signal<OptionName<TransactionTypes>[]>(reportsTypes);
+  budgetLabels = signal<OptionName<number>[]>([]);
   totals = signal<ReportsTotal[]>([]);
   reports = signal<ChartCardData[]>([]);
 
-  protected readonly ReportTypes = ReportTypes;
+  protected readonly ReportTypes = TransactionTypes;
 
-  reportType = ReportTypes.EXPENSE;
-  department: number | null = null;
-  period: Array<Date> | null = null;
+  reportType = TransactionTypes.EXPENSE;
+  departmentId!: number;
+  budgetId!: number;
 
   ngOnInit() {
-    this.getTotals(this.reportType);
-    this.getReports(this.reportType);
+    this.getBudgetLabels(undefined, this.reportType);
   }
 
-  formDataChanged(formData: FormData): void {
-    console.log('formData > ', formData)
-    this.reportType = formData.reportType;
-    this.department = formData.department;
-    this.period = formData.period;
-    this.getTotals(this.reportType, this.department, this.period);
-    this.getReports(this.reportType, this.department, this.period);
+  reportTypeChanged(reportType: TransactionTypes): void {
+    console.log('reportTypeChanged > ', reportType);
+    this.reportType = reportType;
+    this.getBudgetLabels(undefined, reportType, this.departmentId);
   }
 
-  private getTotals(reportType: ReportTypes, departmentId?: number, period?: Date[]): void {
-    this.reportsService.getTotals(reportType, departmentId, period)
+  departmentChanged(departmentId: number): void {
+    console.log('departmentChanged > ', departmentId);
+    this.departmentId = departmentId;
+    this.getBudgetLabels(undefined, this.reportType, departmentId);
+  }
+
+  budgetChanged(budgetId: number): void {
+    console.log('budgetChanged > ', budgetId);
+    this.budgetId = budgetId;
+    this.getReports(this.reportType, budgetId);
+  }
+
+  private getBudgetLabels(budgetType?: BudgetTypes, transactionType?: TransactionTypes, departmentId?: number): void {
+    console.log('departmentId ', departmentId);
+    this.labelsService.getBudgets(budgetType, transactionType, departmentId)
+      .pipe(
+        take(1),
+        takeUntilDestroyed(this.destroyRef)
+      ).subscribe(budgetLabels => this.budgetLabels.set(budgetLabels));
+  }
+
+  private getReports(reportType: TransactionTypes, budgetId: number): void {
+    this.reportsService.get(reportType, budgetId)
       .pipe(take(1), takeUntilDestroyed(this.destroyRef))
-      .subscribe(totals => this.totals.set(totals));
-  }
-
-  private getReports(reportType: ReportTypes, departmentId?: number, period?: Date[]): void {
-    this.reportsService.get(reportType, departmentId, period)
-      .pipe(take(1), takeUntilDestroyed(this.destroyRef))
-      .subscribe(reports => this.reports.set(reports));
+      .subscribe(data => {
+        console.log('reports', data);
+        this.totals.set(data.totals);
+        this.reports.set(data.reports);
+      });
   }
 }

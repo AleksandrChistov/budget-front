@@ -5,7 +5,7 @@ import { AccountOption, AccountResponse, BudgetItem } from '../../pages/transact
 import { OptionName } from '../interfaces/option.interface';
 import { BudgetTypes } from '../interfaces/budget-types.enum';
 import { AccountTypes } from '../../pages/transactions/enums/account.enum';
-import { TransactionTypes } from '../../pages/transactions/enums/transaction.enum';
+import { TransactionTypes } from '../enums/transaction.enum';
 import { buildQueryParams } from '../utils/http.util';
 
 @Injectable({
@@ -14,8 +14,9 @@ import { buildQueryParams } from '../utils/http.util';
 export class LabelsService {
   http = inject(HttpClient);
 
-  getBudgets(type: BudgetTypes, departmentId?: number): Observable<OptionName<number>[]> {
-    return this.http.get<OptionName<number>[]>(`http://localhost:8080/api/budgets/names${buildQueryParams({type, departmentId})}`);
+  // TODO: rename and delete budgetType and transactionType from args
+  getBudgets(budgetType?: BudgetTypes, transactionType?: TransactionTypes, departmentId?: number): Observable<OptionName<number>[]> {
+    return this.http.get<OptionName<number>[]>(`http://localhost:8080/api/budgets/names${buildQueryParams({budgetType, transactionType, departmentId})}`);
   }
 
   getDepartments(): Observable<OptionName<number>[]> {

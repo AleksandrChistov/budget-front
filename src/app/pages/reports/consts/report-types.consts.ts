@@ -1,13 +1,13 @@
 import { OptionName } from '../../../shared/interfaces/option.interface';
-import { ReportTypes } from '../enums/reports.enum';
+import { TransactionTypes } from '../../../shared/enums/transaction.enum';
 
-export const reportsTypes: OptionName<ReportTypes>[] = [
+export const reportsTypes: OptionName<TransactionTypes>[] = [
   {
-    id: ReportTypes.EXPENSE,
+    id: TransactionTypes.EXPENSE,
     name: 'Расходы',
   },
   {
-    id: ReportTypes.INCOME,
+    id: TransactionTypes.INCOME,
     name: 'Доходы',
   },
 ];

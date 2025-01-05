@@ -2,19 +2,18 @@
   [reportType]="reportType"
   [departmentLabels]="departmentLabels()"
   [reportTypeLabels]="reportTypesLabels()"
-  (formDataChanged)="formDataChanged($event)"
+  [budgetTitles]="budgetLabels()"
+  (reportTypeChanged)="reportTypeChanged($event)"
+  (departmentChanged)="departmentChanged($event)"
+  (budgetChanged)="budgetChanged($event)"
 ></app-reports-header>
 @if (reportType === ReportTypes.INCOME) {
   <app-reports-income
-    [department]="department"
-    [period]="period"
     [totals]="totals()"
     [reports]="reports()"
   ></app-reports-income>
 } @else {
   <app-reports-expenses
-    [department]="department"
-    [period]="period"
     [totals]="totals()"
     [reports]="reports()"
   ></app-reports-expenses>

@@ -1,5 +1,5 @@
 import { BudgetTypes } from '../../../shared/interfaces/budget-types.enum';
-import { TransactionTypes } from '../../transactions/enums/transaction.enum';
+import { TransactionTypes } from '../../../shared/enums/transaction.enum';
 
 export interface Budget {
   budgetItems: BudgetTreeNode[];

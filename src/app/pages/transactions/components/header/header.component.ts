@@ -6,7 +6,7 @@ import { Button } from 'primeng/button';
 import { PrimeTemplate } from 'primeng/api';
 import { OptionName } from '../../../../shared/interfaces/option.interface';
 import { AccountOption } from '../../interfaces/transaction.interface';
-import { TransactionTypes } from '../../enums/transaction.enum';
+import { TransactionTypes } from '../../../../shared/enums/transaction.enum';
 
 @Component({
   selector: 'app-transaction-header',
