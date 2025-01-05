@@ -80,7 +80,7 @@ export class CapexComponent implements OnInit {
 
   private getBudgetLabels(departmentId?: number): void {
     console.log('departmentId ', departmentId);
-    this.labelsService.getBudgets(BudgetTypes.CAPEX, undefined, departmentId)
+    this.labelsService.getBudgets(departmentId)
       .pipe(
         take(1),
         takeUntilDestroyed(this.destroyRef)

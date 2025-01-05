@@ -15,8 +15,8 @@ export class LabelsService {
   http = inject(HttpClient);
 
   // TODO: rename and delete budgetType and transactionType from args
-  getBudgets(budgetType?: BudgetTypes, transactionType?: TransactionTypes, departmentId?: number): Observable<OptionName<number>[]> {
-    return this.http.get<OptionName<number>[]>(`http://localhost:8080/api/budgets/names${buildQueryParams({budgetType, transactionType, departmentId})}`);
+  getBudgets(departmentId?: number): Observable<OptionName<number>[]> {
+    return this.http.get<OptionName<number>[]>(`http://localhost:8080/api/budgets/names${buildQueryParams({departmentId})}`);
   }
 
   getDepartments(): Observable<OptionName<number>[]> {

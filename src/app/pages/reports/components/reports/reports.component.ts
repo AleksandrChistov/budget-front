@@ -10,7 +10,6 @@ import { ReportsTotal } from '../../interfaces/reports.interface';
 import { ReportsService } from '../../services/reports.service';
 import { ChartCardData } from '../../../../shared/components/chart-card/chart-card.interface';
 import { reportsTypes } from '../../consts/report-types.consts';
-import { BudgetTypes } from '../../../../shared/interfaces/budget-types.enum';
 import { TransactionTypes } from '../../../../shared/enums/transaction.enum';
 
 @Component({
@@ -42,19 +41,19 @@ export class ReportsComponent implements OnInit {
   budgetId!: number;
 
   ngOnInit() {
-    this.getBudgetLabels(undefined, this.reportType);
+    this.getBudgetLabels(undefined);
   }
 
   reportTypeChanged(reportType: TransactionTypes): void {
     console.log('reportTypeChanged > ', reportType);
     this.reportType = reportType;
-    this.getBudgetLabels(undefined, reportType, this.departmentId);
+    this.getBudgetLabels(this.departmentId);
   }
 
   departmentChanged(departmentId: number): void {
     console.log('departmentChanged > ', departmentId);
     this.departmentId = departmentId;
-    this.getBudgetLabels(undefined, this.reportType, departmentId);
+    this.getBudgetLabels(departmentId);
   }
 
   budgetChanged(budgetId: number): void {
@@ -63,9 +62,9 @@ export class ReportsComponent implements OnInit {
     this.getReports(this.reportType, budgetId);
   }
 
-  private getBudgetLabels(budgetType?: BudgetTypes, transactionType?: TransactionTypes, departmentId?: number): void {
+  private getBudgetLabels(departmentId?: number): void {
     console.log('departmentId ', departmentId);
-    this.labelsService.getBudgets(budgetType, transactionType, departmentId)
+    this.labelsService.getBudgets(departmentId)
       .pipe(
         take(1),
         takeUntilDestroyed(this.destroyRef)
