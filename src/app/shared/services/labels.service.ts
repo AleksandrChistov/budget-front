@@ -7,6 +7,7 @@ import { BudgetTypes } from '../interfaces/budget-types.enum';
 import { AccountTypes } from '../../pages/transactions/enums/account.enum';
 import { TransactionTypes } from '../enums/transaction.enum';
 import { buildQueryParams } from '../utils/http.util';
+import { yearLabels } from '../../pages/reports/consts/years-labels.consts';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,8 @@ import { buildQueryParams } from '../utils/http.util';
 export class LabelsService {
   http = inject(HttpClient);
 
-  // TODO: rename and delete budgetType and transactionType from args
-  getBudgets(departmentId?: number): Observable<OptionName<number>[]> {
-    return this.http.get<OptionName<number>[]>(`http://localhost:8080/api/budgets/names${buildQueryParams({departmentId})}`);
+  getBudgetNames(year: number = yearLabels[yearLabels.length - 1].id, departmentId?: number): Observable<OptionName<number>[]> {
+    return this.http.get<OptionName<number>[]>(`http://localhost:8080/api/budgets/names${buildQueryParams({year, departmentId})}`);
   }
 
   getDepartments(): Observable<OptionName<number>[]> {

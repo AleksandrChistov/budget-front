@@ -36,9 +36,23 @@
         optionLabel="name"
         optionValue="id"
         placeholder="Выберите бюджет"
-        inputId="account"
+        emptyMessage="Бюджетов не найдено"
+        inputId="budget"
         size="small"
         class="input"
+      />
+    </div>
+    <div class="form-element">
+      <label for="year">Год</label>
+      <p-select
+        formControlName="year"
+        [options]="yearLabels()"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Выберите год"
+        inputId="year"
+        size="small"
+        class="input input-year"
       />
     </div>
   </form>

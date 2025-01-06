@@ -39,7 +39,7 @@ export class MenuComponent implements OnInit {
         label: 'Бюджеты',
         items: [
           {
-            label: 'Выручка',
+            label: 'Доходы',
             routerLink: 'budgets/revenue',
           },
           {

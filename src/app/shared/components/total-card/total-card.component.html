@@ -1,10 +1,14 @@
 <p-card class="card" [header]="title()">
   <p class="amount">{{actual() | amount}}</p>
   <div class="card-footer">
-    <i class="pi" [ngClass]="amountPercent < 0 ? 'pi-sort-down-fill' : 'pi-sort-up-fill'"></i>
-    <p class="plan-percent">
-      <span>{{amountPercent}}%</span>
-      <span>{{amountPercent < 0 ? 'ниже плана' : 'выше плана'}}</span>
-    </p>
+    @if (actual() === 0 && plan() === 0) {
+      <p class="plan-percent">Данные отсутствуют</p>
+    } @else {
+      <i class="pi" [ngClass]="amountPercent < 0 ? 'pi-sort-down-fill' : 'pi-sort-up-fill'"></i>
+      <p class="plan-percent">
+        <span>{{amountPercent | amount}}%</span>
+        <span>{{amountPercent < 0 ? 'ниже плана' : 'выше плана'}}</span>
+      </p>
+    }
   </div>
 </p-card>

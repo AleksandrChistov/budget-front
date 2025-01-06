@@ -1,9 +1,10 @@
 <app-reports-header
-  [reportType]="reportType"
   [departmentLabels]="departmentLabels()"
   [reportTypeLabels]="reportTypesLabels()"
   [budgetTitles]="budgetLabels()"
+  [yearLabels]="yearLabels"
   (reportTypeChanged)="reportTypeChanged($event)"
+  (yearChanged)="yearChanged($event)"
   (departmentChanged)="departmentChanged($event)"
   (budgetChanged)="budgetChanged($event)"
 ></app-reports-header>

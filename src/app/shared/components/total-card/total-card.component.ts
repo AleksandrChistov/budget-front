@@ -21,6 +21,6 @@ export class TotalCardComponent implements OnInit {
   amountPercent!: number;
 
   ngOnInit() {
-    this.amountPercent = +((this.actual() - this.plan()) / this.plan() * 100).toFixed(1);
+    this.amountPercent = +((this.actual() - this.plan()) / Math.abs(this.plan() || this.actual()) * 100).toFixed(1);
   }
 }

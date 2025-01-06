@@ -82,7 +82,7 @@ export class RevenueComponent implements OnInit {
 
   private getBudgetLabels(departmentId?: number): void {
     console.log('departmentId ', departmentId);
-    this.labelsService.getBudgets(departmentId)
+    this.labelsService.getBudgetNames(departmentId)
       .pipe(
         take(1),
         takeUntilDestroyed(this.destroyRef)

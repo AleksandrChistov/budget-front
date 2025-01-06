@@ -11,6 +11,7 @@ import { ReportsService } from '../../services/reports.service';
 import { ChartCardData } from '../../../../shared/components/chart-card/chart-card.interface';
 import { reportsTypes } from '../../consts/report-types.consts';
 import { TransactionTypes } from '../../../../shared/enums/transaction.enum';
+import { yearLabels } from '../../consts/years-labels.consts';
 
 @Component({
   selector: 'app-reports',
@@ -33,46 +34,60 @@ export class ReportsComponent implements OnInit {
   budgetLabels = signal<OptionName<number>[]>([]);
   totals = signal<ReportsTotal[]>([]);
   reports = signal<ChartCardData[]>([]);
+  yearLabels: OptionName<number>[] = yearLabels;
 
   protected readonly ReportTypes = TransactionTypes;
 
-  reportType = TransactionTypes.EXPENSE;
+  reportType!: TransactionTypes;
+  year!: number;
   departmentId!: number;
   budgetId!: number;
 
   ngOnInit() {
-    this.getBudgetLabels(undefined);
+    this.getBudgetLabels(this.year, this.departmentId);
   }
 
   reportTypeChanged(reportType: TransactionTypes): void {
     console.log('reportTypeChanged > ', reportType);
     this.reportType = reportType;
-    this.getBudgetLabels(this.departmentId);
+    this.getBudgetLabels(this.year, this.departmentId);
+  }
+
+  yearChanged(year: number): void {
+    console.log('yearChanged > ', year);
+    this.year = year;
+    this.getBudgetLabels(this.year, this.departmentId);
   }
 
   departmentChanged(departmentId: number): void {
     console.log('departmentChanged > ', departmentId);
     this.departmentId = departmentId;
-    this.getBudgetLabels(departmentId);
+    this.getBudgetLabels(this.year, this.departmentId);
   }
 
   budgetChanged(budgetId: number): void {
     console.log('budgetChanged > ', budgetId);
     this.budgetId = budgetId;
-    this.getReports(this.reportType, budgetId);
+    this.getReports(this.reportType, this.year, this.budgetId);
   }
 
-  private getBudgetLabels(departmentId?: number): void {
+  private getBudgetLabels(year: number, departmentId?: number): void {
     console.log('departmentId ', departmentId);
-    this.labelsService.getBudgets(departmentId)
+    this.labelsService.getBudgetNames(year, departmentId)
       .pipe(
         take(1),
         takeUntilDestroyed(this.destroyRef)
       ).subscribe(budgetLabels => this.budgetLabels.set(budgetLabels));
   }
 
-  private getReports(reportType: TransactionTypes, budgetId: number): void {
-    this.reportsService.get(reportType, budgetId)
+  private getReports(reportType: TransactionTypes, year: number, budgetId: number): void {
+    if (!budgetId) {
+      this.totals.set([]);
+      this.reports.set([]);
+      return;
+    }
+
+    this.reportsService.get(reportType, year, budgetId)
       .pipe(take(1), takeUntilDestroyed(this.destroyRef))
       .subscribe(data => {
         console.log('reports', data);

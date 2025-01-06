@@ -18,11 +18,12 @@ import { skip } from 'rxjs';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
-  reportType = input.required<string>();
   reportTypeLabels = input.required<OptionName<TransactionTypes>[]>();
   departmentLabels = input.required<OptionName<number>[]>();
   budgetTitles = input.required<OptionName<number>[]>();
+  yearLabels = input.required<OptionName<number>[]>();
   reportTypeChanged = output<TransactionTypes>();
+  yearChanged = output<number>();
   departmentChanged = output<number>();
   budgetChanged = output<number>();
 
@@ -39,14 +40,19 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.formGroup = this.fb.group({
-      reportType: [this.reportType(), Validators.required],
+      reportType: [TransactionTypes.EXPENSE, Validators.required],
       department: [null],
       budget: [null],
+      year: [new Date().getFullYear()],
     })
 
     this.formGroup.get('reportType')?.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((reportType: TransactionTypes) => this.reportTypeChanged.emit(reportType));
+
+    this.formGroup.get('year')?.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((year: number) => this.yearChanged.emit(year));
 
     this.formGroup.get('department')?.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))

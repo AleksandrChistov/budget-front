@@ -5,6 +5,11 @@
   .form {
     display: flex;
     gap: 16px;
+
+    .input-year {
+      min-width: 100px;
+      max-width: 100px;
+    }
   }
   ::ng-deep {
     timesicon.p-datepicker-clear-icon {

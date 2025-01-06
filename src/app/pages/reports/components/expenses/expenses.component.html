@@ -1,14 +1,18 @@
-<div class="cards">
-  @for (total of totals(); track total.id) {
-    <app-total-card
-      [title]="total.title"
-      [plan]="total.plan"
-      [actual]="total.actual"
-    ></app-total-card>
-  }
-</div>
-<div class="charts">
-  @for (report of reports(); track report.id) {
-    <app-chart-card [data]="report"></app-chart-card>
-  }
-</div>
+@if (totals().length > 0 || reports().length > 0) {
+  <div class="cards">
+    @for (total of totals(); track total) {
+      <app-total-card
+        [title]="total.title"
+        [plan]="total.plan"
+        [actual]="total.actual"
+      ></app-total-card>
+    }
+  </div>
+  <div class="charts">
+    @for (report of reports(); track report) {
+      <app-chart-card [data]="report"></app-chart-card>
+    }
+  </div>
+} @else {
+  <p>Отчетов не найдено</p>
+}
