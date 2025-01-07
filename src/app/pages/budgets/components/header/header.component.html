@@ -51,11 +51,19 @@
         (onSelect)="getFromExcel.emit($event)"
       />
       <p-button
+        (click)="createNewBudget.emit(formGroup.get('department')?.value)"
+        [text]="true"
+        icon="pi pi-plus"
+        severity="primary"
+        pTooltip="Создать бюджет"
+      />
+      <p-button
         (click)="deleteBudget.emit(formGroup.get('budget')?.value)"
         [text]="true"
         [disabled]="budgetTitles().length < 2"
         icon="pi pi-trash"
         severity="secondary"
+        [pTooltip]="budgetTitles().length < 2 ? '' : 'Удалить бюджет'"
       />
     </div>
   </form>

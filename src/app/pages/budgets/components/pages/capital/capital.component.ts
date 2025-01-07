@@ -1,14 +1,8 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { take } from 'rxjs';
-import { FileSelectEvent } from 'primeng/fileupload';
-import { BudgetService } from '../../../services/budget.service';
-import { LabelsService } from '../../../../../shared/services/labels.service';
-import { OptionName } from '../../../../../shared/interfaces/option.interface';
-import { BudgetTypes } from '../../../../../shared/interfaces/budget-types.enum';
-import { Budget } from '../../../interfaces/budget.interface';
+import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from '../../header/header.component';
 import { TableBudgetsComponent } from '../../table-budgets/table-budgets.component';
+import { BudgetCommonComponent } from '../../budget-common.component';
+import { BudgetTypes } from '../../../../../shared/interfaces/budget-types.enum';
 
 @Component({
   selector: 'app-capital',
@@ -20,73 +14,6 @@ import { TableBudgetsComponent } from '../../table-budgets/table-budgets.compone
   templateUrl: './capital.component.html',
   styleUrl: './capital.component.scss'
 })
-export class CapitalComponent implements OnInit {
-  budgetService = inject(BudgetService);
-  labelsService = inject(LabelsService);
-  destroyRef = inject(DestroyRef);
-
-  departmentLabels = toSignal<OptionName<number>[], []>(this.labelsService.getDepartments(), { initialValue: [] });
-  budgetLabels = signal<OptionName<number>[]>([]);
-  budget = signal<Budget>({} as Budget);
-  departmentId!: number;
-
-  protected readonly BudgetTypes = BudgetTypes;
-
-  ngOnInit(): void {
-    this.getBudgetLabels();
-  }
-
-  budgetChanged(id: number): void {
-    console.log('budgetChanged ', id);
-    if (id) {
-      this.budgetService.get(BudgetTypes.CAPITAL, id).pipe(
-        take(1),
-        takeUntilDestroyed(this.destroyRef)
-      ).subscribe((budget: Budget) => this.budget.set(budget));
-    }
-  }
-
-  departmentChanged(id: number): void {
-    console.log('departmentChanged ', id);
-    this.departmentId = id;
-    this.getBudgetLabels(id);
-  }
-
-  saveBudget(budget: Budget): void {
-    console.log('saveBudget', budget);
-    this.budget().departmentId = this.departmentId ?? this.budget().departmentId;
-    this.budgetService.update(this.budget()).pipe(
-      take(1),
-      takeUntilDestroyed(this.destroyRef)
-    ).subscribe(() => this.getBudgetLabels(this.budget().departmentId));
-  }
-
-  deleteBudget(id: number): void {
-    console.log('deleteBudget', id);
-    this.budget().departmentId = this.departmentId ?? this.budget().departmentId;
-    this.budgetService.delete(id).pipe(
-      take(1),
-      takeUntilDestroyed(this.destroyRef)
-    ).subscribe(() => this.getBudgetLabels(this.budget().departmentId));
-  }
-
-  saveToExcel(): void {
-    console.log('saveToExcel', this.budget());
-    // TODO: make a request to save a budget to excel and download this file
-  }
-
-  getFromExcel(event: FileSelectEvent): void {
-    console.log('getFromExcel', event);
-    // TODO: open a modal to upload excel file
-  }
-
-  private getBudgetLabels(departmentId?: number): void {
-    console.log('departmentId ', departmentId);
-    this.labelsService.getBudgetNames(departmentId)
-      .pipe(
-        take(1),
-        takeUntilDestroyed(this.destroyRef)
-      ).subscribe(budgetLabels => this.budgetLabels.set(budgetLabels));
-  }
-
+export class CapitalComponent extends BudgetCommonComponent implements OnInit {
+  override budgetType = BudgetTypes.CAPITAL;
 }

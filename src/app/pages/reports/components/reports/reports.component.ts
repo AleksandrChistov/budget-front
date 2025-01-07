@@ -41,7 +41,7 @@ export class ReportsComponent implements OnInit {
   reportType!: TransactionTypes;
   year!: number;
   departmentId!: number;
-  budgetId!: number;
+  budgetId?: number;
 
   ngOnInit() {
     this.getBudgetLabels(this.year, this.departmentId);
@@ -62,22 +62,25 @@ export class ReportsComponent implements OnInit {
   departmentChanged(departmentId: number): void {
     console.log('departmentChanged > ', departmentId);
     this.departmentId = departmentId;
+    this.budgetId = undefined;
     this.getBudgetLabels(this.year, this.departmentId);
   }
 
   budgetChanged(budgetId: number): void {
     console.log('budgetChanged > ', budgetId);
-    this.budgetId = budgetId;
-    this.getReports(this.reportType, this.year, this.budgetId);
+    this.getReports(this.reportType, this.year, budgetId);
   }
 
   private getBudgetLabels(year: number, departmentId?: number): void {
     console.log('departmentId ', departmentId);
-    this.labelsService.getBudgetNames(year, departmentId)
+    this.labelsService.getBudgetNames(departmentId, year)
       .pipe(
         take(1),
         takeUntilDestroyed(this.destroyRef)
-      ).subscribe(budgetLabels => this.budgetLabels.set(budgetLabels));
+      ).subscribe(budgetLabels => {
+        this.budgetLabels.set(budgetLabels);
+        this.budgetId = this.budgetLabels()[this.budgetLabels().length - 1].id;
+    });
   }
 
   private getReports(reportType: TransactionTypes, year: number, budgetId: number): void {

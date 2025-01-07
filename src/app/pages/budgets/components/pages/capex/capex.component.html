@@ -2,9 +2,11 @@
   title="Инвестиции"
   [departments]="departmentLabels()"
   [budgetTitles]="budgetLabels()"
+  [bidgetId]="budgetId"
   (budgetChanged)="budgetChanged($event)"
   (departmentChanged)="departmentChanged($event)"
   (deleteBudget)="deleteBudget($event)"
+  (createNewBudget)="createNewBudget($event)"
   (saveToExcel)="saveToExcel()"
   (getFromExcel)="getFromExcel($event)"
 ></app-budgets-header>

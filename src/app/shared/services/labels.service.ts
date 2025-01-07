@@ -15,7 +15,7 @@ import { yearLabels } from '../../pages/reports/consts/years-labels.consts';
 export class LabelsService {
   http = inject(HttpClient);
 
-  getBudgetNames(year: number = yearLabels[yearLabels.length - 1].id, departmentId?: number): Observable<OptionName<number>[]> {
+  getBudgetNames(departmentId?: number, year: number = yearLabels[yearLabels.length - 1].id): Observable<OptionName<number>[]> {
     return this.http.get<OptionName<number>[]>(`http://localhost:8080/api/budgets/names${buildQueryParams({year, departmentId})}`);
   }
 

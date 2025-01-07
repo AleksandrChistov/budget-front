@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Budget, BudgetTreeNode } from '../interfaces/budget.interface';
 import { buildQueryParams } from '../../../shared/utils/http.util';
 import { BudgetTypes } from '../../../shared/interfaces/budget-types.enum';
+import { yearLabels } from '../../reports/consts/years-labels.consts';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +12,16 @@ import { BudgetTypes } from '../../../shared/interfaces/budget-types.enum';
 export class BudgetService {
   http = inject(HttpClient);
 
-  get(type: BudgetTypes, budgetId: number): Observable<Budget> {
-    return this.http.get<Budget>(`http://localhost:8080/api/budgets${buildQueryParams({type, budgetId})}`);
+  get(type: BudgetTypes, budgetId: number, year  = yearLabels[yearLabels.length - 1].id): Observable<Budget> {
+    return this.http.get<Budget>(`http://localhost:8080/api/budgets${buildQueryParams({type, budgetId, year})}`);
   }
 
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`http://localhost:8080/api/budgets/${id}`);
+  }
+
+  createNew(departmentId?: number): Observable<Budget> {
+    return this.http.post<Budget>(`http://localhost:8080/api/budgets`, {departmentId});
   }
 
   update(budget: Budget): Observable<number> {

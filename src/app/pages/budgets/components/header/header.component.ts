@@ -3,8 +3,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Select } from 'primeng/select';
 import { Button } from 'primeng/button';
-import { Option, OptionName } from '../../../../shared/interfaces/option.interface';
+import { Tooltip } from 'primeng/tooltip';
 import { FileSelectEvent, FileUpload } from 'primeng/fileupload';
+import { OptionName } from '../../../../shared/interfaces/option.interface';
 
 @Component({
   selector: 'app-budgets-header',
@@ -14,7 +15,8 @@ import { FileSelectEvent, FileUpload } from 'primeng/fileupload';
     Select,
     FormsModule,
     Button,
-    FileUpload
+    FileUpload,
+    Tooltip
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
@@ -23,9 +25,11 @@ export class HeaderComponent implements OnInit {
   title = input.required<string>();
   departments = input.required<OptionName<number>[]>();
   budgetTitles = input.required<OptionName<number>[]>();
+  bidgetId = input.required<number | undefined>();
   departmentChanged = output<number>();
   budgetChanged = output<number>();
   deleteBudget = output<number>();
+  createNewBudget = output<number>();
   saveToExcel = output<void>();
   getFromExcel = output<FileSelectEvent>();
 
@@ -36,7 +40,7 @@ export class HeaderComponent implements OnInit {
 
   constructor() {
     effect(() => {
-      this.formGroup.get('budget')?.setValue(this.budgetTitles()[this.budgetTitles().length - 1]?.id);
+      this.formGroup.get('budget')?.setValue(this.bidgetId() ?? this.budgetTitles()[this.budgetTitles().length - 1]?.id);
     }, { allowSignalWrites: true });
   }
 

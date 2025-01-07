@@ -22,6 +22,7 @@ export class HeaderComponent implements OnInit {
   departmentLabels = input.required<OptionName<number>[]>();
   budgetTitles = input.required<OptionName<number>[]>();
   yearLabels = input.required<OptionName<number>[]>();
+  budgetId = input.required<number | undefined>();
   reportTypeChanged = output<TransactionTypes>();
   yearChanged = output<number>();
   departmentChanged = output<number>();
@@ -34,7 +35,7 @@ export class HeaderComponent implements OnInit {
 
   constructor() {
     effect(() => {
-      this.formGroup.get('budget')?.setValue(this.budgetTitles()[this.budgetTitles().length - 1]?.id);
+      this.formGroup.get('budget')?.setValue(this.budgetId());
     }, { allowSignalWrites: true });
   }
 
