@@ -35,6 +35,7 @@ export class HeaderComponent implements OnInit {
 
   constructor() {
     effect(() => {
+      this.budgetTitles();
       this.formGroup.get('budget')?.setValue(this.budgetId());
     }, { allowSignalWrites: true });
   }

@@ -50,7 +50,7 @@ export class ReportsComponent implements OnInit {
   reportTypeChanged(reportType: TransactionTypes): void {
     console.log('reportTypeChanged > ', reportType);
     this.reportType = reportType;
-    this.getBudgetLabels(this.year, this.departmentId);
+    this.getReports(this.reportType, this.year, this.budgetId);
   }
 
   yearChanged(year: number): void {
@@ -83,7 +83,7 @@ export class ReportsComponent implements OnInit {
     });
   }
 
-  private getReports(reportType: TransactionTypes, year: number, budgetId: number): void {
+  private getReports(reportType: TransactionTypes, year: number, budgetId?: number): void {
     if (!budgetId) {
       this.totals.set([]);
       this.reports.set([]);
@@ -94,6 +94,7 @@ export class ReportsComponent implements OnInit {
       .pipe(take(1), takeUntilDestroyed(this.destroyRef))
       .subscribe(data => {
         console.log('reports', data);
+        this.budgetId = budgetId;
         this.totals.set(data.totals);
         this.reports.set(data.reports);
       });
