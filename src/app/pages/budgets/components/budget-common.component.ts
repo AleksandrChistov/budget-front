@@ -81,13 +81,22 @@ export class BudgetCommonComponent implements OnInit {
   }
 
   saveToExcel(): void {
-    console.log('saveToExcel', this.budget());
-    // TODO: make a request to save a budget to excel and download this file
+    console.log('getFromExcel', this.budgetId ?? this.budget().id, this.budgetType);
+    this.budgetService.downLoadExcel(this.budgetId ?? this.budget().id, this.budgetType).pipe(
+      take(1),
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe((filePath) => window.open(filePath));
   }
 
   getFromExcel(event: FileSelectEvent): void {
     console.log('getFromExcel', event);
-    // TODO: open a modal to upload excel file
+    this.budgetService.saveFromExcel(event.files[0], this.budgetId ?? this.budget().id).pipe(
+      take(1),
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe(() => {
+      this.budgetId = undefined;
+      this.getBudgetLabels(this.budget().departmentId);
+    });
   }
 
   private getBudgetLabels(departmentId?: number): void {
