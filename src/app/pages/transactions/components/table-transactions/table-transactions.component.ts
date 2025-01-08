@@ -7,6 +7,7 @@ import { TransactionTypes } from '../../../../shared/enums/transaction.enum';
 import { Transaction } from '../../interfaces/transaction.interface';
 import { BudgetTypeToTitlePipe } from '../../pipes/budget-type-to-title.pipe';
 import { AccountTypeToTitlePipe } from '../../pipes/account-type-to-title.pipe';
+import { Tooltip } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-table-transactions',
@@ -18,7 +19,8 @@ import { AccountTypeToTitlePipe } from '../../pipes/account-type-to-title.pipe';
     CurrencyPipe,
     Card,
     BudgetTypeToTitlePipe,
-    AccountTypeToTitlePipe
+    AccountTypeToTitlePipe,
+    Tooltip
   ],
   templateUrl: './table-transactions.component.html',
   styleUrl: './table-transactions.component.scss'
