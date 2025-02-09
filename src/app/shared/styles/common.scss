@@ -17,6 +17,20 @@
   border-radius: 8px;
 }
 
+.skeleton {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.skeleton-up {
+  margin-top: 16px;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
 *::-webkit-scrollbar {
   width: 5px;
   height: 5px;

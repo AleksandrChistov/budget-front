@@ -9,14 +9,32 @@
   (departmentChanged)="departmentChanged($event)"
   (budgetChanged)="budgetChanged($event)"
 ></app-reports-header>
-@if (reportType === ReportTypes.INCOME) {
-  <app-reports-income
-    [totals]="totals()"
-    [reports]="reports()"
-  ></app-reports-income>
+
+@if (isLoading) {
+  <div class="skeleton">
+    <p-skeleton class="flex-grow" height="15vh"/>
+    <p-skeleton class="flex-grow" height="15vh"/>
+    <p-skeleton class="flex-grow" height="15vh"/>
+    <p-skeleton class="flex-grow" height="15vh"/>
+  </div>
+  <div class="skeleton skeleton-up">
+    <p-skeleton class="flex-grow" height="35vh"/>
+    <p-skeleton class="flex-grow" height="35vh"/>
+  </div>
+  <div class="skeleton skeleton-up">
+    <p-skeleton class="flex-grow" height="35vh"/>
+    <p-skeleton class="flex-grow" height="35vh"/>
+  </div>
 } @else {
-  <app-reports-expenses
-    [totals]="totals()"
-    [reports]="reports()"
-  ></app-reports-expenses>
+  @if (reportType === ReportTypes.INCOME) {
+    <app-reports-income
+      [totals]="totals()"
+      [reports]="reports()"
+    ></app-reports-income>
+  } @else {
+    <app-reports-expenses
+      [totals]="totals()"
+      [reports]="reports()"
+    ></app-reports-expenses>
+  }
 }

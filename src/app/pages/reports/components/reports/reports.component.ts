@@ -12,6 +12,7 @@ import { ChartCardData } from '../../../../shared/components/chart-card/chart-ca
 import { reportsTypes } from '../../consts/report-types.consts';
 import { TransactionTypes } from '../../../../shared/enums/transaction.enum';
 import { yearLabels } from '../../consts/years-labels.consts';
+import { Skeleton } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-reports',
@@ -19,7 +20,8 @@ import { yearLabels } from '../../consts/years-labels.consts';
   imports: [
     HeaderComponent,
     IncomeComponent,
-    ExpensesComponent
+    ExpensesComponent,
+    Skeleton
   ],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.scss'
@@ -35,6 +37,7 @@ export class ReportsComponent implements OnInit {
   totals = signal<ReportsTotal[]>([]);
   reports = signal<ChartCardData[]>([]);
   yearLabels: OptionName<number>[] = yearLabels;
+  isLoading = true;
 
   protected readonly ReportTypes = TransactionTypes;
 
@@ -90,6 +93,8 @@ export class ReportsComponent implements OnInit {
       return;
     }
 
+    this.isLoading = true;
+
     this.reportsService.get(reportType, year, budgetId)
       .pipe(take(1), takeUntilDestroyed(this.destroyRef))
       .subscribe(data => {
@@ -97,6 +102,7 @@ export class ReportsComponent implements OnInit {
         this.budgetId = budgetId;
         this.totals.set(data.totals);
         this.reports.set(data.reports);
+        this.isLoading = false;
       });
   }
 }
