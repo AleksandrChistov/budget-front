@@ -3,6 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Button } from 'primeng/button';
 import { InputText } from 'primeng/inputtext';
 import { Password } from 'primeng/password';
+import { Roles } from '../../../../shared/enums/role.enums';
 
 @Component({
   selector: 'app-access-item',
@@ -20,11 +21,24 @@ import { Password } from 'primeng/password';
 export class AccessItemComponent {
   email = input.required<string>();
   fullName = input.required<string>();
-  role = input.required<string>();
+  role = input.required<string, Roles>({ transform: this.transformRole });
   password = input.required<string>();
   deleteAccess = output<void>()
 
   delete(): void {
     this.deleteAccess.emit();
+  }
+
+  private transformRole(role: Roles): string {
+    switch (role) {
+      case Roles.ADMIN:
+        return 'Админ';
+      case Roles.MANAGER:
+        return 'Менеджер';
+      case Roles.ANALYST:
+        return 'Аналитик';
+      default:
+        return 'Неизвестный пользователей';
+    }
   }
 }

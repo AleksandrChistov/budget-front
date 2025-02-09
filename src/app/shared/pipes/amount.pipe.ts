@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class AmountPipe implements PipeTransform {
 
-  transform(value: number, ...args: unknown[]): unknown {
+  transform(value: number): unknown {
     const amount = value.toString();
     if (amount.length < 7) {
       return this.formatNumberWithSpaces(value);
