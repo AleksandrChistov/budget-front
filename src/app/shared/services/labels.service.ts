@@ -8,6 +8,7 @@ import { AccountTypes } from '../../pages/transactions/enums/account.enum';
 import { TransactionTypes } from '../enums/transaction.enum';
 import { buildQueryParams } from '../utils/http.util';
 import { yearLabels } from '../../pages/reports/consts/years-labels.consts';
+import { baseUrl } from '../consts/config.const';
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +17,15 @@ export class LabelsService {
   http = inject(HttpClient);
 
   getBudgetNames(departmentId?: number, year: number = yearLabels[yearLabels.length - 1].id): Observable<OptionName<number>[]> {
-    return this.http.get<OptionName<number>[]>(`http://localhost:8080/api/budgets/names${buildQueryParams({year, departmentId})}`);
+    return this.http.get<OptionName<number>[]>(`${baseUrl}/api/budgets/names${buildQueryParams({year, departmentId})}`);
   }
 
   getDepartments(): Observable<OptionName<number>[]> {
-    return this.http.get<OptionName<number>[]>('http://localhost:8080/api/departments');
+    return this.http.get<OptionName<number>[]>(`${baseUrl}/api/departments`);
   }
 
   getAccounts(departmentId?: number): Observable<AccountOption[]> {
-    return this.http.get<AccountResponse[]>(`http://localhost:8080/api/accounts${buildQueryParams({departmentId})}`)
+    return this.http.get<AccountResponse[]>(`${baseUrl}/api/accounts${buildQueryParams({departmentId})}`)
       .pipe(
         map((accounts: AccountResponse[]) => {
           const bank = {
@@ -50,11 +51,11 @@ export class LabelsService {
   }
 
   getBudgetItems(budgetType: BudgetTypes, transactionType: TransactionTypes): Observable<BudgetItem[]> {
-    return this.http.get<BudgetItem[]>(`http://localhost:8080/api/budget-items${buildQueryParams({budgetType, transactionType})}`);
+    return this.http.get<BudgetItem[]>(`${baseUrl}/api/budget-items${buildQueryParams({budgetType, transactionType})}`);
   }
 
   getCounterparties(): Observable<OptionName<number>[]> {
-    return this.http.get<OptionName<number>[]>('http://localhost:8080/api/counterparty');
+    return this.http.get<OptionName<number>[]>(`${baseUrl}/api/counterparty`);
   }
 
 }

@@ -5,6 +5,7 @@ import { Reports } from '../interfaces/reports.interface';
 import { TransactionTypes } from '../../../shared/enums/transaction.enum';
 import { buildQueryParams } from '../../../shared/utils/http.util';
 import { yearLabels } from '../consts/years-labels.consts';
+import { baseUrl } from '../../../shared/consts/config.const';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class ReportsService {
     console.log('transactionType', type);
     console.log('year', year);
     console.log('budgetId', budgetId);
-    return this.http.get<Reports>(`http://localhost:8080/api/reports${buildQueryParams({type, year, budgetId})}`);
+    return this.http.get<Reports>(`${baseUrl}/api/reports${buildQueryParams({type, year, budgetId})}`);
   }
 
 }
