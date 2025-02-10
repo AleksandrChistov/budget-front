@@ -1,5 +1,28 @@
 :host {
   ::ng-deep {
+    .skeleton-block {
+      display: flex;
+      flex-direction: column;
+      margin-top: 30px;
+
+      p-skeleton {
+        div {
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        &:not(:first-child):not(:last-child) div {
+          border-radius: 0;
+        }
+        &:first-child div {
+          border-bottom-right-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+        &:last-child div {
+          border-top-right-radius: 0;
+          border-top-left-radius: 0;
+        }
+      }
+    }
     .p-card {
       height: calc(100% - 145px);
       margin-top: 30px;

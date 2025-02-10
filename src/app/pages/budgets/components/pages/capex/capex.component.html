@@ -14,5 +14,6 @@
 <app-table-budgets
   [budget]="budget()"
   [budgetType]="BudgetTypes.CAPEX"
+  [loading]="loadingService.isLoading()"
   (saveBudget)="saveBudget($event)"
 ></app-table-budgets>

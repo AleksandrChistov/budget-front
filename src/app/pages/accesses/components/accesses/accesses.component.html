@@ -1,19 +1,26 @@
 <h2 class="title">Управление доступом</h2>
 <app-add-access-item (addAccess)="addAccess($event)"></app-add-access-item>
 
-@if (accesses().length > 0) {
-  <div class="access-list">
-    @for (access of accesses(); track access.id) {
-      <app-access-item
-        [email]="access.email"
-        [fullName]="access.fullName"
-        [role]="access.role"
-        [password]="access.password"
-        (deleteAccess)="deleteAccess(access.id)"
-      ></app-access-item>
+@if (loadingService.isLoading()) {
+  <div class="skeletons">
+    @for (el of [1,2,3]; track $index) {
+      <p-skeleton width="100%" height="30px"/>
     }
   </div>
 } @else {
-  <p class="fallback">Ни одного пользователя не было добавлено</p>
+  @if (accesses().length > 0) {
+    <div class="access-list">
+      @for (access of accesses(); track access.id) {
+        <app-access-item
+          [email]="access.email"
+          [fullName]="access.fullName"
+          [role]="access.role"
+          [password]="access.password"
+          (deleteAccess)="deleteAccess(access.id)"
+        ></app-access-item>
+      }
+    </div>
+  } @else {
+    <p class="fallback">Ни одного пользователя не было добавлено</p>
+  }
 }
-

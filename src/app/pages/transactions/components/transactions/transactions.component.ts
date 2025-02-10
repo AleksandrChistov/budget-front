@@ -12,15 +12,18 @@ import { HeaderComponent } from '../header/header.component';
 import { TransactionService } from '../../services/transaction.service';
 import { TableTransactionsComponent } from '../table-transactions/table-transactions.component';
 import { getBudgetTypeOptions } from '../../../../shared/utils/budget-types.util';
+import { Skeleton } from "primeng/skeleton";
+import { LoadingService } from '../../../../shared/services/loading.service';
 
 @Component({
   selector: 'app-transactions',
   standalone: true,
-  imports: [
-    FormTransactionsComponent,
-    HeaderComponent,
-    TableTransactionsComponent
-  ],
+    imports: [
+        FormTransactionsComponent,
+        HeaderComponent,
+        TableTransactionsComponent,
+        Skeleton
+    ],
   templateUrl: './transactions.component.html',
   styleUrl: './transactions.component.scss'
 })
@@ -28,6 +31,7 @@ export class TransactionsComponent implements OnInit {
   transactionService = inject(TransactionService);
   labelsService = inject(LabelsService);
   destroyRef = inject(DestroyRef);
+  loadingService = inject(LoadingService);
 
   isFormOpened = false;
   type: TransactionTypes = TransactionTypes.EXPENSE;

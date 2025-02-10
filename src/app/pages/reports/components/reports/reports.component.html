@@ -11,19 +11,21 @@
 ></app-reports-header>
 
 @if (isLoading) {
-  <div class="skeleton">
-    <p-skeleton class="flex-grow" height="15vh"/>
-    <p-skeleton class="flex-grow" height="15vh"/>
-    <p-skeleton class="flex-grow" height="15vh"/>
-    <p-skeleton class="flex-grow" height="15vh"/>
-  </div>
-  <div class="skeleton skeleton-up">
-    <p-skeleton class="flex-grow" height="35vh"/>
-    <p-skeleton class="flex-grow" height="35vh"/>
-  </div>
-  <div class="skeleton skeleton-up">
-    <p-skeleton class="flex-grow" height="35vh"/>
-    <p-skeleton class="flex-grow" height="35vh"/>
+  <div class="skeletons">
+    <div class="skeleton">
+      <p-skeleton class="flex-grow" height="14vh"/>
+      <p-skeleton class="flex-grow" height="14vh"/>
+      <p-skeleton class="flex-grow" height="14vh"/>
+      <p-skeleton class="flex-grow" height="14vh"/>
+    </div>
+    <div class="skeleton">
+      <p-skeleton class="flex-grow" height="32vh"/>
+      <p-skeleton class="flex-grow" height="32vh"/>
+    </div>
+    <div class="skeleton">
+      <p-skeleton class="flex-grow" height="32vh"/>
+      <p-skeleton class="flex-grow" height="32vh"/>
+    </div>
   </div>
 } @else {
   @if (reportType === ReportTypes.INCOME) {

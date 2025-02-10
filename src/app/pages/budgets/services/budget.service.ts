@@ -1,39 +1,56 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { Budget, BudgetTreeNode } from '../interfaces/budget.interface';
 import { buildQueryParams } from '../../../shared/utils/http.util';
 import { BudgetTypes } from '../../../shared/interfaces/budget-types.enum';
 import { yearLabels } from '../../reports/consts/years-labels.consts';
 import { baseUrl } from '../../../shared/consts/config.const';
+import { LoadingService } from '../../../shared/services/loading.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BudgetService {
-  http = inject(HttpClient);
+  private http = inject(HttpClient);
+  private loadingService = inject(LoadingService);
 
   get(type: BudgetTypes, budgetId: number, year  = yearLabels[yearLabels.length - 1].id): Observable<Budget> {
-    return this.http.get<Budget>(`${baseUrl}/api/budgets${buildQueryParams({type, budgetId, year})}`);
+    this.loadingService.load();
+    return this.http.get<Budget>(`${baseUrl}/api/budgets${buildQueryParams({type, budgetId, year})}`).pipe(
+      finalize(() => this.loadingService.stop())
+    );
   }
 
   delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${baseUrl}/api/budgets/${id}`);
+    this.loadingService.load();
+    return this.http.delete<void>(`${baseUrl}/api/budgets/${id}`).pipe(
+      finalize(() => this.loadingService.stop())
+    );
   }
 
   createNew(departmentId?: number): Observable<Budget> {
-    return this.http.post<Budget>(`${baseUrl}/api/budgets`, {departmentId});
+    this.loadingService.load();
+    return this.http.post<Budget>(`${baseUrl}/api/budgets`, {departmentId}).pipe(
+      finalize(() => this.loadingService.stop())
+    );
   }
 
   saveFromExcel(file: File, budgetId: number | undefined): Observable<void> {
     const formData = new FormData();
     formData.append('file', file);
-    return this.http.put<void>(`${baseUrl}8080/api/files/upload/${budgetId}`, formData);
+    this.loadingService.load();
+    return this.http.put<void>(`${baseUrl}8080/api/files/upload/${budgetId}`, formData).pipe(
+      finalize(() => this.loadingService.stop())
+    );
   }
 
   downLoadExcel(budgetId: number, type: BudgetTypes): Observable<string> {
+    this.loadingService.load();
     return this.http.get(`${baseUrl}/api/files/download${buildQueryParams({budgetId, type})}`,
       { responseType: 'text' }
+    ).pipe(
+      finalize(() => this.loadingService.stop())
     );
   }
 
@@ -45,7 +62,11 @@ export class BudgetService {
       budgetItems: this.prepareBudgetItems(budget.budgetItems)
     }
 
-    return this.http.put<number>(`${baseUrl}/api/budgets/${budget.id}`, newBudget);
+    this.loadingService.load();
+
+    return this.http.put<number>(`${baseUrl}/api/budgets/${budget.id}`, newBudget).pipe(
+      finalize(() => this.loadingService.stop())
+    );
   }
 
   private prepareBudgetItems(items: BudgetTreeNode[]): BudgetTreeNode[] {

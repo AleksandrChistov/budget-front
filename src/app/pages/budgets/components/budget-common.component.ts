@@ -8,6 +8,7 @@ import { LabelsService } from '../../../shared/services/labels.service';
 import { OptionName } from '../../../shared/interfaces/option.interface';
 import { Budget } from '../interfaces/budget.interface';
 import { BudgetTypes } from '../../../shared/interfaces/budget-types.enum';
+import { LoadingService } from '../../../shared/services/loading.service';
 
 @Component({
   standalone: true,
@@ -18,6 +19,7 @@ export class BudgetCommonComponent implements OnInit {
   labelsService = inject(LabelsService);
   destroyRef = inject(DestroyRef);
   message = inject(MessageService);
+  loadingService = inject(LoadingService);
 
   departmentLabels = toSignal<OptionName<number>[], []>(this.labelsService.getDepartments(), { initialValue: [] });
   budgetLabels = signal<OptionName<number>[]>([]);
@@ -39,7 +41,8 @@ export class BudgetCommonComponent implements OnInit {
         take(1),
         catchError(err => {
           this.message.add(
-            { severity: 'error',
+            {
+              severity: 'error',
               summary: 'Ошибка получения бюджета',
               detail: err.message,
             });
@@ -65,7 +68,8 @@ export class BudgetCommonComponent implements OnInit {
       take(1),
       catchError(err => {
         this.message.add(
-          { severity: 'error',
+          {
+            severity: 'error',
             summary: 'Ошибка обновления бюджета',
             detail: err.message,
           });
@@ -75,7 +79,8 @@ export class BudgetCommonComponent implements OnInit {
     ).subscribe(() => {
       this.budgetChanged(this.budgetId);
       this.message.add(
-        { severity: 'success',
+        {
+          severity: 'success',
           summary: 'Бюджет успешно обновлен',
           detail: 'Текуший бюджет был успешно обновлен'
         });
@@ -88,7 +93,8 @@ export class BudgetCommonComponent implements OnInit {
       take(1),
       catchError(err => {
         this.message.add(
-          { severity: 'error',
+          {
+            severity: 'error',
             summary: 'Ошибка создания бюджета',
             detail: err.message,
           });
@@ -99,7 +105,8 @@ export class BudgetCommonComponent implements OnInit {
       this.budgetId = undefined;
       this.getBudgetLabels(departmentId);
       this.message.add(
-        { severity: 'success',
+        {
+          severity: 'success',
           summary: 'Бюджет успешно создан',
           detail: 'Текуший бюджет был успешно создан'
         });
@@ -113,7 +120,8 @@ export class BudgetCommonComponent implements OnInit {
       take(1),
       catchError(err => {
         this.message.add(
-          { severity: 'error',
+          {
+            severity: 'error',
             summary: 'Ошибка удаления бюджета',
             detail: err.message,
           });
@@ -124,7 +132,8 @@ export class BudgetCommonComponent implements OnInit {
       this.budgetId = undefined;
       this.getBudgetLabels(this.budget().departmentId);
       this.message.add(
-        { severity: 'success',
+        {
+          severity: 'success',
           summary: 'Бюджет успешно удален',
           detail: 'Текуший бюджет был успешно удален'
         });
@@ -137,7 +146,8 @@ export class BudgetCommonComponent implements OnInit {
       take(1),
       catchError(err => {
         this.message.add(
-          { severity: 'error',
+          {
+            severity: 'error',
             summary: 'Ошибка скачивания файла',
             detail: err.message,
           });
@@ -153,7 +163,8 @@ export class BudgetCommonComponent implements OnInit {
       take(1),
       catchError(err => {
         this.message.add(
-          { severity: 'error',
+          {
+            severity: 'error',
             summary: 'Ошибка загрузки файла',
             detail: err.message,
           });
@@ -164,7 +175,8 @@ export class BudgetCommonComponent implements OnInit {
       this.budgetId = undefined;
       this.getBudgetLabels(this.budget().departmentId);
       this.message.add(
-        { severity: 'success',
+        {
+          severity: 'success',
           summary: 'Файл успешно загружен',
           detail: 'Текуший бюджет был успешно обновлен'
         });
@@ -178,7 +190,8 @@ export class BudgetCommonComponent implements OnInit {
         take(1),
         catchError(err => {
           this.message.add(
-            { severity: 'error',
+            {
+              severity: 'error',
               summary: 'Ошибка получения наименований бюджетов',
               detail: err.message,
             });

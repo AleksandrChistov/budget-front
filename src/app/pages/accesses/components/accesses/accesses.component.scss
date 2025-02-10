@@ -8,4 +8,11 @@
   .fallback {
     margin-top: 50px;
   }
+  .skeletons {
+    max-width: 1135px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 16px;
+  }
 }

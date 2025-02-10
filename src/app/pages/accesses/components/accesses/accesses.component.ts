@@ -5,20 +5,24 @@ import { AddAccessItemComponent } from '../add-access-item/add-access-item.compo
 import { AccessItemComponent } from '../access-item/access-item.component';
 import { AccessesService } from '../../services/accesses.service';
 import { AccessData, FormAccessData } from '../../interfaces/form.interface';
+import { Skeleton } from "primeng/skeleton";
+import { LoadingService } from '../../../../shared/services/loading.service';
 
 @Component({
   selector: 'app-accesses',
   standalone: true,
-  imports: [
-    AddAccessItemComponent,
-    AccessItemComponent,
-  ],
+    imports: [
+        AddAccessItemComponent,
+        AccessItemComponent,
+        Skeleton,
+    ],
   templateUrl: './accesses.component.html',
   styleUrl: './accesses.component.scss'
 })
 export class AccessesComponent implements OnInit {
   private readonly accessesService = inject(AccessesService);
   private destroyRef = inject(DestroyRef);
+  protected loadingService = inject(LoadingService);
 
   accesses = signal<AccessData[]>([]);
 

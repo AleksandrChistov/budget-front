@@ -9,6 +9,7 @@ import { InputNumber } from 'primeng/inputnumber';
 import { Budget, BudgetData, BudgetTreeNode } from '../../interfaces/budget.interface';
 import { TransactionTypes } from '../../../../shared/enums/transaction.enum';
 import { BudgetTypes } from '../../../../shared/interfaces/budget-types.enum';
+import { Skeleton } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-table-budgets',
@@ -21,7 +22,8 @@ import { BudgetTypes } from '../../../../shared/interfaces/budget-types.enum';
     InputNumber,
     ReactiveFormsModule,
     NgIf,
-    Button
+    Button,
+    Skeleton
   ],
   templateUrl: './table-budgets.component.html',
   styleUrl: './table-budgets.component.scss'
@@ -29,6 +31,7 @@ import { BudgetTypes } from '../../../../shared/interfaces/budget-types.enum';
 export class TableBudgetsComponent {
   budget = input.required<Budget>();
   budgetType = input.required<BudgetTypes>();
+  loading = input.required<boolean>();
   saveBudget = output<Budget>();
 
   skipTotal = false;

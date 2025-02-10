@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit {
     this.formGroup.get('department')?.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((department: number) => {
-        this.formGroup.get('account')?.reset();
+        this.formGroup.get('account')?.reset(null, {onlySelf: true, emitEvent: false});
         this.departmentChanged.emit(department);
       });
 
