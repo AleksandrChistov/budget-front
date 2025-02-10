@@ -1,6 +1,7 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { take } from 'rxjs';
+import { catchError, EMPTY, take } from 'rxjs';
 import { FileSelectEvent } from 'primeng/fileupload';
 import { BudgetService } from '../services/budget.service';
 import { LabelsService } from '../../../shared/services/labels.service';
@@ -10,12 +11,13 @@ import { BudgetTypes } from '../../../shared/interfaces/budget-types.enum';
 
 @Component({
   standalone: true,
-  template: ''
+  template: '',
 })
 export class BudgetCommonComponent implements OnInit {
   budgetService = inject(BudgetService);
   labelsService = inject(LabelsService);
   destroyRef = inject(DestroyRef);
+  message = inject(MessageService);
 
   departmentLabels = toSignal<OptionName<number>[], []>(this.labelsService.getDepartments(), { initialValue: [] });
   budgetLabels = signal<OptionName<number>[]>([]);
@@ -35,6 +37,14 @@ export class BudgetCommonComponent implements OnInit {
     if (id) {
       this.budgetService.get(this.budgetType, id).pipe(
         take(1),
+        catchError(err => {
+          this.message.add(
+            { severity: 'error',
+              summary: 'Ошибка получения бюджета',
+              detail: err.message,
+            });
+          return EMPTY;
+        }),
         takeUntilDestroyed(this.destroyRef)
       ).subscribe((budget: Budget) => this.budget.set(budget));
     }
@@ -53,18 +63,46 @@ export class BudgetCommonComponent implements OnInit {
     this.budgetId = this.budget().id;
     this.budgetService.update(this.budget()).pipe(
       take(1),
+      catchError(err => {
+        this.message.add(
+          { severity: 'error',
+            summary: 'Ошибка обновления бюджета',
+            detail: err.message,
+          });
+        return EMPTY;
+      }),
       takeUntilDestroyed(this.destroyRef)
-    ).subscribe(() => this.budgetChanged(this.budgetId));
+    ).subscribe(() => {
+      this.budgetChanged(this.budgetId);
+      this.message.add(
+        { severity: 'success',
+          summary: 'Бюджет успешно обновлен',
+          detail: 'Текуший бюджет был успешно обновлен'
+        });
+    });
   }
 
   createNewBudget(departmentId: number): void {
     console.log('createNewBudget', departmentId);
     this.budgetService.createNew(departmentId).pipe(
       take(1),
+      catchError(err => {
+        this.message.add(
+          { severity: 'error',
+            summary: 'Ошибка создания бюджета',
+            detail: err.message,
+          });
+        return EMPTY;
+      }),
       takeUntilDestroyed(this.destroyRef)
     ).subscribe(() => {
       this.budgetId = undefined;
       this.getBudgetLabels(departmentId);
+      this.message.add(
+        { severity: 'success',
+          summary: 'Бюджет успешно создан',
+          detail: 'Текуший бюджет был успешно создан'
+        });
     });
   }
 
@@ -73,10 +111,23 @@ export class BudgetCommonComponent implements OnInit {
     this.budget().departmentId = this.departmentId ?? this.budget().departmentId;
     this.budgetService.delete(id).pipe(
       take(1),
+      catchError(err => {
+        this.message.add(
+          { severity: 'error',
+            summary: 'Ошибка удаления бюджета',
+            detail: err.message,
+          });
+        return EMPTY;
+      }),
       takeUntilDestroyed(this.destroyRef)
     ).subscribe(() => {
       this.budgetId = undefined;
       this.getBudgetLabels(this.budget().departmentId);
+      this.message.add(
+        { severity: 'success',
+          summary: 'Бюджет успешно удален',
+          detail: 'Текуший бюджет был успешно удален'
+        });
     });
   }
 
@@ -84,6 +135,14 @@ export class BudgetCommonComponent implements OnInit {
     console.log('getFromExcel', this.budgetId ?? this.budget().id, this.budgetType);
     this.budgetService.downLoadExcel(this.budgetId ?? this.budget().id, this.budgetType).pipe(
       take(1),
+      catchError(err => {
+        this.message.add(
+          { severity: 'error',
+            summary: 'Ошибка скачивания файла',
+            detail: err.message,
+          });
+        return EMPTY;
+      }),
       takeUntilDestroyed(this.destroyRef)
     ).subscribe((filePath) => window.open(filePath));
   }
@@ -92,10 +151,23 @@ export class BudgetCommonComponent implements OnInit {
     console.log('getFromExcel', event);
     this.budgetService.saveFromExcel(event.files[0], this.budgetId ?? this.budget().id).pipe(
       take(1),
+      catchError(err => {
+        this.message.add(
+          { severity: 'error',
+            summary: 'Ошибка загрузки файла',
+            detail: err.message,
+          });
+        return EMPTY;
+      }),
       takeUntilDestroyed(this.destroyRef)
     ).subscribe(() => {
       this.budgetId = undefined;
       this.getBudgetLabels(this.budget().departmentId);
+      this.message.add(
+        { severity: 'success',
+          summary: 'Файл успешно загружен',
+          detail: 'Текуший бюджет был успешно обновлен'
+        });
     });
   }
 
@@ -104,6 +176,14 @@ export class BudgetCommonComponent implements OnInit {
     this.labelsService.getBudgetNames(departmentId)
       .pipe(
         take(1),
+        catchError(err => {
+          this.message.add(
+            { severity: 'error',
+              summary: 'Ошибка получения наименований бюджетов',
+              detail: err.message,
+            });
+          return EMPTY;
+        }),
         takeUntilDestroyed(this.destroyRef)
       ).subscribe(budgetLabels => this.budgetLabels.set(budgetLabels));
   }

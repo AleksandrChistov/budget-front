@@ -82,7 +82,7 @@ export class ReportsComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef)
       ).subscribe(budgetLabels => {
         this.budgetLabels.set(budgetLabels);
-        this.budgetId = this.budgetLabels()[this.budgetLabels().length - 1].id;
+        this.budgetId = budgetLabels[budgetLabels.length - 1]?.id;
     });
   }
 
