@@ -2,3 +2,13 @@
 <main>
   <router-outlet></router-outlet>
 </main>
+<p-button
+  (onClick)="logout()"
+  type="button"
+  severity="secondary"
+  icon="pi pi-sign-out"
+  pTooltip="Выйти"
+  tooltipPosition="left"
+  class="logout-btn"
+  [outlined]="true"
+/>

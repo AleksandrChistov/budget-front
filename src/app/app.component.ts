@@ -4,6 +4,9 @@ import { definePreset } from '@primeng/themes';
 import Aura from '@primeng/themes/aura';
 import { MenuComponent } from './shared/components/menu/menu.component';
 import { RouterOutlet } from '@angular/router';
+import { Button } from 'primeng/button';
+import { AuthService } from './shared/services/auth.service';
+import { Tooltip } from 'primeng/tooltip';
 
 const MyPreset = definePreset(Aura, {
   semantic: {
@@ -25,15 +28,20 @@ const MyPreset = definePreset(Aura, {
 
 @Component({
   selector: 'app-root',
-  imports: [MenuComponent, RouterOutlet],
+  imports: [MenuComponent, RouterOutlet, Button, Tooltip],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   standalone: true,
 })
 export class AppComponent {
-  public config: PrimeNG = inject(PrimeNG);
+  private config: PrimeNG = inject(PrimeNG);
+  private authService = inject(AuthService);
 
   constructor() {
     this.config.theme.set({ preset: MyPreset });
+  }
+
+  public logout(): void {
+    this.authService.logout();
   }
 }
