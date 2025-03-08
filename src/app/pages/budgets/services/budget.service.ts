@@ -40,7 +40,7 @@ export class BudgetService {
     const formData = new FormData();
     formData.append('file', file);
     this.loadingService.load();
-    return this.http.put<void>(`${baseUrl}8080/api/files/upload/${budgetId}`, formData).pipe(
+    return this.http.put<void>(`${baseUrl}/api/files/upload/${budgetId}`, formData).pipe(
       finalize(() => this.loadingService.stop())
     );
   }

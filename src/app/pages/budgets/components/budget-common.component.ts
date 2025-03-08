@@ -159,7 +159,7 @@ export class BudgetCommonComponent implements OnInit {
 
   getFromExcel(event: FileSelectEvent): void {
     console.log('getFromExcel', event);
-    this.budgetService.saveFromExcel(event.files[0], this.budgetId ?? this.budget().id).pipe(
+    this.budgetService.saveFromExcel(event.files[0] ?? event.currentFiles[0], this.budgetId ?? this.budget().id).pipe(
       take(1),
       catchError(err => {
         this.message.add(
