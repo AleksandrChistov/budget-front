@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { finalize, map, Observable } from 'rxjs';
+import { catchError, EMPTY, finalize, map, Observable } from 'rxjs';
+import { MessageService } from 'primeng/api';
 import { AccountOption, AccountResponse, BudgetItem } from '../../pages/transactions/interfaces/transaction.interface';
 import { OptionName } from '../interfaces/option.interface';
 import { BudgetTypes } from '../interfaces/budget-types.enum';
@@ -17,10 +18,20 @@ import { LoadingService } from './loading.service';
 export class LabelsService {
   private http = inject(HttpClient);
   private loadingService = inject(LoadingService);
+  private message = inject(MessageService);
 
   getBudgetNames(departmentId?: number, year: number = yearLabels[yearLabels.length - 1].id): Observable<OptionName<number>[]> {
     this.loadingService.load();
     return this.http.get<OptionName<number>[]>(`${baseUrl}/api/budgets/names${buildQueryParams({year, departmentId})}`).pipe(
+      catchError(err => {
+        this.message.add(
+          {
+            severity: 'error',
+            summary: 'Ошибка получения названий бюджетов',
+            detail: err.message,
+          });
+        return EMPTY;
+      }),
       finalize(() => this.loadingService.stop())
     );
   }
@@ -28,6 +39,15 @@ export class LabelsService {
   getDepartments(): Observable<OptionName<number>[]> {
     this.loadingService.load();
     return this.http.get<OptionName<number>[]>(`${baseUrl}/api/departments`).pipe(
+      catchError(err => {
+        this.message.add(
+          {
+            severity: 'error',
+            summary: 'Ошибка получения отделов',
+            detail: err.message,
+          });
+        return EMPTY;
+      }),
       finalize(() => this.loadingService.stop())
     );
   }
@@ -56,6 +76,15 @@ export class LabelsService {
           });
           return [bank, cash];
         }),
+        catchError(err => {
+          this.message.add(
+            {
+              severity: 'error',
+              summary: 'Ошибка получения счетов',
+              detail: err.message,
+            });
+          return EMPTY;
+        }),
         finalize(() => this.loadingService.stop())
       );
   }
@@ -63,6 +92,15 @@ export class LabelsService {
   getBudgetItems(budgetType: BudgetTypes, transactionType: TransactionTypes): Observable<BudgetItem[]> {
     this.loadingService.load();
     return this.http.get<BudgetItem[]>(`${baseUrl}/api/budget-items${buildQueryParams({budgetType, transactionType})}`).pipe(
+      catchError(err => {
+        this.message.add(
+          {
+            severity: 'error',
+            summary: 'Ошибка получения статей бюджетов',
+            detail: err.message,
+          });
+        return EMPTY;
+      }),
       finalize(() => this.loadingService.stop())
     );
   }
@@ -70,6 +108,15 @@ export class LabelsService {
   getCounterparties(): Observable<OptionName<number>[]> {
     this.loadingService.load();
     return this.http.get<OptionName<number>[]>(`${baseUrl}/api/counterparty`).pipe(
+      catchError(err => {
+        this.message.add(
+          {
+            severity: 'error',
+            summary: 'Ошибка получения контрагентов',
+            detail: err.message,
+          });
+        return EMPTY;
+      }),
       finalize(() => this.loadingService.stop())
     );
   }

@@ -14,16 +14,18 @@ import { TableTransactionsComponent } from '../table-transactions/table-transact
 import { getBudgetTypeOptions } from '../../../../shared/utils/budget-types.util';
 import { Skeleton } from "primeng/skeleton";
 import { LoadingService } from '../../../../shared/services/loading.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-transactions',
   standalone: true,
-    imports: [
-        FormTransactionsComponent,
-        HeaderComponent,
-        TableTransactionsComponent,
-        Skeleton
-    ],
+  imports: [
+    FormTransactionsComponent,
+    HeaderComponent,
+    TableTransactionsComponent,
+    Skeleton
+  ],
+  providers: [LabelsService, MessageService],
   templateUrl: './transactions.component.html',
   styleUrl: './transactions.component.scss'
 })

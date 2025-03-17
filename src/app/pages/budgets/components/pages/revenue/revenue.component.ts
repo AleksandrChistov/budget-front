@@ -5,6 +5,7 @@ import { BudgetCommonComponent } from '../../budget-common.component';
 import { BudgetTypes } from '../../../../../shared/interfaces/budget-types.enum';
 import { Toast } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { LabelsService } from '../../../../../shared/services/labels.service';
 
 @Component({
   selector: 'app-revenue',
@@ -16,7 +17,7 @@ import { MessageService } from 'primeng/api';
     TableBudgetsComponent,
     Toast
   ],
-  providers: [MessageService],
+  providers: [LabelsService, MessageService],
 })
 export class RevenueComponent extends BudgetCommonComponent implements OnInit {
   override budgetType = BudgetTypes.REVENUE;

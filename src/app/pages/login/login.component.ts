@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, UntypedFormGroup, Validators } from '@angular/forms';
 import { Card } from 'primeng/card';
 import { Button } from 'primeng/button';
 import { InputText } from 'primeng/inputtext';
@@ -29,7 +29,7 @@ export class LoginComponent {
   router = inject(Router);
   msgService = inject(MessageService);
 
-  loginForm = this.fb.group({
+  loginForm: UntypedFormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required]
   })
@@ -44,16 +44,16 @@ export class LoginComponent {
 
   loginUser() {
     const { email, password } = this.loginForm.getRawValue();
-    this.authService.getUserByEmail(email as string, password as string).pipe(
+    this.authService.login({ username: email, password }).pipe(
       tap(user => {
         if (!user) {
           throw new Error("Email или пароль введены неверно");
         }
-        sessionStorage.setItem('auth', 'true');
+        sessionStorage.setItem('auth', user.token);
         this.router.navigate(['/reports']);
       }),
       catchError(error => {
-        this.msgService.add({ severity: 'error', summary: 'Ошибка доступа', detail: error.message });
+        this.msgService.add({ severity: 'error', summary: 'Ошибка доступа', detail: error.error });
         return EMPTY;
       })
     ).subscribe();

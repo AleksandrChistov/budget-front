@@ -13,6 +13,8 @@ import { reportsTypes } from '../../consts/report-types.consts';
 import { TransactionTypes } from '../../../../shared/enums/transaction.enum';
 import { yearLabels } from '../../consts/years-labels.consts';
 import { Skeleton } from 'primeng/skeleton';
+import { MessageService } from 'primeng/api';
+import { Toast } from 'primeng/toast';
 
 @Component({
   selector: 'app-reports',
@@ -21,8 +23,10 @@ import { Skeleton } from 'primeng/skeleton';
     HeaderComponent,
     IncomeComponent,
     ExpensesComponent,
-    Skeleton
+    Skeleton,
+    Toast
   ],
+  providers: [LabelsService, MessageService],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.scss'
 })
