@@ -5,9 +5,10 @@ import { routes } from './app.routes';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import localeRu from '@angular/common/locales/ru';
 import { registerLocaleData } from '@angular/common';
+import { addHeaderInterceptor } from './shared/intercepts/add-header.interceptor';
 registerLocaleData(localeRu, 'ru');
 
 export const appConfig: ApplicationConfig = {
@@ -15,7 +16,9 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimations(),
-    provideHttpClient(),
+    provideHttpClient(
+      withInterceptors([addHeaderInterceptor]),
+    ),
     providePrimeNG({
       theme: {
         preset: Aura
