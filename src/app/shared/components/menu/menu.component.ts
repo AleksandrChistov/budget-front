@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { RippleModule } from 'primeng/ripple';
 import { AvatarModule } from 'primeng/avatar';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -19,6 +20,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './menu.component.scss'
 })
 export class MenuComponent implements OnInit {
+  public authService = inject(AuthService);
+
   items: MenuItem[] | undefined;
 
   ngOnInit() {

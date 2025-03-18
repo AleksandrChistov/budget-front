@@ -5,7 +5,7 @@ import { NotFoundComponent } from './pages/not-found/not-found/not-found.compone
 import { budgetsRoutes } from './pages/budgets/budgets.routes';
 import { ReportsComponent } from './pages/reports/components/reports/reports.component';
 import { LoginComponent } from './pages/login/login.component';
-import { authGuard } from './shared/guards/auth.guard';
+import { authAdminGuard, authGuard } from './shared/guards/auth.guard';
 
 
 export const routes: Routes = [
@@ -36,7 +36,7 @@ export const routes: Routes = [
   {
     path: 'accesses',
     component: AccessesComponent,
-    canActivate: [authGuard],
+    canActivate: [authAdminGuard],
   },
   {
     path: '**',

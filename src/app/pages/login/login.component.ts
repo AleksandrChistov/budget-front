@@ -49,7 +49,7 @@ export class LoginComponent {
         if (!user) {
           throw new Error("Email или пароль введены неверно");
         }
-        sessionStorage.setItem('auth', user.token);
+        sessionStorage.setItem('auth', user.token || '');
         this.router.navigate(['/reports']);
       }),
       catchError(error => {

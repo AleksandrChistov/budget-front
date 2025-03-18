@@ -8,9 +8,11 @@
     </a>
   </ng-template>
   <ng-template #end>
-    <div class="menu-footer">
-      <i class="pi pi-users"></i>
-      <a class="footer-link" routerLink="/accesses" routerLinkActive="link-active">Управление доступом</a>
-    </div>
+    @if (authService.getUser().role === 'ROLE_ADMIN') {
+      <div class="menu-footer">
+        <i class="pi pi-users"></i>
+        <a class="footer-link" routerLink="/accesses" routerLinkActive="link-active">Управление доступом</a>
+      </div>
+    }
   </ng-template>
 </p-menu>

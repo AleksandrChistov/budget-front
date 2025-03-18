@@ -6,3 +6,9 @@ export interface User {
   password: string;
   role: Roles;
 }
+
+export interface AuthUser {
+  token?: string,
+  username?: string,
+  role?: string
+}

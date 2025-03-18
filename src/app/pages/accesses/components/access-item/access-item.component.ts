@@ -1,9 +1,10 @@
-import { Component, input, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Button } from 'primeng/button';
 import { InputText } from 'primeng/inputtext';
 import { Password } from 'primeng/password';
 import { Roles } from '../../../../shared/enums/role.enums';
+import { AuthService } from '../../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-access-item',
@@ -13,12 +14,14 @@ import { Roles } from '../../../../shared/enums/role.enums';
     InputText,
     ReactiveFormsModule,
     Password,
-    FormsModule
+    FormsModule,
   ],
   templateUrl: './access-item.component.html',
   styleUrl: './access-item.component.scss'
 })
 export class AccessItemComponent {
+  public authService = inject(AuthService);
+
   email = input.required<string>();
   fullName = input.required<string>();
   role = input.required<string, Roles>({ transform: this.transformRole });
